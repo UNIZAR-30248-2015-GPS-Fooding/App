@@ -1,2 +1,2 @@
 # App
-Fooding Application repository (Android
+Repositorio para la creación de la aplicación para Android Fooding
