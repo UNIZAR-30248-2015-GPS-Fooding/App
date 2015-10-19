@@ -99,9 +99,9 @@ public class MainActivity extends AppCompatActivity
             //Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
         }
         else if (id == R.id.menu_iniciar_sesion) {
-            Intent Intent = new Intent(this, LoginActivity.class);
-            startActivity(Intent);
-        }
+          Fragment fragment = new LoginFragment();
+          fragmentTransaction.replace(R.id.mainFrame, fragment);
+      }
         else if (id == R.id.menu_lista_recetas) {
             Fragment fragment = new ListaRecetasFragment();
             fragmentTransaction.replace(R.id.mainFrame, fragment);
