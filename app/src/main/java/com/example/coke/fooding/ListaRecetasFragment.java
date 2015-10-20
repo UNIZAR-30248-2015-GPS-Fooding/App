@@ -34,11 +34,11 @@ public class ListaRecetasFragment extends Fragment {
             R.mipmap.fish_logo,
             R.mipmap.meat_logo,
             R.mipmap.vegetable_logo,
-            R.mipmap.fish_logo,
-            R.mipmap.vegetable_logo,
-            R.mipmap.fish_logo,
+            R.mipmap.pasta_logo,
             R.mipmap.meat_logo,
-            R.mipmap.meat_logo,
+            R.mipmap.fish_logo,
+            R.mipmap.pasta_logo,
+            R.mipmap.dessert_logo,
     };
 
     @Override
@@ -46,7 +46,7 @@ public class ListaRecetasFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState)
     {
         actividadPadre = this.getActivity();
-        View view = inflater.inflate(R.layout.activity_lista_recetas, container, false);
+        View view = inflater.inflate(R.layout.fragment_lista_recetas, container, false);
         ListView lv = (ListView) view.findViewById(R.id.listRec);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

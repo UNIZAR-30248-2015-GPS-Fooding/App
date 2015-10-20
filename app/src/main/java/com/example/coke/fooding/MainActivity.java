@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +17,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.MapsInitializer;
@@ -47,14 +50,33 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        ImageView imageView = (ImageView) findViewById(R.id.imageView2);
+        imageView.setImageResource(R.mipmap.watermark);
+
+
+        //Iniciamos la Actividad con el fragment ListaRecetas
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment fragment = new ListaRecetasFragment();
+        fragmentTransaction.replace(R.id.mainFrame, fragment);
+        fragmentTransaction.commit();
+
+
+
+
     }
 
+
+
     @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+    public void onBackPressed(){
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            Log.i("MainActivity", "popping backstack");
+            fm.popBackStack();
         } else {
+            Log.i("MainActivity", "nothing on backstack, calling super");
             super.onBackPressed();
         }
     }
@@ -96,31 +118,33 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.menu_registrarse) {
             Fragment fragment = new RegistrarseFragment();
             fragmentTransaction.replace(R.id.mainFrame, fragment);
+            fragmentTransaction.addToBackStack(null);
             //Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
         }
         else if (id == R.id.menu_iniciar_sesion) {
           Fragment fragment = new LoginFragment();
           fragmentTransaction.replace(R.id.mainFrame, fragment);
+            fragmentTransaction.addToBackStack(null);
       }
         else if (id == R.id.menu_lista_recetas) {
             Fragment fragment = new ListaRecetasFragment();
             fragmentTransaction.replace(R.id.mainFrame, fragment);
+            fragmentTransaction.addToBackStack(null);
 
 
-        //Intent Intent = new Intent(this, ListaRecetas.class);
-        //    startActivity(Intent);
         }
         else if (id == R.id.menu_lista_usuarios) {
             Fragment fragment = new ListaUsuariosFragment();
             fragmentTransaction.replace(R.id.mainFrame, fragment);
+            fragmentTransaction.addToBackStack(null);
             //Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
         }
         else if (id == R.id.menu_supermercados) {
-//            Intent Intent = new Intent(this, MapsActivity.class);
-//            startActivity(Intent);
+            Intent Intent = new Intent(this, MapsActivity.class);
+            startActivity(Intent);
 
-            Fragment fragment = new MapsActivity();
-            fragmentTransaction.replace(R.id.mainFrame, fragment);
+            //Fragment fragment = new MapsActivity();
+            //fragmentTransaction.replace(R.id.mainFrame, fragment);
 
         }
         else if (id == R.id.menu_favoritos) {
@@ -135,6 +159,7 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.menu_cerrar_sesion) {
             Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
         }
+
 
         fragmentTransaction.commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

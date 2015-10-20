@@ -49,8 +49,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.coke.fooding.MainActivity" />
         </activity>
-        <activity android:name=".ListaRecetas" >
-        </activity>
     </application>
 
 </manifest>
