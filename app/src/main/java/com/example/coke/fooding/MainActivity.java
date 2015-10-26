@@ -1,13 +1,17 @@
 package com.example.coke.fooding;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,14 +21,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.AlertDialog.Builder;
 
 import com.google.android.gms.maps.MapsInitializer;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    //Atributos para guardar filtros
+    public static String filtroNombre = "";
+    public static String filtroIngredientes = "";
+    public static int ordenacionSpinner = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,21 +75,18 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.replace(R.id.mainFrame, fragment);
         fragmentTransaction.commit();
 
-
-
-
     }
 
 
-
+    /*
+     * Volver a atras a la anterior Entrada de la pila de entradas
+     */
     @Override
     public void onBackPressed(){
         FragmentManager fm = getFragmentManager();
         if (fm.getBackStackEntryCount() > 0) {
-            Log.i("MainActivity", "popping backstack");
             fm.popBackStack();
         } else {
-            Log.i("MainActivity", "nothing on backstack, calling super");
             super.onBackPressed();
         }
     }
@@ -96,7 +106,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.menu_item_buscar) {
-            Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
+            showDialog(1);
+            //Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
             return true;
         }
 
@@ -166,4 +177,73 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        Dialog dialog = null;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        switch (id) {
+            case 1:
+                return dialogBuscar();
+        }
+        dialog = builder.show();
+        return dialog;
+    }
+
+    /*
+     * ShowDialog correspondiente a la opcion BUSCAR del ActionBar
+     */
+    private Dialog dialogBuscar() {
+
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.filtros_busqueda, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        //Ponemos layour filtros_busqueda.xml a alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+
+        //Obtenemos elementos de layout
+        final EditText userInputNom = (EditText) promptsView
+                .findViewById(R.id.textoNom);
+        final EditText userInputIng = (EditText) promptsView
+                .findViewById(R.id.TextoIng);
+        final Spinner userInputSpinner = (Spinner) promptsView
+                .findViewById(R.id.dialog_spinner);
+        String[] tiposOrdenación = {"Por Nombre", "Por Tipo"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_dropdown_item, tiposOrdenación);
+        userInputSpinner.setAdapter(adapter);
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Filtrar",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                String valueNombre = userInputNom.getText().toString();
+                                filtroNombre = valueNombre;
+                                String valueIngrediente = userInputIng.getText().toString();
+                                filtroIngredientes = valueIngrediente;
+                                ordenacionSpinner = userInputSpinner.getSelectedItemPosition();
+                                //fillData();
+                                return;
+                            }
+                        })
+                .setNegativeButton("Borrar Filtros",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                filtroNombre = "";
+                                userInputNom.setText("");
+                                filtroIngredientes = "";
+                                userInputIng.setText("");
+                                ordenacionSpinner = 0;
+                                userInputSpinner.setSelection(0);
+                                return;
+                            }
+                        });
+
+        return alertDialogBuilder.create();
+
+    }
+
 }

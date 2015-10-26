@@ -39,7 +39,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        //do what you want to do when button is clicked
         switch (v.getId()) {
             case R.id.email_sign_in_button:
                 //switchFragment(HelpFragment.TAG);

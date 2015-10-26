@@ -42,10 +42,8 @@ public class RegistrarseFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        //do what you want to do when button is clicked
         switch (v.getId()) {
             case R.id.RegistrarseButton:
-                //switchFragment(HelpFragment.TAG);
                 Toast.makeText(getActivity(), "Email: " + mEmailView.getText() + " Pass: " + mPasswordView.getText() + " Nombre: " + mNombreView.getText(), Toast.LENGTH_SHORT).show();
                 break;
         }
