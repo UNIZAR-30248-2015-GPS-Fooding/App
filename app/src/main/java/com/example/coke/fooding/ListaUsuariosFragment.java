@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 /**
  * Created by coke on 15/10/2015.
  */
-public class ListaUsuariosFragment extends Fragment {
+public class ListaUsuariosFragment extends android.support.v4.app.Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater,

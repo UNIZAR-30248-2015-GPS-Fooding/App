@@ -14,7 +14,7 @@ import android.widget.Toast;
  * Created by coke on 15/10/2015.
  */
 
-public class LoginFragment extends Fragment implements View.OnClickListener {
+public class LoginFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
 
     View view;
     private AutoCompleteTextView mEmailView;

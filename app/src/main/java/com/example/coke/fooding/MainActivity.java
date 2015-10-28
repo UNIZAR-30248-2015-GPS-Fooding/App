@@ -69,9 +69,9 @@ public class MainActivity extends AppCompatActivity
 
 
         //Iniciamos la Actividad con el fragment ListaRecetas
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment fragment = new ListaRecetasFragment();
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        android.support.v4.app.Fragment fragment = new ListaRecetasFragment();
         fragmentTransaction.replace(R.id.mainFrame, fragment);
         fragmentTransaction.commit();
 
@@ -120,32 +120,32 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         if (id == R.id.menu_inicio) {
             Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
         }
         else if (id == R.id.menu_registrarse) {
-            Fragment fragment = new RegistrarseFragment();
+            android.support.v4.app.Fragment fragment = new RegistrarseFragment();
             fragmentTransaction.replace(R.id.mainFrame, fragment);
             fragmentTransaction.addToBackStack(null);
             //Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
         }
         else if (id == R.id.menu_iniciar_sesion) {
-          Fragment fragment = new LoginFragment();
+            android.support.v4.app.Fragment fragment = new LoginFragment();
           fragmentTransaction.replace(R.id.mainFrame, fragment);
             fragmentTransaction.addToBackStack(null);
       }
         else if (id == R.id.menu_lista_recetas) {
-            Fragment fragment = new ListaRecetasFragment();
+            android.support.v4.app.Fragment fragment = new ListaRecetasFragment();
             fragmentTransaction.replace(R.id.mainFrame, fragment);
             fragmentTransaction.addToBackStack(null);
 
 
         }
         else if (id == R.id.menu_lista_usuarios) {
-            Fragment fragment = new ListaUsuariosFragment();
+            android.support.v4.app.Fragment fragment = new ListaUsuariosFragment();
             fragmentTransaction.replace(R.id.mainFrame, fragment);
             fragmentTransaction.addToBackStack(null);
             //Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
