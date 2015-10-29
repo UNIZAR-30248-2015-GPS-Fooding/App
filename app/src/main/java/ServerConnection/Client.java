@@ -38,7 +38,7 @@ public class Client {
             conn.setDoOutput(true);
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-type", "text/xml");
-            conn.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
+            conn.setRequestProperty("User-Agent", "Mozilla/5.0 ( compatible ) ");
             conn.connect();
 
             // escribir la request
@@ -46,10 +46,14 @@ public class Client {
             pw.write(xml);
             pw.close();
 
-            // recibir la response en el documento
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            doc = builder.parse(conn.getInputStream());
+            if(conn.getResponseCode() >= 200 && conn.getResponseCode() < 300){
+                // codigo de exito
+
+                // recibir la response en el documento
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                doc = builder.parse(conn.getInputStream());
+            }
         }
         catch(Exception e){
             e.printStackTrace();
