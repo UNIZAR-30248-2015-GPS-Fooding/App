@@ -3,29 +3,34 @@
  */
 package ServerConnection;
 
-import org.w3c.dom.Document;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
 
 public class Client {
 
     /**
      * Clase para la conexion con el servidor
+     *
      * @version 1.0
      * @date 29/10/2015
      */
 
-   /* URL a la que mandar las peticiones */
-    private static String url = "https://fooding-gpsfooding.rhcloud.com/servlet/Listener";
+	/* URL a la que mandar las peticiones */
+    private static String url = "http://fooding-gpsfooding.rhcloud.com/servlet/Listener";
 
     /**
-     * @return un docuumento con el XML de respuesta del servidor al enviarle @param xml
+     * @return un docuumento con el XML de respuesta del servidor al
+     *         enviarle @param xml
      */
-    public static Document sendRequest(String xml){
+    public static Document sendRequest(String xml) {
         Document doc = null;
         try {
             // crear la conexion
@@ -43,10 +48,10 @@ public class Client {
 
             // escribir la request
             PrintWriter pw = new PrintWriter(conn.getOutputStream());
-            pw.write(xml);
+            pw.write(URLEncoder.encode(xml, "UTF-8"));
             pw.close();
 
-            if(conn.getResponseCode() >= 200 && conn.getResponseCode() < 300){
+            if (conn.getResponseCode() >= 200 && conn.getResponseCode() < 300) {
                 // codigo de exito
 
                 // recibir la response en el documento
@@ -54,8 +59,7 @@ public class Client {
                 DocumentBuilder builder = factory.newDocumentBuilder();
                 doc = builder.parse(conn.getInputStream());
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
