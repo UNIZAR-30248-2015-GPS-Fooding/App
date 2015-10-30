@@ -85,10 +85,13 @@ public class Access {
         }
         xml = xml + "</request>";
 
+        System.out.println(xml);
+
         // mandar la peticion
         Document doc = Client.sendRequest(xml);
 
         if (doc != null) {
+            System.out.println("HOLA");
             // se ha recibido respuesta correcta
 
             doc.getDocumentElement().normalize();
@@ -132,10 +135,12 @@ public class Access {
                     // agregar ingrediente
                     ings.add(ing);
                 }
+                r.setIngredientes(ings);
 
                 // agregar receta
                 recetas.add(r);
             }
+            return recetas;
         }
         return null;
     }
