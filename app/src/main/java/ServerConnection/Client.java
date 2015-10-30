@@ -3,16 +3,15 @@
  */
 package ServerConnection;
 
-import java.io.PrintWriter;
+import org.w3c.dom.Document;
+
+import java.io.DataOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
 
 public class Client {
 
@@ -28,7 +27,7 @@ public class Client {
 
     /**
      * @return un docuumento con el XML de respuesta del servidor al
-     *         enviarle @param xml
+     * enviarle @param xml
      */
     public static Document sendRequest(String xml) {
         Document doc = null;
@@ -44,12 +43,17 @@ public class Client {
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-type", "text/xml");
             conn.setRequestProperty("User-Agent", "Mozilla/5.0 ( compatible ) ");
-            conn.connect();
+            conn.setRequestProperty("Content-Type",
+                    "application/x-www-form-urlencoded");
+            conn.setRequestProperty("Content-Length",
+                    Integer.toString(xml.getBytes().length));
+            conn.setUseCaches(false);
 
             // escribir la request
-            PrintWriter pw = new PrintWriter(conn.getOutputStream());
-            pw.write(URLEncoder.encode(xml, "UTF-8"));
-            pw.close();
+            DataOutputStream wr = new DataOutputStream(
+                    conn.getOutputStream());
+            wr.writeBytes(xml);
+            wr.close();
 
             if (conn.getResponseCode() >= 200 && conn.getResponseCode() < 300) {
                 // codigo de exito
