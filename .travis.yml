@@ -11,4 +11,4 @@ before_script:
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_dd16d61b1a0c_key -iv $encrypted_dd16d61b1a0c_iv
-  -in google_maps_api.xml.enc -out app/src/debug/res/values/google_maps_api.xml -d
+  -in app/src/debug/res/values/google_maps_api.xml.enc -out app/src/debug/res/values/google_maps_api.xml -d
