@@ -1,13 +1,3 @@
-language: android
-jdk: oraclejdk7
-env:
-  matrix:
-  - ANDROID_TARGET=android-23  ANDROID_ABI=armeabi-v7a
-android:
-  components:
-  - android-23
-  - build-tools-23.0.1
-  - platform-tools
-  - tools
-before_script:
-  - chmod +x gradlew
+before_install:
+- openssl aes-256-cbc -K $encrypted_dd16d61b1a0c_key -iv $encrypted_dd16d61b1a0c_iv
+  -in google_maps_api.xml.enc -out app/src/debug/res/values/google_maps_api.xml -d
