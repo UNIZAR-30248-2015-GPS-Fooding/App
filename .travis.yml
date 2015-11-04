@@ -10,7 +10,7 @@ android:
     - android-23
 
 before_script:
-- android list sdk --no-ui --all --extended
+- rm app/src/debug/res/values/google_maps_api.xml.enc
 - chmod +x gradlew
 
 before_install:
