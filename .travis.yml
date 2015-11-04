@@ -1,8 +1,8 @@
 language: android
 android:
   components:
-    - android update sdk --filter platform-tools --no-ui --force > /dev/null
-    - android update sdk --filter android-23 --no-ui --force > /dev/null
+    - android-23
+    - build-tools-23.0.1
     - android update sdk --filter extra-android-support --no-ui --force > /dev/null
     - android update sdk --filter extra-android-m2repository --no-ui --force > /dev/null
 
