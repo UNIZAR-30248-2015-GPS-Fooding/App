@@ -9,16 +9,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
-
-import ServerConnection.data.Ingrediente;
-import ServerConnection.data.Receta;
 
 public class Client {
 
@@ -76,23 +71,6 @@ public class Client {
         }
 
         return doc;
-    }
-
-    public static void main(String[] args) {
-        List<Receta> recetas = Access.getRecetas("mac", null, null);
-        for(Receta r: recetas){
-            System.out.println(r.getNombre());
-            System.out.println(r.getTipo());
-            System.out.println(r.getInstrucciones());
-            System.out.println(r.getMe_gusta());
-            System.out.println(r.getNo_me_gusta());
-            for(Ingrediente i: r.getIngredientes()){
-                System.out.println(i.getNombre());
-                System.out.println(i.getCantidad());
-                System.out.println(i.getUds());
-            }
-            System.out.println();
-        }
     }
 
     /**
