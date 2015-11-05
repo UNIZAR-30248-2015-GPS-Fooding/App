@@ -28,3 +28,6 @@ proguard/
 
 # Google Maps KEY
 google_maps_api.xml
+
+# idea
+.idea
