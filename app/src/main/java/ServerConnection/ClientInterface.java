@@ -22,6 +22,9 @@ public class ClientInterface {
      *          Si no se quiere buscar por todos los campos, poner los campos
      *          que no se usen a <null>.
      *
+     * **** IMPORTANTE: getRecetasFiltros() funciona con (nombre, null, null)
+     *      No se garantiza que funcione con tipo o ingredientes (TODAVIA)
+     *
      * @date 05/11/2015
      */
 
