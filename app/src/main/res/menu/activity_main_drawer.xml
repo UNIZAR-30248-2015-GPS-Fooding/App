@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/menu_inicio"
+            android:title="Inicio" />
+        <item android:id="@+id/menu_registrarse"
+            android:title="Registrarse" />
+        <item android:id="@+id/menu_iniciar_sesion"
+            android:title="Iniciar Sesion" />
+        <item android:id="@+id/menu_lista_recetas"
+            android:title="Lista de Recetas" />
+        <item android:id="@+id/menu_lista_usuarios"
+            android:title="Lista de Usuarios" />
+        <item android:id="@+id/menu_supermercados"
+            android:title="Supermercados Cercanos" />
+    </group>
+
+    <item android:title="Mi cuenta">
+        <menu android:checkableBehavior="single">
+            <item android:id="@+id/menu_favoritos" android:icon="@android:drawable/ic_menu_send"
+                android:title="Mis Favoritos" />
+            <item android:id="@+id/menu_ingredientes" android:icon="@android:drawable/ic_menu_send"
+                android:title="Mis Ingredientes" />
+            <item android:id="@+id/menu_grupo" android:icon="@android:drawable/ic_menu_send"
+                android:title="Mi Grupo" />
+            <item android:id="@+id/menu_cerrar_sesion" android:icon="@android:drawable/ic_menu_send"
+                android:title="Cerrar Sesión" />
+        </menu>
+    </item>
+
+</menu>
