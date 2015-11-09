@@ -35,6 +35,11 @@ public class ClientInterface {
     }
 
     /**
+     * @return la lista de tipos de la BD
+     */
+    public static List<String> getTipos() { return Access.getTipos(); }
+
+    /**
      * @return el listado con todas las recetas de la BD
      */
     public static List<Receta> getRecetas(){
