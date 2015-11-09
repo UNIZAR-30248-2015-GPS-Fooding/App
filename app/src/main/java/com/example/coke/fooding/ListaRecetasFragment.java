@@ -31,8 +31,9 @@ import java.util.List;
 public class ListaRecetasFragment extends android.support.v4.app.Fragment {
 
     static Activity actividadPadre;
-
     static ListView lv;
+
+    //Datos de prueba
     String[] itemname ={
             "Receta",
             "Receta",
@@ -43,7 +44,6 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
             "Receta",
             "Receta"
     };
-
     Integer[] imgid={
             R.mipmap.fish_logo,
             R.mipmap.meat_logo,
@@ -57,6 +57,7 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
 
     static ArrayList<String> nombresReceta = new ArrayList<>();
     static ArrayList<Integer> logosReceta = new ArrayList<>();
+    static List<Receta> listaRecetas = null;
 
     public ListaRecetasFragment (){
 
@@ -86,9 +87,10 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 // TODO Auto-generated method stub
-                String Slecteditem = itemname[+position];
-                Toast.makeText(actividadPadre.getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
-                showEditDialog();
+                //String Slecteditem = itemname[+position];
+                Receta recetaSeleccionada = listaRecetas.get(position);
+                //Toast.makeText(actividadPadre.getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
+                showEditDialog(recetaSeleccionada);
 
             }
         });
@@ -100,14 +102,14 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
         return view;
     }
 
-    private void showEditDialog() {
+    private void showEditDialog(Receta recetaSeleccionada) {
         FragmentManager fm = getFragmentManager();
-        RecetaDialog editNameDialog = new RecetaDialog();
+        RecetaDialog editNameDialog = new RecetaDialog(recetaSeleccionada);
         editNameDialog.show(fm, "fragment_edit_name");
     }
 
     public static void actualizarLista(){
-        List<Receta> listaRecetas = ClientInterface.getRecetas();
+        listaRecetas = ClientInterface.getRecetas();
         String[] listaNombres = new String[listaRecetas.size()];
         String[] listaTipo = new String[listaRecetas.size()];
         Integer[] listaIconos = new Integer[listaRecetas.size()];
@@ -133,7 +135,7 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
                 listaIconos[i] = R.mipmap.vegetable_logo;
             }
             else{
-                listaIconos[i] = R.mipmap.dessert_logo;
+                listaIconos[i] = R.mipmap.random_logo;
             }
 
         }
