@@ -30,7 +30,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.app.AlertDialog.Builder;
 
+import com.example.coke.fooding.data.Receta;
 import com.google.android.gms.maps.MapsInitializer;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -212,6 +215,11 @@ public class MainActivity extends AppCompatActivity
         //Obtenemos elementos de layout
         final EditText userInputNom = (EditText) promptsView
                 .findViewById(R.id.textoNom);
+
+        List<Receta> recetasNombre = ClientInterface.getRecetasFiltros(userInputNom.getText().toString(), null, null);
+
+
+
         final EditText userInputIng = (EditText) promptsView
                 .findViewById(R.id.TextoIng);
         final Spinner userInputSpinner = (Spinner) promptsView
@@ -251,5 +259,8 @@ public class MainActivity extends AppCompatActivity
         return alertDialogBuilder.create();
 
     }
+
+
+
 
 }

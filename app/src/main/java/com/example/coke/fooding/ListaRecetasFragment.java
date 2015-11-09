@@ -78,7 +78,7 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
                 Toast.makeText(actividadPadre.getApplicationContext(), "FAB CLICKED: agnadida Receta", Toast.LENGTH_LONG).show();
                 nombresReceta.add("Nueva Receta");
                 logosReceta.add(R.mipmap.fish_logo);
-                actualizarLista();
+                actualizarLista(null);
             }
         });
 
@@ -98,7 +98,7 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
         //ADAPTADOR PARA LAS RECETAS
         //RecetaAdapter adapter=new RecetaAdapter(actividadPadre, itemname, imgid);
         //lv.setAdapter(adapter);
-        actualizarLista();
+        actualizarLista(null);
         return view;
     }
 
@@ -108,8 +108,12 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
         editNameDialog.show(fm, "fragment_edit_name");
     }
 
-    public static void actualizarLista(){
-        listaRecetas = ClientInterface.getRecetas();
+    public static void actualizarLista(List<Receta> listaReceta){
+        if(listaReceta== null){
+            listaRecetas = ClientInterface.getRecetas();
+        }else{
+            listaRecetas = listaReceta;
+        }
         String[] listaNombres = new String[listaRecetas.size()];
         String[] listaTipo = new String[listaRecetas.size()];
         Integer[] listaIconos = new Integer[listaRecetas.size()];
