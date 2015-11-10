@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity
     public static String filtroNombre = "";
     public static String filtroIngredientes = "";
     public static int ordenacionSpinner = 0;
+    public static String ordenacionTipos = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,16 +216,17 @@ public class MainActivity extends AppCompatActivity
         //Obtenemos elementos de layout
         final EditText userInputNom = (EditText) promptsView
                 .findViewById(R.id.textoNom);
-
-        List<Receta> recetasNombre = ClientInterface.getRecetasFiltros(userInputNom.getText().toString(), null, null);
-
-
-
         final EditText userInputIng = (EditText) promptsView
                 .findViewById(R.id.TextoIng);
+
+        final Spinner tipoInputSpinner = (Spinner) promptsView.findViewById(R.id.dialog_spinner2);
+        String[] tipos = {"Todos", "Carne", "Pescado", "Pasta", "Verdura", "Postre" };
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_dropdown_item, tipos);
+        tipoInputSpinner.setAdapter(adapter2);
+
         final Spinner userInputSpinner = (Spinner) promptsView
                 .findViewById(R.id.dialog_spinner);
-        String[] tiposOrdenación = {"Por Nombre", "Por Tipo"};
+        String[] tiposOrdenación = {"Sin Orden","Por Nombre", "Por Tipo"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_dropdown_item, tiposOrdenación);
         userInputSpinner.setAdapter(adapter);
 
@@ -238,8 +240,12 @@ public class MainActivity extends AppCompatActivity
                                 filtroNombre = valueNombre;
                                 String valueIngrediente = userInputIng.getText().toString();
                                 filtroIngredientes = valueIngrediente;
+                                ordenacionTipos = saberTipo(tipoInputSpinner.getSelectedItemPosition());
                                 ordenacionSpinner = userInputSpinner.getSelectedItemPosition();
                                 //fillData();
+                                List<Receta> recetasNombre = ClientInterface.getRecetasFiltros(filtroNombre, ordenacionTipos, null);
+                                ListaRecetasFragment.actualizarLista(recetasNombre);
+
                                 return;
                             }
                         })
@@ -252,12 +258,38 @@ public class MainActivity extends AppCompatActivity
                                 userInputIng.setText("");
                                 ordenacionSpinner = 0;
                                 userInputSpinner.setSelection(0);
+                                ListaRecetasFragment.actualizarLista(null);
                                 return;
                             }
                         });
 
         return alertDialogBuilder.create();
 
+    }
+
+    private static String saberTipo(int i ){
+        String tipo = "";
+        switch(i){
+            case 0:
+                tipo = null;
+                break;
+            case 1:
+                tipo = "Carne";
+                break;
+            case 2:
+                tipo = "Pescado";
+                break;
+            case 3:
+                tipo = "Pasta";
+                break;
+            case 4:
+                tipo = "Verdura";
+                break;
+            default:
+                tipo = "Postre";
+                break;
+        }
+        return tipo;
     }
 
 
