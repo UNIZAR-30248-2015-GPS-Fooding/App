@@ -58,6 +58,37 @@ public class Access {
     }
 
     /**
+     * Obtiene los tipos que hay en la base de datos del servidor
+     *
+     * @return una lista de tipos si ha funcionado correctamente o
+     * null si no puede conectarse con el servidor
+     */
+    public static List<String> getTipos(){
+        // hacer la peticion al servidor
+        String xml = "<request id =\"" + Data.TIPO_CODE + "\"></request>";
+        Document doc = Client.sendRequest(xml);
+
+        if(doc != null){
+            // se han recuperado tipos
+            doc.getDocumentElement().normalize();
+
+            // recorrer la lista de tipos
+            List<String> tipos = new LinkedList<String>();
+            NodeList nl = doc.getElementsByTagName("tipo");
+
+            for (int i = 0; i < nl.getLength(); i++) {
+                // agregar cada tipo
+                Node n = nl.item(i);
+                tipos.add(n.getTextContent());
+            }
+            return tipos;
+        }
+        else{
+            return null;
+        }
+    }
+
+    /**
      * Obtiene las recetas de la BD del servidor cuyo nombre coincide
      * con @param nombre, su tipo con @param tipo y todos los ingredientes
      * de @param ingredientes son ingredientes de la receta.
