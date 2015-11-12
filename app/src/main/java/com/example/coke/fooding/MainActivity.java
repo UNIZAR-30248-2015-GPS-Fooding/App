@@ -30,15 +30,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.app.AlertDialog.Builder;
 
+import com.example.coke.fooding.data.Receta;
 import com.google.android.gms.maps.MapsInitializer;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     //Atributos para guardar filtros
     public static String filtroNombre = "";
-    public static String filtroIngredientes = "";
+    public static List<String> filtroIngredientes = new LinkedList<String>();
     public static int ordenacionSpinner = 0;
+    public static String ordenacionTipos = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,11 +217,18 @@ public class MainActivity extends AppCompatActivity
         //Obtenemos elementos de layout
         final EditText userInputNom = (EditText) promptsView
                 .findViewById(R.id.textoNom);
+
         final EditText userInputIng = (EditText) promptsView
                 .findViewById(R.id.TextoIng);
+
+        final Spinner tipoInputSpinner = (Spinner) promptsView.findViewById(R.id.dialog_spinner2);
+        String[] tipos = {"Todos", "Carne", "Pescado", "Pasta", "Verdura", "Postre" };
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_dropdown_item, tipos);
+        tipoInputSpinner.setAdapter(adapter2);
+
         final Spinner userInputSpinner = (Spinner) promptsView
                 .findViewById(R.id.dialog_spinner);
-        String[] tiposOrdenación = {"Por Nombre", "Por Tipo"};
+        String[] tiposOrdenación = {"Sin Orden","Por Nombre", "Por Tipo"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_dropdown_item, tiposOrdenación);
         userInputSpinner.setAdapter(adapter);
 
@@ -229,9 +241,13 @@ public class MainActivity extends AppCompatActivity
                                 String valueNombre = userInputNom.getText().toString();
                                 filtroNombre = valueNombre;
                                 String valueIngrediente = userInputIng.getText().toString();
-                                filtroIngredientes = valueIngrediente;
+                                filtroIngredientes = listaIngredientes(valueIngrediente);
+                                ordenacionTipos = saberTipo(tipoInputSpinner.getSelectedItemPosition());
                                 ordenacionSpinner = userInputSpinner.getSelectedItemPosition();
                                 //fillData();
+                                List<Receta> recetasNombre = ClientInterface.getRecetasFiltros(filtroNombre, ordenacionTipos, filtroIngredientes);
+                                ListaRecetasFragment.actualizarLista(recetasNombre);
+
                                 return;
                             }
                         })
@@ -240,10 +256,11 @@ public class MainActivity extends AppCompatActivity
                             public void onClick(DialogInterface dialog, int id) {
                                 filtroNombre = "";
                                 userInputNom.setText("");
-                                filtroIngredientes = "";
+                                filtroIngredientes = null;
                                 userInputIng.setText("");
                                 ordenacionSpinner = 0;
                                 userInputSpinner.setSelection(0);
+                                ListaRecetasFragment.actualizarLista(null);
                                 return;
                             }
                         });
@@ -251,5 +268,53 @@ public class MainActivity extends AppCompatActivity
         return alertDialogBuilder.create();
 
     }
+
+    private static String saberTipo(int i ){
+        String tipo = "";
+        switch(i){
+            case 0:
+                tipo = null;
+                break;
+            case 1:
+                tipo = "Carne";
+                break;
+            case 2:
+                tipo = "Pescado";
+                break;
+            case 3:
+                tipo = "Pasta";
+                break;
+            case 4:
+                tipo = "Verdura";
+                break;
+            default:
+                tipo = "Postre";
+                break;
+        }
+        return tipo;
+    }
+
+
+    private static List<String> listaIngredientes(String texto){
+        List<String> ingrediente = new LinkedList<String>();
+        int j = 0;
+        if(!texto.equals("")){
+            boolean ultimo = false;
+            while (texto.contains(",") || ultimo == false){
+                if(texto.contains(",")){
+                    int i = texto.indexOf(",");
+                    ingrediente.add(texto.substring(0,i));
+                    texto = texto.substring(i+1, texto.length());
+                }else{
+                    ultimo = true;
+                    ingrediente.add(texto);
+                }
+            }
+        }
+        return ingrediente;
+    }
+
+
+
 
 }
