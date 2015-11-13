@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
@@ -23,9 +24,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.app.AlertDialog.Builder;
@@ -39,11 +44,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    //Atributos para guardar filtros
-    public static String filtroNombre = "";
-    public static List<String> filtroIngredientes = new LinkedList<String>();
-    public static int ordenacionSpinner = 0;
-    public static String ordenacionTipos = null;
+    //Atributos para guardar tipos
+    public static List<String> tipos = new LinkedList<String>();
+
+    //Atributo del dialogo de busqueda
+    private LinearLayout mLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,18 +58,12 @@ public class MainActivity extends AppCompatActivity
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        tipos.add("Ninguno");
+        tipos.addAll(ClientInterface.getTipos());
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -220,17 +219,38 @@ public class MainActivity extends AppCompatActivity
 
         final EditText userInputIng = (EditText) promptsView
                 .findViewById(R.id.TextoIng);
+        final EditText userInputIng2 = (EditText) promptsView
+                .findViewById(R.id.TextoIng2);
+        final EditText userInputIng3 = (EditText) promptsView
+                .findViewById(R.id.TextoIng3);
 
         final Spinner tipoInputSpinner = (Spinner) promptsView.findViewById(R.id.dialog_spinner2);
-        String[] tipos = {"Todos", "Carne", "Pescado", "Pasta", "Verdura", "Postre" };
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_dropdown_item, tipos);
+        String[] tiposRecetas = tipos.toArray(new String[tipos.size()]);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_dropdown_item, tiposRecetas);
         tipoInputSpinner.setAdapter(adapter2);
 
         final Spinner userInputSpinner = (Spinner) promptsView
                 .findViewById(R.id.dialog_spinner);
-        String[] tiposOrdenación = {"Sin Orden","Por Nombre", "Por Tipo"};
+        String[] tiposOrdenación = {"Ninguno","Por Nombre", "Por Tipo"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_dropdown_item, tiposOrdenación);
         userInputSpinner.setAdapter(adapter);
+
+        final Button botonAnadeIngrediente = (Button) promptsView.findViewById(R.id.angry_btn);
+        botonAnadeIngrediente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userInputIng.getVisibility() == View.GONE){
+                    userInputIng.setVisibility(View.VISIBLE);
+                }
+                else if (userInputIng2.getVisibility() == View.GONE){
+                    userInputIng2.setVisibility(View.VISIBLE);
+                }
+                else{
+                    userInputIng3.setVisibility(View.VISIBLE);
+                    botonAnadeIngrediente.setText("Maximo numero de Ingredientes");
+                }
+            }
+        });
 
         // set dialog message
         alertDialogBuilder
@@ -239,28 +259,44 @@ public class MainActivity extends AppCompatActivity
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 String valueNombre = userInputNom.getText().toString();
-                                filtroNombre = valueNombre;
-                                String valueIngrediente = userInputIng.getText().toString();
-                                filtroIngredientes = listaIngredientes(valueIngrediente);
-                                ordenacionTipos = saberTipo(tipoInputSpinner.getSelectedItemPosition());
-                                ordenacionSpinner = userInputSpinner.getSelectedItemPosition();
-                                //fillData();
-                                List<Receta> recetasNombre = ClientInterface.getRecetasFiltros(filtroNombre, ordenacionTipos, filtroIngredientes);
-                                ListaRecetasFragment.actualizarLista(recetasNombre);
+                                List<String> listaIngredientes = new LinkedList<String>();
+                                if (!userInputIng.getText().toString().equalsIgnoreCase("")){
+                                    listaIngredientes.add(userInputIng.getText().toString());
+                                }
+                                if (!userInputIng2.getText().toString().equalsIgnoreCase("")){
+                                    listaIngredientes.add(userInputIng2.getText().toString());
+                                }
+                                if (!userInputIng3.getText().toString().equalsIgnoreCase("")){
+                                    listaIngredientes.add(userInputIng3.getText().toString());
+                                }
 
+                                String valueTipo = saberTipo(tipoInputSpinner.getSelectedItemPosition());
+                                List<Receta> recetasNombre = ClientInterface.getRecetasFiltros(valueNombre, valueTipo,listaIngredientes);
+                                ListaRecetasFragment.actualizarLista(recetasNombre);
                                 return;
                             }
                         })
                 .setNegativeButton("Borrar Filtros",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                filtroNombre = "";
                                 userInputNom.setText("");
-                                filtroIngredientes = null;
                                 userInputIng.setText("");
-                                ordenacionSpinner = 0;
                                 userInputSpinner.setSelection(0);
+                                tipoInputSpinner.setSelection(0);
+                                userInputIng.setVisibility(View.GONE);
+                                userInputIng.setText("");
+                                userInputIng2.setVisibility(View.GONE);
+                                userInputIng2.setText("");
+                                userInputIng3.setVisibility(View.GONE);
+                                userInputIng3.setText("");
+                                botonAnadeIngrediente.setText("Añadir Ingrediente");
                                 ListaRecetasFragment.actualizarLista(null);
+                                return;
+                            }
+                        })
+                .setNeutralButton("Cancelar",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
                                 return;
                             }
                         });
@@ -276,13 +312,13 @@ public class MainActivity extends AppCompatActivity
                 tipo = null;
                 break;
             case 1:
-                tipo = "Carne";
+                tipo = "Pasta";
                 break;
             case 2:
-                tipo = "Pescado";
+                tipo = "Carne";
                 break;
             case 3:
-                tipo = "Pasta";
+                tipo = "Pescado";
                 break;
             case 4:
                 tipo = "Verdura";
@@ -298,7 +334,7 @@ public class MainActivity extends AppCompatActivity
     private static List<String> listaIngredientes(String texto){
         List<String> ingrediente = new LinkedList<String>();
         int j = 0;
-        if(!texto.equals("")){
+        if(!texto.equals(",,")){
             boolean ultimo = false;
             while (texto.contains(",") || ultimo == false){
                 if(texto.contains(",")){
@@ -310,6 +346,9 @@ public class MainActivity extends AppCompatActivity
                     ingrediente.add(texto);
                 }
             }
+        }
+        else{
+            return null;
         }
         return ingrediente;
     }

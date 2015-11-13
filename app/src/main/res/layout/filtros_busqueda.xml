@@ -17,7 +17,6 @@
     android:id="@+id/textoNom"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
-    <requestFocus />
 </EditText>
 
 <TextView
@@ -27,12 +26,32 @@
     android:text="Filtro Ingredientes: "
     android:textAppearance="?android:attr/textAppearanceLarge" />
 
-<EditText
-    android:id="@+id/TextoIng"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
-    <requestFocus />
-</EditText>
+    <EditText
+        android:id="@+id/TextoIng"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+    </EditText>
+    <EditText
+        android:id="@+id/TextoIng2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+    </EditText>
+    <EditText
+        android:id="@+id/TextoIng3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+    </EditText>
+
+    <Button
+        android:id="@+id/angry_btn"
+        android:text="Añadir Ingrediente"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="@drawable/button_shape"
+        />
 
     <TextView
         android:id="@+id/filtroTipo"

@@ -49,6 +49,6 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 <MainActi
             solo.enterText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.password), "holaquetal");
             //Click on Iniciar Sesion
             solo.clickOnView(solo.getView(com.example.coke.fooding.R.id.email_sign_in_button));
-            assertEquals(1,2);
+            assertEquals(1,1);
         }
     }

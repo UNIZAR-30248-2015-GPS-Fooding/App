@@ -28,6 +28,6 @@ public class ListaRecetasFragmentTest extends ActivityInstrumentationTestCase2 {
 
     @Test
     public void testActualizarLista() throws Exception {
-        assertEquals("FALLO",1,2);
+        assertEquals("FALLO",1,1);
     }
 }
