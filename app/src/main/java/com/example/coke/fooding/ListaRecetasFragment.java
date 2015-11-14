@@ -33,28 +33,6 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
     static Activity actividadPadre;
     static ListView lv;
 
-    //Datos de prueba
-    String[] itemname ={
-            "Receta",
-            "Receta",
-            "Receta",
-            "Receta",
-            "Receta",
-            "Receta",
-            "Receta",
-            "Receta"
-    };
-    Integer[] imgid={
-            R.mipmap.fish_logo,
-            R.mipmap.meat_logo,
-            R.mipmap.vegetable_logo,
-            R.mipmap.pasta_logo,
-            R.mipmap.meat_logo,
-            R.mipmap.fish_logo,
-            R.mipmap.pasta_logo,
-            R.mipmap.dessert_logo,
-    };
-
     static ArrayList<String> nombresReceta = new ArrayList<>();
     static ArrayList<Integer> logosReceta = new ArrayList<>();
     static List<Receta> listaRecetas = null;
@@ -95,9 +73,7 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
             }
         });
 
-        //ADAPTADOR PARA LAS RECETAS
-        //RecetaAdapter adapter=new RecetaAdapter(actividadPadre, itemname, imgid);
-        //lv.setAdapter(adapter);
+        //ACTUALIZAMOS LA LISTA
         actualizarLista(null);
         return view;
     }
