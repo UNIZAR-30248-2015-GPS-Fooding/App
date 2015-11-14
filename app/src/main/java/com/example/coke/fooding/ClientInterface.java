@@ -59,4 +59,17 @@ public class ClientInterface {
     public static List<Receta> getRecetasFiltros(String nombre, String tipo, List<String> ingredientes){
         return Access.getRecetas(nombre, tipo, ingredientes);
     }
+
+    /**
+     * @param mail: e-mail del usuario
+     * @param nick: nickname del usuario
+     * @param pw: password del usuario (se encriptara aqui)
+     * @param test: <true> si se quiere realizar la operacion sobre la BD de test,
+     *            <false> en caso contrario
+     * @return <true> si se ha podido crear el usuario, <false> en caso contrario
+     */
+    public static boolean crear_usuario(String mail, String nick, String pw, boolean test){
+        String encrypted_pw = Security.encrypt_password(pw);
+        return Access.crear_usuario(mail, nick, encrypted_pw, test);
+    }
 }
