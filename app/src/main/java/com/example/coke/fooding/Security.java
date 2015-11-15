@@ -3,6 +3,9 @@
  */
 package com.example.coke.fooding;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class Security {
 
 	/**
@@ -16,8 +19,9 @@ public class Security {
 	 * @param pw:
 	 *            password a encriptar
 	 * @return una cadena de caracteres que representa la password (encriptada)
+	 * @throws NoSuchAlgorithmException si el algoritmo empleado para el encriptado no existe
 	 */
-	public static String encrypt_password(String pw) {
+	public static String encrypt_password(String pw) throws NoSuchAlgorithmException {
 
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
 		md.update(pw.getBytes());
