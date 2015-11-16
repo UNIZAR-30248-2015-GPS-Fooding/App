@@ -5,6 +5,7 @@ package com.example.coke.fooding;
 
 import com.example.coke.fooding.data.Receta;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 public class ClientInterface {
@@ -69,7 +70,27 @@ public class ClientInterface {
      * @return <true> si se ha podido crear el usuario, <false> en caso contrario
      */
     public static boolean crear_usuario(String mail, String nick, String pw, boolean test){
-        String encrypted_pw = Security.encrypt_password(pw);
-        return Access.crear_usuario(mail, nick, encrypted_pw, test);
+        try {
+            String encrypted_pw = Security.encrypt_password(pw);
+            return Access.crear_usuario(mail, nick, encrypted_pw, test);
+        }
+        catch(NoSuchAlgorithmException e){
+            return false;
+        }
+    }
+
+    /**
+     * @param mail: e-mail del usuario
+     * @param pw: password del usuario (se encriptara aqui)
+     * @return <true> si se ha podido loguear al usuaio, <false> en caso contrario
+     */
+    public static boolean login_usuario(String mail, String pw){
+        try{
+            String encrypted_pw = Security.encrypt_password(pw);
+            return Access.login_usuario(mail, encrypted_pw);
+        }
+        catch(NoSuchAlgorithmException e){
+            return false;
+        }
     }
 }

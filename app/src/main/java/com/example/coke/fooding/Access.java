@@ -242,4 +242,38 @@ public class Access {
             return false;
         }
     }
+
+    /**
+     * Intenta loguear a un usuario en la BD. Este usuario tendra
+     * @param mail como e-mail y @param pw como password
+     *
+     * @return true si se ha logueado el usuario y false en caso contrario
+     */
+    public static boolean login_usuario(String mail, String pw){
+        // crear xml
+        String xml = "<request id=\"" + Data.LOGIN_CODE + "\">";
+        xml += "<mail>" + mail + "</mail>";
+        xml += "<pw>" + pw + "</pw>";
+        xml += "</request>";
+
+        // enviar xml y recibir respuesta
+        Document doc = Client.sendRequest(xml);
+
+        // comprobar respuesta
+        if(doc != null){
+            doc.getDocumentElement().normalize();
+
+            if(doc.getElementsByTagName("hecho") != null &&
+                    doc.getElementsByTagName("hecho").getLength() > 0){
+                String t = doc.getElementsByTagName("hecho").item(0).getTextContent();
+                return t.equalsIgnoreCase("yes");
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
 }
