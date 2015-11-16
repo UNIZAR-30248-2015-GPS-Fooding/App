@@ -6,13 +6,6 @@
         android:layout_gravity="center" android:orientation="vertical"
         android:layout_centerHorizontal="true">
 
-        <TextView
-        android:id="@+id/nombre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nombre receta: "
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
         <ImageView
         android:id="@+id/icono"
         android:layout_width="100dp"
@@ -39,18 +32,24 @@
         android:layout_height="wrap_content"
         android:text="Ingredientes: "
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
     <TextView
-        android:id="@+id/descripcion" android:text="Descripcion de la receta. Nombre completo, y mas informacion relevante sobre ella"
+        android:id="@+id/descripcion" android:text="Aqui los ingredientes de la receta"
         android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
     <TextView
         android:id="@+id/elaboracion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Elaboración: "
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
     <TextView
-        android:id="@+id/descripcion2" android:text="Descripcion de la receta. Nombre completo, y mas informacion relevante sobre ella"
+        android:id="@+id/descripcion2" android:text="Aqui la elaboracion de la receta"
         android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+
 
 
 </LinearLayout>
