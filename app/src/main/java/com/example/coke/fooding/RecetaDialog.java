@@ -5,10 +5,19 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.example.coke.fooding.data.Ingrediente;
 import com.example.coke.fooding.data.Receta;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by coke on 28/10/2015.
@@ -17,6 +26,8 @@ public class RecetaDialog extends DialogFragment {
 
     private ImageView imageView;
     private Receta recetaSeleccionada;
+
+
 
     public RecetaDialog(Receta recetaSeleccionada) {
         // Constructor para pasarle datos de la receta
@@ -30,6 +41,12 @@ public class RecetaDialog extends DialogFragment {
         //Cargamos elementos del layout
         View view = inflater.inflate(R.layout.receta_dialog, container);
         ImageView imageView = (ImageView) view.findViewById(R.id.icono);
+        View ing = inflater.inflate(R.layout.receta_dialog, container);
+        TextView descripcion = (TextView) view.findViewById(R.id.descripcion);
+        TextView elaboracion = (TextView) view.findViewById(R.id.descripcion2);
+
+
+
 
         //Mostramos nombre
         getDialog().setTitle(recetaSeleccionada.getNombre());
@@ -52,6 +69,20 @@ public class RecetaDialog extends DialogFragment {
         else {
             imageView.setImageResource(R.mipmap.random_logo);
         }
+        //Mostramos los comensales
+
+
+        //Mostramos los ingredientes
+        String listaIngredientes = ingredientesReceta(recetaSeleccionada.getIngredientes());
+
+        descripcion.setText(listaIngredientes);
+
+    //    descripcion.setText(recetaSeleccionada.getIngredientes().toString());
+
+
+        //Mostramos la elaboracion
+
+        elaboracion.setText(recetaSeleccionada.getInstrucciones());
 
         return view;
     }
@@ -59,5 +90,15 @@ public class RecetaDialog extends DialogFragment {
     public static RecetaDialog newInstance(Receta recetaSeleccionada) {
         RecetaDialog f = new RecetaDialog(recetaSeleccionada);
         return f;
+    }
+
+    public String ingredientesReceta(List<Ingrediente> listaIngredientes){
+        String ingredientes = "";
+
+        for(int i = 0; i< listaIngredientes.size(); i++){
+            ingredientes = ingredientes + listaIngredientes.get(i).getNombre() + "\n";
+        }
+        return ingredientes;
+
     }
 }
