@@ -26,7 +26,7 @@ public class Client {
      */
 
 	/* URL a la que mandar las peticiones */
-    private static String url = "http://fooding-gpsfooding.rhcloud.com/servlet/Listener";
+    private static String url = "https://fooding-gpsfooding.rhcloud.com/servlet/Listener";
 
     /**
      * @return un docuumento con el XML de respuesta del servidor al
