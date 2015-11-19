@@ -46,10 +46,12 @@ public class Access {
             List<String> ings = new LinkedList<String>();
             NodeList nl = doc.getElementsByTagName("ingrediente");
 
-            for (int i = 0; i < nl.getLength(); i++) {
-                // agregar cada ingrediente
-                Node n = nl.item(i);
-                ings.add(n.getTextContent());
+            if(nl != null && nl.getLength() > 0) {
+                for (int i = 0; i < nl.getLength(); i++) {
+                    // agregar cada ingrediente
+                    Node n = nl.item(i);
+                    ings.add(n.getTextContent());
+                }
             }
             return ings;
         } else {
@@ -76,10 +78,12 @@ public class Access {
             List<String> tipos = new LinkedList<String>();
             NodeList nl = doc.getElementsByTagName("tipo");
 
-            for (int i = 0; i < nl.getLength(); i++) {
-                // agregar cada tipo
-                Node n = nl.item(i);
-                tipos.add(n.getTextContent());
+            if(nl != null && nl.getLength() > 0) {
+                for (int i = 0; i < nl.getLength(); i++) {
+                    // agregar cada tipo
+                    Node n = nl.item(i);
+                    tipos.add(n.getTextContent());
+                }
             }
             return tipos;
         }
@@ -116,13 +120,10 @@ public class Access {
         }
         xml = xml + "</request>";
 
-        System.out.println(xml);
-
         // mandar la peticion
         Document doc = Client.sendRequest(xml);
 
         if (doc != null) {
-            System.out.println("HOLA");
             // se ha recibido respuesta correcta
 
             doc.getDocumentElement().normalize();
@@ -130,49 +131,149 @@ public class Access {
             // recorrer lista de recetas
             NodeList nl = doc.getElementsByTagName("receta");
             List<Receta> recetas = new LinkedList<Receta>();
-            for (int i = 0; i < nl.getLength(); i++) {
-                Element n = (Element) nl.item(i);
 
-                // crear nueva receta
-                Receta r = new Receta();
+            if(nl != null && nl.getLength() > 0) {
+                for (int i = 0; i < nl.getLength(); i++) {
+                    Element n = (Element) nl.item(i);
 
-                // nombre
-                r.setNombre(n.getElementsByTagName("nombre").item(0).getTextContent());
+                    // crear nueva receta
+                    Receta r = new Receta();
 
-                // tipo
-                r.setTipo(n.getElementsByTagName("tipo").item(0).getTextContent());
+                    // nombre
+                    if(n.getElementsByTagName("nombre") != null
+                            && n.getElementsByTagName("nombre").getLength() > 0) {
+                        r.setNombre(n.getElementsByTagName("nombre").item(0).getTextContent());
+                    }
 
-                // instrucciones
-                r.setInstrucciones(n.getElementsByTagName("instrucciones").item(0).getTextContent());
+                    // tipo
+                    if(n.getElementsByTagName("tipo") != null
+                            && n.getElementsByTagName("tipo").getLength() > 0) {
+                        r.setTipo(n.getElementsByTagName("tipo").item(0).getTextContent());
+                    }
 
-                // me_gusta
-                r.setMe_gusta(Integer.parseInt(n.getElementsByTagName("me_gusta").item(0).getTextContent()));
+                    // instrucciones
+                    if(n.getElementsByTagName("instrucciones") != null
+                            && n.getElementsByTagName("instrucciones").getLength() > 0) {
+                        r.setInstrucciones(n.getElementsByTagName("instrucciones").item(0).getTextContent());
+                    }
 
-                // no_me_gusta
-                r.setNo_me_gusta(Integer.parseInt(n.getElementsByTagName("no_me_gusta").item(0).getTextContent()));
+                    // me_gusta
+                    if(n.getElementsByTagName("me_gusta") != null
+                            && n.getElementsByTagName("me_gusta").getLength() > 0) {
+                        r.setMe_gusta(Integer.parseInt(n.getElementsByTagName("me_gusta").item(0).getTextContent()));
+                    }
 
-                // ingredientes
-                List<Ingrediente> ings = new LinkedList<Ingrediente>();
-                NodeList nll = n.getElementsByTagName("ingrediente");
-                for (int j = 0; j < nll.getLength(); j++) {
-                    Element nn = (Element) nll.item(j);
+                    // no_me_gusta
+                    if(n.getElementsByTagName("no_me_gusta") != null
+                            && n.getElementsByTagName("no_me_gusta").getLength() > 0) {
+                        r.setNo_me_gusta(Integer.parseInt(n.getElementsByTagName("no_me_gusta").item(0).getTextContent()));
+                    }
 
-                    // crear ingrediente
-                    Ingrediente ing = new Ingrediente();
-                    ing.setNombre(nn.getTextContent());
-                    ing.setCantidad(Integer.parseInt(nn.getAttribute("cantidad")));
-                    ing.setUds(nn.getAttribute("uds"));
+                    // ingredientes
+                    List<Ingrediente> ings = new LinkedList<Ingrediente>();
+                    NodeList nll = n.getElementsByTagName("ingrediente");
+                    if(nll != null && nll.getLength() > 0) {
+                        for (int j = 0; j < nll.getLength(); j++) {
+                            Element nn = (Element) nll.item(j);
 
-                    // agregar ingrediente
-                    ings.add(ing);
+                            // crear ingrediente
+                            Ingrediente ing = new Ingrediente();
+                            ing.setNombre(nn.getTextContent());
+                            ing.setCantidad(Integer.parseInt(nn.getAttribute("cantidad")));
+                            ing.setUds(nn.getAttribute("uds"));
+
+                            // agregar ingrediente
+                            ings.add(ing);
+                        }
+                        r.setIngredientes(ings);
+                    }
+
+                    // agregar receta
+                    recetas.add(r);
                 }
-                r.setIngredientes(ings);
-
-                // agregar receta
-                recetas.add(r);
             }
             return recetas;
         }
         return null;
+    }
+
+    /**
+     * Intenta crear un nuevo usuario en la BD (BD de test o de produccion,
+     * dependiendo del @param test). Este usuario tendra @param mail como
+     * e-mail, @param nick como nickname y @param pw como password
+     *
+     * @return true si se ha creado el usuario y false en caso contrario
+     */
+    public static boolean crear_usuario(String mail, String nick, String pw, boolean test){
+        String t = null;
+
+        if(test){
+            t = "yes";
+        }
+        else{
+            t = "no";
+        }
+
+        // crear xml
+        String xml = "<request id=\"" + Data.CREAR_USER_CODE + "\">";
+        xml += "<mail>" + mail + "</mail>";
+        xml += "<nick>" + nick + "</nick>";
+        xml += "<pw>" + pw + "</pw>";
+        xml += "<test>" + t + "</test>";
+        xml += "</request>";
+
+        // enviar xml y recibir respuesta
+        Document doc = Client.sendRequest(xml);
+
+        // comprobar respuesta
+        if(doc != null){
+            doc.getDocumentElement().normalize();
+
+            if(doc.getElementsByTagName("hecho") != null &&
+                    doc.getElementsByTagName("hecho").getLength() > 0){
+                t = doc.getElementsByTagName("hecho").item(0).getTextContent();
+               return t.equalsIgnoreCase("yes");
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
+
+    /**
+     * Intenta loguear a un usuario en la BD. Este usuario tendra
+     * @param mail como e-mail y @param pw como password
+     *
+     * @return true si se ha logueado el usuario y false en caso contrario
+     */
+    public static boolean login_usuario(String mail, String pw){
+        // crear xml
+        String xml = "<request id=\"" + Data.LOGIN_CODE + "\">";
+        xml += "<mail>" + mail + "</mail>";
+        xml += "<pw>" + pw + "</pw>";
+        xml += "</request>";
+
+        // enviar xml y recibir respuesta
+        Document doc = Client.sendRequest(xml);
+
+        // comprobar respuesta
+        if(doc != null){
+            doc.getDocumentElement().normalize();
+
+            if(doc.getElementsByTagName("hecho") != null &&
+                    doc.getElementsByTagName("hecho").getLength() > 0){
+                String t = doc.getElementsByTagName("hecho").item(0).getTextContent();
+                return t.equalsIgnoreCase("yes");
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
     }
 }

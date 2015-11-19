@@ -10,6 +10,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -25,7 +26,7 @@ public class Client {
      */
 
 	/* URL a la que mandar las peticiones */
-    private static String url = "http://fooding-gpsfooding.rhcloud.com/servlet/Listener";
+    private static String url = "https://fooding-gpsfooding.rhcloud.com/servlet/Listener";
 
     /**
      * @return un docuumento con el XML de respuesta del servidor al
@@ -37,7 +38,7 @@ public class Client {
             // crear la conexion
             URL u = new URL(url);
             URLConnection uc = u.openConnection();
-            HttpURLConnection conn = (HttpURLConnection) uc;
+            HttpsURLConnection conn = (HttpsURLConnection) uc;
 
             // parametros de la conexion
             conn.setDoInput(true);
