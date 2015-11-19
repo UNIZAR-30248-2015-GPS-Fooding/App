@@ -82,12 +82,13 @@ public class ClientInterface {
     /**
      * @param mail: e-mail del usuario
      * @param pw: password del usuario (se encriptara aqui)
+     * @param test: <true> si es test, <false> en caso contrario
      * @return <true> si se ha podido loguear al usuaio, <false> en caso contrario
      */
-    public static boolean login_usuario(String mail, String pw){
+    public static boolean login_usuario(String mail, String pw, boolean test){
         try{
             String encrypted_pw = Security.encrypt_password(pw);
-            return Access.login_usuario(mail, encrypted_pw);
+            return Access.login_usuario(mail, encrypted_pw, test);
         }
         catch(NoSuchAlgorithmException e){
             return false;

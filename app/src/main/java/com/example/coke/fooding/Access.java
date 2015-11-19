@@ -249,11 +249,19 @@ public class Access {
      *
      * @return true si se ha logueado el usuario y false en caso contrario
      */
-    public static boolean login_usuario(String mail, String pw){
+    public static boolean login_usuario(String mail, String pw, boolean test){
+        String t = null;
+
+        if(test){
+            t = "yes";
+        }else{
+            t = "no;";
+        }
         // crear xml
         String xml = "<request id=\"" + Data.LOGIN_CODE + "\">";
         xml += "<mail>" + mail + "</mail>";
         xml += "<pw>" + pw + "</pw>";
+        xml += "<test>" + t + "</test>";
         xml += "</request>";
 
         // enviar xml y recibir respuesta
@@ -265,7 +273,7 @@ public class Access {
 
             if(doc.getElementsByTagName("hecho") != null &&
                     doc.getElementsByTagName("hecho").getLength() > 0){
-                String t = doc.getElementsByTagName("hecho").item(0).getTextContent();
+                t = doc.getElementsByTagName("hecho").item(0).getTextContent();
                 return t.equalsIgnoreCase("yes");
             }
             else{
