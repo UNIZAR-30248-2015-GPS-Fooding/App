@@ -187,11 +187,7 @@ public class MainActivity extends AppCompatActivity
             //Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
         }
         else if (id == R.id.menu_supermercados) {
-            Intent Intent = new Intent(this, MapsActivity.class);
-            startActivity(Intent);
-
-            //Fragment fragment = new MapsActivity();
-            //fragmentTransaction.replace(R.id.mainFrame, fragment);
+            Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
 
         }
         else if (id == R.id.menu_favoritos) {
