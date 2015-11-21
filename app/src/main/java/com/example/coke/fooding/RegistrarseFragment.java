@@ -44,7 +44,13 @@ public class RegistrarseFragment extends android.support.v4.app.Fragment impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.RegistrarseButton:
-                Toast.makeText(getActivity(), "Email: " + mEmailView.getText() + " Pass: " + mPasswordView.getText() + " Nombre: " + mNombreView.getText(), Toast.LENGTH_SHORT).show();
+                boolean creado = ClientInterface.crear_usuario(mEmailView.getText().toString(),mNombreView.getText().toString(), mPasswordView.getText().toString(),false);
+              //  Toast.makeText(getActivity(), "Email: " + mEmailView.getText() + " Pass: " + mPasswordView.getText() + " Nombre: " + mNombreView.getText(), Toast.LENGTH_SHORT).show();
+                if(creado){
+                    Toast.makeText(getActivity(), "Usuario creado correctamente",Toast.LENGTH_SHORT ).show();
+                }else{
+                    Toast.makeText(getActivity(), "Usuario no registrado",Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }

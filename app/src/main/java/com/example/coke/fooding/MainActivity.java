@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -38,6 +39,7 @@ import android.app.AlertDialog.Builder;
 import com.example.coke.fooding.data.Receta;
 import com.google.android.gms.maps.MapsInitializer;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -50,9 +52,33 @@ public class MainActivity extends AppCompatActivity
     //Atributo del dialogo de busqueda
     private LinearLayout mLayout;
 
+    public static File mPath = new File(Environment.getExternalStorageDirectory() + "/Fooding");
+
+
+
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+    }
+
+    protected void onResume(){
+        super.onResume();
+        //leer el fichero si hay algo escrito ese nombre de usuario
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!mPath.exists()) {
+            mPath.mkdirs();
+        }
+
+        //leer el fichero de usuarios
+        //mira si hay usuarios
+        //y crea una variable para el usuario
 
         //Permitir conexion con servidor
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
