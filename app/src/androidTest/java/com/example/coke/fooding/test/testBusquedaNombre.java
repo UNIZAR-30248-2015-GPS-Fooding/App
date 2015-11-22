@@ -38,6 +38,6 @@ public class testBusquedaNombre extends ActivityInstrumentationTestCase2<MainAct
 		solo.enterText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.textoNom), "macarrones");
         //Click on Filtrar
 		solo.clickOnView(solo.getView(android.R.id.button1));
-		assertEquals(1,1);
+		assertTrue(solo.searchText("Macarrones"));
 	}
 }

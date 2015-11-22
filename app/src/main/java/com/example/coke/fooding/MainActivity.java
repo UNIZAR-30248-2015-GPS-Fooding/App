@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -38,6 +39,7 @@ import android.app.AlertDialog.Builder;
 import com.example.coke.fooding.data.Receta;
 import com.google.android.gms.maps.MapsInitializer;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -46,13 +48,38 @@ public class MainActivity extends AppCompatActivity
 
     //Atributos para guardar tipos
     public static List<String> tipos = new LinkedList<String>();
+    public static List<String> ingredientes = new LinkedList<String>();
 
     //Atributo del dialogo de busqueda
     private LinearLayout mLayout;
 
+    public static File mPath = new File(Environment.getExternalStorageDirectory() + "/Fooding");
+
+
+
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+    }
+
+    protected void onResume(){
+        super.onResume();
+        //leer el fichero si hay algo escrito ese nombre de usuario
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!mPath.exists()) {
+            mPath.mkdirs();
+        }
+
+        //leer el fichero de usuarios
+        //mira si hay usuarios
+        //y crea una variable para el usuario
 
         //Permitir conexion con servidor
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -60,6 +87,8 @@ public class MainActivity extends AppCompatActivity
 
         tipos.add("Ninguno");
         tipos.addAll(ClientInterface.getTipos());
+        ingredientes.add("Ninguno");
+        ingredientes.addAll(ClientInterface.getIngredientes());
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -161,11 +190,7 @@ public class MainActivity extends AppCompatActivity
             //Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
         }
         else if (id == R.id.menu_supermercados) {
-            Intent Intent = new Intent(this, MapsActivity.class);
-            startActivity(Intent);
-
-            //Fragment fragment = new MapsActivity();
-            //fragmentTransaction.replace(R.id.mainFrame, fragment);
+            Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
 
         }
         else if (id == R.id.menu_favoritos) {
@@ -217,12 +242,17 @@ public class MainActivity extends AppCompatActivity
         final EditText userInputNom = (EditText) promptsView
                 .findViewById(R.id.textoNom);
 
-        final EditText userInputIng = (EditText) promptsView
+        final Spinner userInputIng = (Spinner) promptsView
                 .findViewById(R.id.TextoIng);
-        final EditText userInputIng2 = (EditText) promptsView
+        final Spinner userInputIng2 = (Spinner) promptsView
                 .findViewById(R.id.TextoIng2);
-        final EditText userInputIng3 = (EditText) promptsView
+        final Spinner userInputIng3 = (Spinner) promptsView
                 .findViewById(R.id.TextoIng3);
+        String[] ingrecientesRecetas = ingredientes.toArray(new String[ingredientes.size()]);
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_dropdown_item, ingrecientesRecetas);
+        userInputIng.setAdapter(adapter3);
+        userInputIng2.setAdapter(adapter3);
+        userInputIng3.setAdapter(adapter3);
 
         final Spinner tipoInputSpinner = (Spinner) promptsView.findViewById(R.id.dialog_spinner2);
         String[] tiposRecetas = tipos.toArray(new String[tipos.size()]);
@@ -260,14 +290,14 @@ public class MainActivity extends AppCompatActivity
                             public void onClick(DialogInterface dialog,int id) {
                                 String valueNombre = userInputNom.getText().toString();
                                 List<String> listaIngredientes = new LinkedList<String>();
-                                if (!userInputIng.getText().toString().equalsIgnoreCase("")){
-                                    listaIngredientes.add(userInputIng.getText().toString());
+                                if (!userInputIng.getSelectedItem().toString().equalsIgnoreCase("Ninguno")){
+                                    listaIngredientes.add(userInputIng.getSelectedItem().toString());
                                 }
-                                if (!userInputIng2.getText().toString().equalsIgnoreCase("")){
-                                    listaIngredientes.add(userInputIng2.getText().toString());
+                                if (!userInputIng2.getSelectedItem().toString().equalsIgnoreCase("Ninguno")){
+                                    listaIngredientes.add(userInputIng2.getSelectedItem().toString());
                                 }
-                                if (!userInputIng3.getText().toString().equalsIgnoreCase("")){
-                                    listaIngredientes.add(userInputIng3.getText().toString());
+                                if (!userInputIng3.getSelectedItem().toString().equalsIgnoreCase("Ninguno")){
+                                    listaIngredientes.add(userInputIng3.getSelectedItem().toString());
                                 }
 
                                 String valueTipo = saberTipo(tipoInputSpinner.getSelectedItemPosition());
@@ -280,15 +310,15 @@ public class MainActivity extends AppCompatActivity
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 userInputNom.setText("");
-                                userInputIng.setText("");
+                                userInputIng.setSelection(0);
                                 userInputSpinner.setSelection(0);
                                 tipoInputSpinner.setSelection(0);
                                 userInputIng.setVisibility(View.GONE);
-                                userInputIng.setText("");
+                                userInputIng.setSelection(0);
                                 userInputIng2.setVisibility(View.GONE);
-                                userInputIng2.setText("");
+                                userInputIng2.setSelection(0);
                                 userInputIng3.setVisibility(View.GONE);
-                                userInputIng3.setText("");
+                                userInputIng3.setSelection(0);
                                 botonAnadeIngrediente.setText("Añadir Ingrediente");
                                 ListaRecetasFragment.actualizarLista(null);
                                 return;

@@ -41,15 +41,17 @@ public class RecetaDialog extends DialogFragment {
         //Cargamos elementos del layout
         View view = inflater.inflate(R.layout.receta_dialog, container);
         ImageView imageView = (ImageView) view.findViewById(R.id.icono);
-        View ing = inflater.inflate(R.layout.receta_dialog, container);
         TextView descripcion = (TextView) view.findViewById(R.id.descripcion);
         TextView elaboracion = (TextView) view.findViewById(R.id.descripcion2);
 
 
 
-
         //Mostramos nombre
-        getDialog().setTitle(recetaSeleccionada.getNombre());
+        getDialog().setTitle("     " + recetaSeleccionada.getNombre() + "     ");
+        int width = ViewGroup.LayoutParams.FILL_PARENT;
+        int height = ViewGroup.LayoutParams.FILL_PARENT;
+        getDialog().getWindow().setLayout(width, height);
+
         //Mostramos icono
         if (recetaSeleccionada.getTipo().equalsIgnoreCase("pasta")){
             imageView.setImageResource(R.mipmap.pasta_logo);
