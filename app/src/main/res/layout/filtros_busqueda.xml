@@ -26,24 +26,21 @@
     android:text="Filtro Ingredientes: "
     android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <EditText
+    <Spinner
         android:id="@+id/TextoIng"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone">
-    </EditText>
-    <EditText
+        android:layout_width="fill_parent" />
+    <Spinner
         android:id="@+id/TextoIng2"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone">
-    </EditText>
-    <EditText
+        android:layout_width="fill_parent"
+        android:visibility="gone"/>
+    <Spinner
         android:id="@+id/TextoIng3"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone">
-    </EditText>
+        android:layout_width="fill_parent"
+        android:visibility="gone"/>
+
 
     <Button
         android:id="@+id/angry_btn"
