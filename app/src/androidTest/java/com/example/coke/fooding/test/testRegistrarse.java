@@ -1,17 +1,22 @@
 package com.example.coke.fooding.test;
 
+import android.test.ActivityInstrumentationTestCase2;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+
 import com.example.coke.fooding.LoginFragment;
 import com.example.coke.fooding.MainActivity;
-import com.robotium.solo.*;
-import android.test.ActivityInstrumentationTestCase2;
+import com.example.coke.fooding.R;
+import com.example.coke.fooding.RegistrarseFragment;
+import com.robotium.solo.Solo;
 
 import org.junit.Test;
 
 
-public class testLogin extends ActivityInstrumentationTestCase2<MainActivity> {
+public class testRegistrarse extends ActivityInstrumentationTestCase2<MainActivity> {
   	private Solo solo;
-  	
-  	public testLogin() {
+
+  	public testRegistrarse() {
 		super(MainActivity.class);
   	}
 
@@ -22,7 +27,7 @@ public class testLogin extends ActivityInstrumentationTestCase2<MainActivity> {
 		getActivity();
 
   	}
-  
+
    	@Override
    	public void tearDown() throws Exception {
 		solo.finishOpenedActivities();
@@ -32,11 +37,12 @@ public class testLogin extends ActivityInstrumentationTestCase2<MainActivity> {
 	@Test
 	public void testRun() {
         //Wait for activity: 'com.example.coke.fooding.MainActivity'
-		solo.waitForActivity(com.example.coke.fooding.MainActivity.class, 2000);
+		solo.waitForActivity(MainActivity.class, 2000);
         //Click on ImageView
 		solo.clickOnView(solo.getView(android.widget.ImageButton.class, 0));
-        //Click on Iniciar Sesion
-		solo.clickOnText(java.util.regex.Pattern.quote("Iniciar Sesion"));
+        //Click on Registrarse
+		solo.clickOnText(java.util.regex.Pattern.quote("Registrarse"));
+
         //Enter the text: 'asd@gmail.com'
 		solo.clearEditText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.email));
 		solo.enterText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.email), "prueba");
@@ -45,12 +51,18 @@ public class testLogin extends ActivityInstrumentationTestCase2<MainActivity> {
         //Enter the text: 'holaquetal'
 		solo.clearEditText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.password));
 		solo.enterText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.password), "prueba");
-        //Click on Iniciar Sesion y activamos modo de prueba
-		LoginFragment.pruebaTest = false;
-		solo.clickOnView(solo.getView(com.example.coke.fooding.R.id.email_sign_in_button));
-		assertTrue(solo.searchText("Email o passwd fallido"));
-		LoginFragment.pruebaTest = true;
-		solo.clickOnView(solo.getView(com.example.coke.fooding.R.id.email_sign_in_button));
-		assertFalse(solo.searchText("Email o passwd fallido"));
+		//Click on Empty Text View
+		solo.clickOnView(solo.getView(com.example.coke.fooding.R.id.nombre));
+		//Enter the text: 'holaquetal'
+		solo.clearEditText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.nombre));
+		solo.enterText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.nombre), "prueba");
+        //Click on Registrarse
+		RegistrarseFragment.test = false;
+		solo.clickOnView(solo.getView(com.example.coke.fooding.R.id.RegistrarseButton));
+		assertTrue(solo.searchText("Usuario no registrado"));
+		RegistrarseFragment.test = true;
+		solo.clickOnView(solo.getView(com.example.coke.fooding.R.id.RegistrarseButton));
+		assertTrue(solo.searchText("Usuario creado correctamente"));
+
 	}
 }

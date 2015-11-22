@@ -24,6 +24,7 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
     View view;
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    public static boolean pruebaTest = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -50,7 +51,7 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
 
                // Toast.makeText(getActivity(), "Email: " + mEmailView.getText() + " Pass: " + mPasswordView.getText(), Toast.LENGTH_SHORT).show();
 
-                boolean logueado = ClientInterface.login_usuario(mEmailView.getText().toString(), mPasswordView.getText().toString(), false);
+                boolean logueado = ClientInterface.login_usuario(mEmailView.getText().toString(), mPasswordView.getText().toString(), pruebaTest);
 
                 if(logueado){
 
