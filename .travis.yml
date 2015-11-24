@@ -16,7 +16,7 @@ before_install:
 - pip install --upgrade pip --user codecov
 
 script:
-- ./gradlew build
+- ./gradlew build -x test
 
 licenses:
 - '.+'
