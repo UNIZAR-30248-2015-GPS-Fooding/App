@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity
     private LinearLayout mLayout;
 
     public static File mPath = new File(Environment.getExternalStorageDirectory() + "/Fooding");
-
+    public static boolean registrado = false;
 
 
 
@@ -162,6 +162,8 @@ public class MainActivity extends AppCompatActivity
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
+        File root = new File(mPath, "ficheroUsuarios.txt");
+
         if (id == R.id.menu_inicio) {
             Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
         }
@@ -172,9 +174,15 @@ public class MainActivity extends AppCompatActivity
             //Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
         }
         else if (id == R.id.menu_iniciar_sesion) {
-            android.support.v4.app.Fragment fragment = new LoginFragment();
-          fragmentTransaction.replace(R.id.mainFrame, fragment);
-            fragmentTransaction.addToBackStack(null);
+            if (root.exists() && root.isFile() && registrado){
+                Toast.makeText(MainActivity.this, "ERROR. Primero debe cerrar sesion.", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                android.support.v4.app.Fragment fragment = new LoginFragment();
+                fragmentTransaction.replace(R.id.mainFrame, fragment);
+                fragmentTransaction.addToBackStack(null);
+            }
+
       }
         else if (id == R.id.menu_lista_recetas) {
             android.support.v4.app.Fragment fragment = new ListaRecetasFragment();
@@ -203,7 +211,15 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
         }
         else if (id == R.id.menu_cerrar_sesion) {
-            Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
+            if (root.exists() && root.isFile() && registrado){
+                root.delete();
+                registrado = false;
+                Toast.makeText(MainActivity.this, "Sesion cerrada correctamente", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(MainActivity.this, "ERROR. Primero debe hacer login", Toast.LENGTH_SHORT).show();
+            }
+
         }
 
 

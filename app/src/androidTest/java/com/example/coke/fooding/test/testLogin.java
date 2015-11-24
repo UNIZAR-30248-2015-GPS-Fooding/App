@@ -39,18 +39,18 @@ public class testLogin extends ActivityInstrumentationTestCase2<MainActivity> {
 		solo.clickOnText(java.util.regex.Pattern.quote("Iniciar Sesion"));
         //Enter the text: 'asd@gmail.com'
 		solo.clearEditText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.email));
-		solo.enterText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.email), "prueba");
+		solo.enterText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.email), "prueba@gmail.com");
         //Click on Empty Text View
 		solo.clickOnView(solo.getView(com.example.coke.fooding.R.id.password));
         //Enter the text: 'holaquetal'
 		solo.clearEditText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.password));
 		solo.enterText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.password), "prueba");
-        //Click on Iniciar Sesion y activamos modo de prueba
+        //Click on Iniciar Sesion en modo Test y modo !Test
 		LoginFragment.pruebaTest = false;
 		solo.clickOnView(solo.getView(com.example.coke.fooding.R.id.email_sign_in_button));
 		assertTrue(solo.searchText("Email o passwd fallido"));
 		LoginFragment.pruebaTest = true;
 		solo.clickOnView(solo.getView(com.example.coke.fooding.R.id.email_sign_in_button));
-		assertFalse(solo.searchText("Email o passwd fallido"));
+		assertTrue(solo.searchText("Logeado correctamente"));
 	}
 }
