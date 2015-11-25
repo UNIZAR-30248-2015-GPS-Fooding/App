@@ -62,6 +62,7 @@ public class testRegistrarse extends ActivityInstrumentationTestCase2<MainActivi
 		assertTrue(solo.searchText("Se ha enviado un e-mail de verificación al correo introducido"));
 
 		//Introducimos un email NO VALIDO:
+		RegistrarseFragment.test = false;
 		solo.clearEditText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.email));
 		solo.enterText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.email), "pruebaSinMail");
 		solo.clickOnView(solo.getView(com.example.coke.fooding.R.id.RegistrarseButton));
