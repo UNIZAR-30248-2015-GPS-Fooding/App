@@ -290,4 +290,51 @@ public class Access {
             return false;
         }
     }
+
+    /**
+     * @param nombre : nombre de la nueva receta
+     * @param tipo : tipo de la nueva receta
+     * @param instrucciones : instrucciones de la nueva receta
+     * @param ings : ingredientes de la nueva receta
+     * @return <true> si se ha podido crear la receta, <false> en
+     * caso contrario
+     */
+    public static boolean crear_receta(String nombre, String tipo, String instrucciones, List<Ingrediente> ings, boolean test){
+        String t = null;
+
+        if(test) t= "yes";
+        else t= "no";
+
+        String xml = "<request id=\"" + Data.CREAR_REC_CODE + "\">";
+        xml = xml + "<nombre>" + nombre + "</nombre>";
+        xml = xml + "<tipo>" + tipo + "</tipo>";
+        xml = xml + "<instrucciones>" + instrucciones + "</instrucciones>";
+        xml = xml + "<test>" + t + "</test>";
+
+        for(Ingrediente i : ings){
+            xml = xml + "<ingrediente cantidad=\"" + i.getCantidad()
+                    + "\" uds=\"" + i.getUds() + "\">"
+                    + i.getNombre() + "</ingrediente>";
+        }
+
+        // enviar xml y recibir respuesta
+        Document doc = Client.sendRequest(xml);
+
+        // comprobar respuesta
+        if(doc != null){
+            doc.getDocumentElement().normalize();
+
+            if(doc.getElementsByTagName("hecho") != null &&
+                    doc.getElementsByTagName("hecho").getLength() > 0){
+                t = doc.getElementsByTagName("hecho").item(0).getTextContent();
+                return t.equalsIgnoreCase("yes");
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
 }
