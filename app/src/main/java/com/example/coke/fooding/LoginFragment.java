@@ -62,10 +62,12 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
                         writer.append(mEmailView.getText().toString());
                         writer.flush();
                         writer.close();
+                        MainActivity.registrado = true;
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
+                    Toast.makeText(getActivity(), "Logeado correctamente", Toast.LENGTH_SHORT).show();
                     // meter el usuario en fichero
                 }
                 else{

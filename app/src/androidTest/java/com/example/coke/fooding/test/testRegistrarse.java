@@ -45,7 +45,7 @@ public class testRegistrarse extends ActivityInstrumentationTestCase2<MainActivi
 
         //Enter the text: 'asd@gmail.com'
 		solo.clearEditText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.email));
-		solo.enterText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.email), "prueba");
+		solo.enterText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.email), "prueba@gmail.com");
         //Click on Empty Text View
 		solo.clickOnView(solo.getView(com.example.coke.fooding.R.id.password));
         //Enter the text: 'holaquetal'
@@ -57,12 +57,10 @@ public class testRegistrarse extends ActivityInstrumentationTestCase2<MainActivi
 		solo.clearEditText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.nombre));
 		solo.enterText((android.widget.EditText) solo.getView(com.example.coke.fooding.R.id.nombre), "prueba");
         //Click on Registrarse
-		RegistrarseFragment.test = false;
-		solo.clickOnView(solo.getView(com.example.coke.fooding.R.id.RegistrarseButton));
-		assertTrue(solo.searchText("Usuario no registrado"));
 		RegistrarseFragment.test = true;
 		solo.clickOnView(solo.getView(com.example.coke.fooding.R.id.RegistrarseButton));
-		assertTrue(solo.searchText("Usuario creado correctamente"));
+		assertTrue(solo.searchText("Se ha enviado un e-mail de verificación al correo introducido"));
+
 
 	}
 }

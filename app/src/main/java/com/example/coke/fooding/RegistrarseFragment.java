@@ -48,7 +48,7 @@ public class RegistrarseFragment extends android.support.v4.app.Fragment impleme
                 boolean creado = ClientInterface.crear_usuario(mEmailView.getText().toString(),mNombreView.getText().toString(), mPasswordView.getText().toString(),test);
               //  Toast.makeText(getActivity(), "Email: " + mEmailView.getText() + " Pass: " + mPasswordView.getText() + " Nombre: " + mNombreView.getText(), Toast.LENGTH_SHORT).show();
                 if(creado){
-                    Toast.makeText(getActivity(), "Usuario creado correctamente",Toast.LENGTH_SHORT ).show();
+                    Toast.makeText(getActivity(), "Se ha enviado un e-mail de verificación al correo introducido",Toast.LENGTH_SHORT ).show();
                 }else{
                     Toast.makeText(getActivity(), "Usuario no registrado",Toast.LENGTH_SHORT).show();
                 }
