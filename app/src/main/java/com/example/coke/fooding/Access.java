@@ -139,6 +139,12 @@ public class Access {
                     // crear nueva receta
                     Receta r = new Receta();
 
+                    // id
+                    if(n.getElementsByTagName("id") != null
+                            && n.getElementsByTagName("id").getLength() > 0) {
+                        r.setId(Integer.parseInt(n.getElementsByTagName("id").item(0).getTextContent()));
+                    }
+
                     // nombre
                     if(n.getElementsByTagName("nombre") != null
                             && n.getElementsByTagName("nombre").getLength() > 0) {
