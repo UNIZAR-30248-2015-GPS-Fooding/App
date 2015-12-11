@@ -10,14 +10,16 @@
         android:id="@+id/edit_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:scrollbars="vertical"
+        android:scrollbarAlwaysDrawVerticalTrack="true">
 
         <ImageView
         android:id="@+id/icono"
         android:layout_width="100dp"
         android:layout_height="100dp" />
 
-    <TextView
+        <TextView
         android:id="@+id/comensales"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,21 +27,21 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 
-    <EditText
+        <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
         android:id="@+id/editText" />
 
-    <TextView
+        <TextView
         android:id="@+id/ingredientes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Ingredientes: "
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
+        <TextView
         android:id="@+id/descripcion" android:text="Aqui los ingredientes de la receta"
         android:layout_width="match_parent" android:layout_height="wrap_content" />
 
@@ -50,13 +52,9 @@
         android:text="Elaboración: "
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-
-    <TextView
+        <TextView
         android:id="@+id/descripcion2" android:text="Aqui la elaboracion de la receta"
         android:layout_width="match_parent" android:layout_height="wrap_content" />
-
-
-
 
 </LinearLayout>
 
