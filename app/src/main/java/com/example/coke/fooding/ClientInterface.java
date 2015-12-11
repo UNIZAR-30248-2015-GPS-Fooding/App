@@ -3,6 +3,7 @@
  */
 package com.example.coke.fooding;
 
+import com.example.coke.fooding.data.Ingrediente;
 import com.example.coke.fooding.data.Receta;
 
 import java.security.NoSuchAlgorithmException;
@@ -83,7 +84,7 @@ public class ClientInterface {
      * @param mail: e-mail del usuario
      * @param pw: password del usuario (se encriptara aqui)
      * @param test: <true> si es test, <false> en caso contrario
-     * @return <true> si se ha podido loguear al usuaio, <false> en caso contrario
+     * @return <true> si se ha podido loguear al usuario, <false> en caso contrario
      */
     public static boolean login_usuario(String mail, String pw, boolean test){
         try{
@@ -93,5 +94,17 @@ public class ClientInterface {
         catch(NoSuchAlgorithmException e){
             return false;
         }
+    }
+
+    /**
+     * @param nombre : nombre de la nueva receta
+     * @param tipo : tipo de la nueva receta
+     * @param instrucciones : instrucciones de la nueva receta
+     * @param ings : ingredientes de la nueva receta
+     * @param test : <true> si es test, <false> en caso contrario
+     * @return <true> si se ha podido crear la receta, <false> en caso contrario
+     */
+    public static boolean crear_receta(String nombre, String tipo, String instrucciones, List<Ingrediente> ings, boolean test){
+        return Access.crear_receta(nombre, tipo, instrucciones, ings, test);
     }
 }
