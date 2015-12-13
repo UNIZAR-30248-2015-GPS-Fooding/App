@@ -2,13 +2,16 @@ package com.example.coke.fooding;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -26,6 +29,11 @@ public class RecetaDialog extends DialogFragment {
 
     private ImageView imageView;
     private Receta recetaSeleccionada;
+
+    private LinearLayout btnIncrementar;
+
+    private TextView comensales;
+    private int cuentaComensales = 1;
 
 
 
@@ -72,6 +80,37 @@ public class RecetaDialog extends DialogFragment {
             imageView.setImageResource(R.mipmap.random_logo);
         }
         //Mostramos los comensales
+
+        comensales = (TextView) view.findViewById(R.id.numComensales);
+
+        //Incrementa el numero de comensales con el boton "+"
+        final Button incrementarComensales = (Button) view.findViewById(R.id.button);
+        incrementarComensales.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                cuentaComensales++;
+                String contador=String.valueOf(cuentaComensales);
+                comensales.setText(contador);
+
+            }
+        });
+
+        //Decrementa el numero de comensales con el boton "-"
+        final Button decrementarComensales = (Button) view.findViewById(R.id.button2);
+        decrementarComensales.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if(cuentaComensales>1){
+                    cuentaComensales--;
+                    String contador=String.valueOf(cuentaComensales);
+                    comensales.setText(contador);
+                }
+            }
+        });
+
+
 
 
         //Mostramos los ingredientes
