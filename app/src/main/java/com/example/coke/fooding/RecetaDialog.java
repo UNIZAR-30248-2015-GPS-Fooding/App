@@ -137,7 +137,10 @@ public class RecetaDialog extends DialogFragment {
         String ingredientes = "";
 
         for(int i = 0; i< listaIngredientes.size(); i++){
-            ingredientes = ingredientes + listaIngredientes.get(i).getNombre() + "\n";
+            ingredientes = ingredientes +
+                    listaIngredientes.get(i).getCantidad() +
+                    listaIngredientes.get(i).getUds() +
+                    listaIngredientes.get(i).getNombre() + "\n";
         }
         return ingredientes;
 
