@@ -30,7 +30,7 @@ public class RecetaDialog extends DialogFragment {
     private ImageView imageView;
     private Receta recetaSeleccionada;
 
-    private LinearLayout btnIncrementar;
+   // private LinearLayout btnIncrementar;
 
     private TextView comensales;
     private int cuentaComensales = 1;
@@ -49,7 +49,7 @@ public class RecetaDialog extends DialogFragment {
         //Cargamos elementos del layout
         View view = inflater.inflate(R.layout.receta_dialog, container);
         ImageView imageView = (ImageView) view.findViewById(R.id.icono);
-        TextView descripcion = (TextView) view.findViewById(R.id.descripcion);
+       final TextView descripcion = (TextView) view.findViewById(R.id.descripcion);
         TextView elaboracion = (TextView) view.findViewById(R.id.descripcion2);
 
 
@@ -79,8 +79,14 @@ public class RecetaDialog extends DialogFragment {
         else {
             imageView.setImageResource(R.mipmap.random_logo);
         }
-        //Mostramos los comensales
 
+        //Mostramos los ingredientes
+        String listaIngredientes = ingredientesReceta(recetaSeleccionada.getIngredientes(),cuentaComensales );
+
+        descripcion.setText(listaIngredientes);
+
+
+        //Mostramos los comensales
         comensales = (TextView) view.findViewById(R.id.numComensales);
 
         //Incrementa el numero de comensales con el boton "+"
@@ -93,6 +99,12 @@ public class RecetaDialog extends DialogFragment {
                 String contador=String.valueOf(cuentaComensales);
                 comensales.setText(contador);
 
+                descripcion.setText(ingredientesReceta(recetaSeleccionada.getIngredientes(),cuentaComensales));
+
+
+
+
+
             }
         });
 
@@ -102,10 +114,13 @@ public class RecetaDialog extends DialogFragment {
 
             @Override
             public void onClick(View v) {
-                if(cuentaComensales>1){
+                if (cuentaComensales > 1) {
                     cuentaComensales--;
-                    String contador=String.valueOf(cuentaComensales);
+                    String contador = String.valueOf(cuentaComensales);
                     comensales.setText(contador);
+
+                    descripcion.setText(ingredientesReceta(recetaSeleccionada.getIngredientes(),cuentaComensales));
+
                 }
             }
         });
@@ -113,10 +128,7 @@ public class RecetaDialog extends DialogFragment {
 
 
 
-        //Mostramos los ingredientes
-        String listaIngredientes = ingredientesReceta(recetaSeleccionada.getIngredientes());
 
-        descripcion.setText(listaIngredientes);
 
     //    descripcion.setText(recetaSeleccionada.getIngredientes().toString());
 
@@ -133,13 +145,14 @@ public class RecetaDialog extends DialogFragment {
         return f;
     }
 
-    public String ingredientesReceta(List<Ingrediente> listaIngredientes){
+    public String ingredientesReceta(List<Ingrediente> listaIngredientes, int cantidad){
         String ingredientes = "";
 
         for(int i = 0; i< listaIngredientes.size(); i++){
+            
             ingredientes = ingredientes +
-                    listaIngredientes.get(i).getCantidad() +
-                    listaIngredientes.get(i).getUds() +
+                    listaIngredientes.get(i).getCantidad() * cantidad +" " +
+                    listaIngredientes.get(i).getUds() + " " +
                     listaIngredientes.get(i).getNombre() + "\n";
         }
         return ingredientes;
