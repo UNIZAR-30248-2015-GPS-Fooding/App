@@ -28,6 +28,15 @@
 
         </android.support.design.widget.TextInputLayout>
 
+
+
+        <TextView
+            android:id="@+id/FiltroTipo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Añadir tipo: "
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,30 +46,94 @@
         <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <EditText android:id="@+id/ingredientes" android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:hint="@string/ingredientes"
-                android:imeActionId="@+id/login"
-                android:maxLines="1" android:singleLine="true" />
+            <TextView
+                android:id="@+id/FiltroIng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Añadir ingredientes: "
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-         <!--   <EditText android:id="@+id/ingredientes2" android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:hint="@string/ingredientes"
-                android:imeActionId="@+id/login"
-                android:maxLines="1" android:singleLine="true"
-                android:visibility="gone"/>
+            <LinearLayout
+                android:id = "@+id/layout"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <EditText android:id="@+id/ingredientes3" android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:hint="@string/ingredientes"
-                android:imeActionId="@+id/login"
-                android:maxLines="1" android:singleLine="true"
-                android:visibility="gone"/> -->
+                <EditText android:id="@+id/cant" android:layout_width="54dp"
+                    android:layout_height="wrap_content" android:hint="@string/cantidad"
+                    android:imeActionId="@+id/login"
+                    android:maxLines="1" android:singleLine="true" />
+
+                <EditText android:id="@+id/uds" android:layout_width="54dp"
+                    android:layout_height="wrap_content" android:hint="@string/unidades"
+                    android:imeActionId="@+id/login"
+                    android:maxLines="1" android:singleLine="true" />
+
+                <Spinner
+                    android:id="@+id/TextoIng"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent" />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id = "@+id/layout2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <EditText android:id="@+id/cant2" android:layout_width="54dp"
+                    android:layout_height="wrap_content" android:hint="@string/nombre_receta"
+                    android:imeActionId="@+id/login"
+                    android:maxLines="1" android:singleLine="true" />
+
+                <EditText android:id="@+id/uds2" android:layout_width="54dp"
+                    android:layout_height="wrap_content" android:hint="@string/nombre_receta"
+                    android:imeActionId="@+id/login"
+                    android:maxLines="1" android:singleLine="true" />
+
+                <Spinner
+                    android:id="@+id/TextoIng2"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id = "@+id/layout3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <EditText android:id="@+id/cant3" android:layout_width="54dp"
+                    android:layout_height="wrap_content" android:hint="@string/nombre_receta"
+                    android:imeActionId="@+id/login"
+                    android:maxLines="1" android:singleLine="true" />
+
+                <EditText android:id="@+id/uds3" android:layout_width="54dp"
+                    android:layout_height="wrap_content" android:hint="@string/nombre_receta"
+                    android:imeActionId="@+id/login"
+                    android:maxLines="1" android:singleLine="true" />
+
+                <Spinner
+                    android:id="@+id/TextoIng3"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent" />
+            </LinearLayout>
+
+
+
+
+
 
             <Button
-                android:id="@+id/angry_btn"
+                android:id="@+id/mas_ingredientes"
                 android:text="Añadir Ingrediente"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:background="@drawable/button_shape"
-                />
+                android:background="@drawable/button_shape" />
 
         </android.support.design.widget.TextInputLayout>
 

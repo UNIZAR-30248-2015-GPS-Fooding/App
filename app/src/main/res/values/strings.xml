@@ -28,4 +28,6 @@
     <string name="ingredientes">Ingredientes</string>
     <string name="elaboracion">Elaboración</string>
     <string name="comensales">Comensales</string>
+    <string name="cantidad">Cant</string>
+    <string name="unidades">Uds</string>
 </resources>
