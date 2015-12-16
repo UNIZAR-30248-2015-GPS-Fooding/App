@@ -14,10 +14,16 @@
             android:title="Lista de Usuarios" />
         <item android:id="@+id/menu_supermercados"
             android:title="Supermercados Cercanos" />
+        <item android:id="@+id/crear_receta"
+            android:title="Supermercados Cercanos" />
     </group>
 
-    <item android:title="Mi cuenta">
+    <item android:title="Mi cuenta"
+          android:id="@+id/menu_logueados"
+          android:visible="false">
         <menu android:checkableBehavior="single">
+            <item android:id="@+id/menu_usuario" android:icon="@android:drawable/ic_menu_send"
+                android:title="Mi Cuenta" />
             <item android:id="@+id/menu_favoritos" android:icon="@android:drawable/ic_menu_send"
                 android:title="Mis Favoritos" />
             <item android:id="@+id/menu_ingredientes" android:icon="@android:drawable/ic_menu_send"

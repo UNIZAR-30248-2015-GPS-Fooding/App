@@ -56,8 +56,6 @@ public class MainActivity extends AppCompatActivity
     public static File mPath = new File(Environment.getExternalStorageDirectory() + "/Fooding");
     public static boolean registrado = false;
 
-
-
     @Override
     protected void onDestroy(){
         super.onDestroy();
