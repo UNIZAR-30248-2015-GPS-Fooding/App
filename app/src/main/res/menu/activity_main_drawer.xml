@@ -15,7 +15,7 @@
         <item android:id="@+id/menu_supermercados"
             android:title="Supermercados Cercanos" />
         <item android:id="@+id/crear_receta"
-            android:title="Supermercados Cercanos" />
+            android:title="Crear receta" />
     </group>
 
     <item android:title="Mi cuenta"

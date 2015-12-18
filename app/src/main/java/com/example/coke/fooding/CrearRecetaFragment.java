@@ -34,7 +34,7 @@ public class CrearRecetaFragment extends android.support.v4.app.Fragment impleme
 
     private Spinner tipoReceta;
     public static List<String> tipos = new LinkedList<String>();
-    final Spinner tipoInputSpinner=null;
+    private Spinner tipoInputSpinner;
 
     public static List<String> tiposIngredientes = new LinkedList<String>();
 
@@ -51,6 +51,7 @@ public class CrearRecetaFragment extends android.support.v4.app.Fragment impleme
     private EditText uds3;
 
     private Spinner tipoInputSpinnerIngredientes;
+  //  private EditText nombreIngrediente1;
     private Spinner tipoInputSpinnerIngredientes2;
     private Spinner tipoInputSpinnerIngredientes3;
 
@@ -78,7 +79,7 @@ public class CrearRecetaFragment extends android.support.v4.app.Fragment impleme
         tipos.add("Seleccione tipo");
         tipos.addAll(ClientInterface.getTipos());
 
-        final Spinner tipoInputSpinner = (Spinner) view.findViewById(R.id.spinnerTipoReceta);
+        tipoInputSpinner = (Spinner) view.findViewById(R.id.spinnerTipoReceta);
         String[] tiposRecetas = tipos.toArray(new String[tipos.size()]);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String> (this.getActivity(), android.R.layout.simple_spinner_dropdown_item, tiposRecetas);
         tipoInputSpinner.setAdapter(adapter2);
@@ -139,6 +140,22 @@ public class CrearRecetaFragment extends android.support.v4.app.Fragment impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.CrearRecetaButton:
+                String tipo = MainActivity.saberTipo(tipoInputSpinner.getSelectedItemPosition());
+                List<Ingrediente> listIngr = new LinkedList<>();
+                Ingrediente i = new Ingrediente();
+                i.setCantidad(Integer.parseInt(cant1.getText().toString()));
+                i.setNombre(tipoInputSpinnerIngredientes.getSelectedItem().toString());
+                i.setUds(uds1.getText().toString());
+                listIngr.add(i);
+                String nombre = nombreReceta.getText().toString();
+                String elaboracion = elaboracionReceta.getText().toString();
+
+                boolean creado = ClientInterface.crear_receta(nombre,tipo,elaboracion ,listIngr, test);
+                if(creado){
+                    Toast.makeText(getActivity(), "Receta creada correctamente",Toast.LENGTH_SHORT ).show();
+                }else{
+                    Toast.makeText(getActivity(), "Receta no creada",Toast.LENGTH_SHORT).show();
+                }
 
                 break;
         }
