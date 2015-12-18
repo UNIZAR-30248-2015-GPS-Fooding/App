@@ -317,6 +317,7 @@ public class Access {
                     + i.getNombre() + "</ingrediente>";
         }
 
+        xml = xml + "</request>";
         // enviar xml y recibir respuesta
         Document doc = Client.sendRequest(xml);
 
