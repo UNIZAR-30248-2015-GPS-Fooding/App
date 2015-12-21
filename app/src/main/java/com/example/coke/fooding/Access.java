@@ -343,7 +343,7 @@ public class Access {
      * @param id identificador de la receta
      * @param valoracion -1 o 1
      * @param test <true> si es test, <false> en caso contrario
-     * @return
+     * @return <true> si se ha podido valorar, <false> en caso contrario
      */
     public static boolean valorar_receta(int id, int valoracion, boolean test){
         String t = null;
@@ -375,6 +375,43 @@ public class Access {
         }
         else{
             return false;
+        }
+    }
+
+    /**
+     * @param id identificador de la receta
+     * @param test <true> si es test, <false> en caso contrario
+     * @return la valoracion media de la receta
+     */
+    public static double valoracion_media_receta(int id, boolean test){
+        String t = null;
+
+        if(test) t= "yes";
+        else t= "no";
+
+        String xml = "<request id=\"" + Data.VOTAR_CODE + "\">";
+        xml = xml + "<id>" + id + "</id>";
+        xml = xml + "<test>" + t + "</test>";
+
+        xml = xml + "</request>";
+        // enviar xml y recibir respuesta
+        Document doc = Client.sendRequest(xml);
+
+        // comprobar respuesta
+        if(doc != null){
+            doc.getDocumentElement().normalize();
+
+            if(doc.getElementsByTagName("valoracion") != null &&
+                    doc.getElementsByTagName("valoracion").getLength() > 0){
+                t = doc.getElementsByTagName("valoracion").item(0).getTextContent();
+                return Double.valueOf(t);
+            }
+            else{
+                return -2;
+            }
+        }
+        else{
+            return -2;
         }
     }
 }

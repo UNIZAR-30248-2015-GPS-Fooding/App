@@ -117,4 +117,13 @@ public class ClientInterface {
     public static boolean valorar_receta(int id, int valoracion, boolean test){
         return Access.valorar_receta(id, valoracion, test);
     }
+
+    /**
+     * @param id : identificador de la receta
+     * @param test : <true> si es test, <false> en caso contrario
+     * @return valoracion media de la receta, -2 si no se ha podido valorar
+     */
+    public static double valoracion_media_receta(int id, boolean test){
+        return Access.valoracion_media_receta(id, test);
+    }
 }
