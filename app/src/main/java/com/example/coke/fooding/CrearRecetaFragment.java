@@ -139,18 +139,43 @@ public class CrearRecetaFragment extends android.support.v4.app.Fragment impleme
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
             case R.id.CrearRecetaButton:
-                String tipo = MainActivity.saberTipo(tipoInputSpinner.getSelectedItemPosition());
+
                 List<Ingrediente> listIngr = new LinkedList<>();
                 Ingrediente i = new Ingrediente();
-                i.setCantidad(Integer.parseInt(cant1.getText().toString()));
-                i.setNombre(tipoInputSpinnerIngredientes.getSelectedItem().toString());
-                i.setUds(uds1.getText().toString());
-                listIngr.add(i);
+                if (!tipoInputSpinnerIngredientes.getSelectedItem().toString().equalsIgnoreCase("Seleccione ingrediente")){
+                    i.setCantidad(Integer.parseInt(cant1.getText().toString()));
+                    i.setNombre(tipoInputSpinnerIngredientes.getSelectedItem().toString());
+                    i.setUds(uds1.getText().toString());
+                    listIngr.add(i);
+                }
+                if(!tipoInputSpinnerIngredientes2.getSelectedItem().toString().equalsIgnoreCase("Seleccione ingrediente")){
+                    i.setCantidad(Integer.parseInt(cant2.getText().toString()));
+                    i.setNombre(tipoInputSpinnerIngredientes2.getSelectedItem().toString());
+                    i.setUds(uds2.getText().toString());
+                    listIngr.add(i);
+                }
+                if(!tipoInputSpinnerIngredientes3.getSelectedItem().toString().equalsIgnoreCase("Seleccione ingrediente")){
+                    i.setCantidad(Integer.parseInt(cant3.getText().toString()));
+                    i.setNombre(tipoInputSpinnerIngredientes3.getSelectedItem().toString());
+                    i.setUds(uds3.getText().toString());
+                    listIngr.add(i);
+                }
+
+                String tipo = MainActivity.saberTipo(tipoInputSpinner.getSelectedItemPosition());
                 String nombre = nombreReceta.getText().toString();
                 String elaboracion = elaboracionReceta.getText().toString();
 
-                boolean creado = ClientInterface.crear_receta(nombre,tipo,elaboracion ,listIngr, test);
+                boolean creado = false;
+
+                if ((tipo!=null) && (!nombre.equalsIgnoreCase("")) && (!elaboracion.equalsIgnoreCase("")) && (listIngr!=null)){
+                    creado = ClientInterface.crear_receta(nombre,tipo,elaboracion ,listIngr, test);
+                }
+                else{
+                    Toast.makeText(getActivity(), "ERROR: rellene todos los campos",Toast.LENGTH_SHORT ).show();
+                }
+
                 if(creado){
                     Toast.makeText(getActivity(), "Receta creada correctamente",Toast.LENGTH_SHORT ).show();
                 }else{
