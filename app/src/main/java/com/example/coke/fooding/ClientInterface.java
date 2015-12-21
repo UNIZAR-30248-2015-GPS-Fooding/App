@@ -107,4 +107,14 @@ public class ClientInterface {
     public static boolean crear_receta(String nombre, String tipo, String instrucciones, List<Ingrediente> ings, boolean test){
         return Access.crear_receta(nombre, tipo, instrucciones, ings, test);
     }
+
+    /**
+     * @param id : identificador de la receta
+     * @param valoracion : -1 o 1
+     * @param test : <true> si es test, <false> en caso contrario
+     * @return <true> si se ha podido valorar la receta, <false> en caso contrario
+     */
+    public static boolean valorar_receta(int id, int valoracion, boolean test){
+        return Access.valorar_receta(id, valoracion, test);
+    }
 }

@@ -338,4 +338,43 @@ public class Access {
             return false;
         }
     }
+
+    /**
+     * @param id identificador de la receta
+     * @param valoracion -1 o 1
+     * @param test <true> si es test, <false> en caso contrario
+     * @return
+     */
+    public static boolean valorar_receta(int id, int valoracion, boolean test){
+        String t = null;
+
+        if(test) t= "yes";
+        else t= "no";
+
+        String xml = "<request id=\"" + Data.VOTAR_CODE + "\">";
+        xml = xml + "<id>" + id + "</id>";
+        xml = xml + "<valoracion>" + valoracion + "</valoracion>";
+        xml = xml + "<test>" + t + "</test>";
+
+        xml = xml + "</request>";
+        // enviar xml y recibir respuesta
+        Document doc = Client.sendRequest(xml);
+
+        // comprobar respuesta
+        if(doc != null){
+            doc.getDocumentElement().normalize();
+
+            if(doc.getElementsByTagName("hecho") != null &&
+                    doc.getElementsByTagName("hecho").getLength() > 0){
+                t = doc.getElementsByTagName("hecho").item(0).getTextContent();
+                return t.equalsIgnoreCase("yes");
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
 }
