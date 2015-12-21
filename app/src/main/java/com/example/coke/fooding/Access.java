@@ -353,7 +353,7 @@ public class Access {
 
         String xml = "<request id=\"" + Data.VOTAR_CODE + "\">";
         xml = xml + "<id>" + id + "</id>";
-        xml = xml + "<valoracion>" + valoracion + "</valoracion>";
+        xml = xml + "<voto>" + valoracion + "</voto>";
         xml = xml + "<test>" + t + "</test>";
 
         xml = xml + "</request>";
