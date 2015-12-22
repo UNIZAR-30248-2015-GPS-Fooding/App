@@ -97,6 +97,7 @@ public class ClientInterface {
     }
 
     /**
+     * @param mail : mail del
      * @param nombre : nombre de la nueva receta
      * @param tipo : tipo de la nueva receta
      * @param instrucciones : instrucciones de la nueva receta
@@ -104,8 +105,8 @@ public class ClientInterface {
      * @param test : <true> si es test, <false> en caso contrario
      * @return <true> si se ha podido crear la receta, <false> en caso contrario
      */
-    public static boolean crear_receta(String nombre, String tipo, String instrucciones, List<Ingrediente> ings, boolean test){
-        return Access.crear_receta(nombre, tipo, instrucciones, ings, test);
+    public static boolean crear_receta(String mail, String nombre, String tipo, String instrucciones, List<Ingrediente> ings, boolean test){
+        return Access.crear_receta(mail, nombre, tipo, instrucciones, ings, test);
     }
 
     /**

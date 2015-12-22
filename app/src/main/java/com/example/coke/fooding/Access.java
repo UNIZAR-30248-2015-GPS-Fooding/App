@@ -292,6 +292,7 @@ public class Access {
     }
 
     /**
+     * @param mail : mail del usuario
      * @param nombre : nombre de la nueva receta
      * @param tipo : tipo de la nueva receta
      * @param instrucciones : instrucciones de la nueva receta
@@ -299,13 +300,14 @@ public class Access {
      * @return <true> si se ha podido crear la receta, <false> en
      * caso contrario
      */
-    public static boolean crear_receta(String nombre, String tipo, String instrucciones, List<Ingrediente> ings, boolean test){
+    public static boolean crear_receta(String mail, String nombre, String tipo, String instrucciones, List<Ingrediente> ings, boolean test){
         String t = null;
 
         if(test) t= "yes";
         else t= "no";
 
         String xml = "<request id=\"" + Data.CREAR_REC_CODE + "\">";
+        xml = xml + "<mail>" + mail + "</mail>";
         xml = xml + "<nombre>" + nombre + "</nombre>";
         xml = xml + "<tipo>" + tipo + "</tipo>";
         xml = xml + "<instrucciones>" + instrucciones + "</instrucciones>";
