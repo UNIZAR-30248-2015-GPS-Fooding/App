@@ -58,7 +58,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
             android:id="@+id/ingredientes"
@@ -82,6 +82,32 @@
             android:id="@+id/descripcion2" android:text="Aqui la elaboracion de la receta"
             android:layout_width="match_parent" android:layout_height="wrap_content" />
 
+            <TextView
+                android:id="@+id/valoracion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Valoracion: "
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Me gusta"
+                android:id="@+id/buttonMeGusta"/>
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No me gusta"
+                android:id="@+id/buttonNoMeGusta" />
         </LinearLayout>
 
 

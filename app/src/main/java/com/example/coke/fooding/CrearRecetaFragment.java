@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,16 @@ import android.widget.Toast;
 import com.example.coke.fooding.data.Ingrediente;
 import com.example.coke.fooding.data.Receta;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,7 +43,7 @@ public class CrearRecetaFragment extends android.support.v4.app.Fragment impleme
     private EditText nombreReceta;
     private EditText elaboracionReceta;
 
-    private Spinner tipoReceta;
+    //tipos de una receta
     public static List<String> tipos = new LinkedList<String>();
     private Spinner tipoInputSpinner;
 
@@ -51,13 +62,8 @@ public class CrearRecetaFragment extends android.support.v4.app.Fragment impleme
     private EditText uds3;
 
     private Spinner tipoInputSpinnerIngredientes;
-  //  private EditText nombreIngrediente1;
     private Spinner tipoInputSpinnerIngredientes2;
     private Spinner tipoInputSpinnerIngredientes3;
-
-
-
-
 
     public static boolean test = false;
 
@@ -167,10 +173,27 @@ public class CrearRecetaFragment extends android.support.v4.app.Fragment impleme
                 String nombre = nombreReceta.getText().toString();
                 String elaboracion = elaboracionReceta.getText().toString();
 
+                String correo = "";
+
                 boolean creado = false;
 
+                File myFile = new File(MainActivity.mPath + "/" + "ficheroUsuarios.txt");
+
+                try {
+                    FileReader f = new FileReader(myFile);
+                    BufferedReader b = new BufferedReader(f);
+                    correo = b.readLine();
+                    b.close();
+                    System.out.println(correo);
+
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 if ((tipo!=null) && (!nombre.equalsIgnoreCase("")) && (!elaboracion.equalsIgnoreCase("")) && (listIngr!=null)){
-                    creado = ClientInterface.crear_receta(nombre,tipo,elaboracion ,listIngr, test);
+                    creado = ClientInterface.crear_receta(correo,nombre,tipo,elaboracion ,listIngr, test);
                 }
                 else{
                     Toast.makeText(getActivity(), "ERROR: rellene todos los campos",Toast.LENGTH_SHORT ).show();

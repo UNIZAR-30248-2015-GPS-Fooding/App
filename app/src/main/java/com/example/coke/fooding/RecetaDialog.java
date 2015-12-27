@@ -125,17 +125,34 @@ public class RecetaDialog extends DialogFragment {
             }
         });
 
-
-
-
-
-
-    //    descripcion.setText(recetaSeleccionada.getIngredientes().toString());
-
-
         //Mostramos la elaboracion
 
         elaboracion.setText(recetaSeleccionada.getInstrucciones());
+
+        //Decrementa el numero de comensales con el boton "-"
+        final Button meGusta = (Button) view.findViewById(R.id.buttonMeGusta);
+        decrementarComensales.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                ClientInterface.valorar_receta(recetaSeleccionada.getId(),1, false);
+            }
+        });
+
+
+        final Button noMeGusta = (Button) view.findViewById(R.id.buttonNoMeGusta);
+        decrementarComensales.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                ClientInterface.valorar_receta(recetaSeleccionada.getId(),-1, false);
+            }
+        });
+
+
+
+
 
         return view;
     }

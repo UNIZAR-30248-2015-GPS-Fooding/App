@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.coke.fooding.data.Usuario;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,6 +24,9 @@ import java.io.IOException;
 public class LoginFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
 
     View view;
+
+    public static Usuario u;
+
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     public static boolean pruebaTest = false;
@@ -66,6 +71,9 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
+                    u = new Usuario();
+                    u.setEmail(mEmailView.getText().toString());
 
                     Toast.makeText(getActivity(), "Logeado correctamente", Toast.LENGTH_SHORT).show();
                     // meter el usuario en fichero

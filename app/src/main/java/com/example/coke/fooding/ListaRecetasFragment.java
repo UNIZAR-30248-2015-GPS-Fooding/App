@@ -68,7 +68,7 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
                 //String Slecteditem = itemname[+position];
                 Receta recetaSeleccionada = listaRecetas.get(position);
                 //Toast.makeText(actividadPadre.getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
-                showEditDialog(recetaSeleccionada);
+                showEditDialog(recetaSeleccionada, position);
 
             }
         });
@@ -78,7 +78,7 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
         return view;
     }
 
-    private void showEditDialog(Receta recetaSeleccionada) {
+    private void showEditDialog(Receta recetaSeleccionada, int position) {
         FragmentManager fm = getFragmentManager();
         RecetaDialog editNameDialog = new RecetaDialog(recetaSeleccionada);
         editNameDialog.show(fm, "fragment_edit_name");
