@@ -6,6 +6,7 @@ package com.example.coke.fooding;
 import com.example.coke.fooding.data.Data;
 import com.example.coke.fooding.data.Ingrediente;
 import com.example.coke.fooding.data.Receta;
+import com.example.coke.fooding.data.Usuario;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -414,6 +415,57 @@ public class Access {
         }
         else{
             return -2;
+        }
+    }
+
+    /**
+     * @param test <true> si es test, <false> en caso contrario
+     * @return una lista de los usuarios de la BD
+     */
+    public static List<Usuario> get_usuarios(boolean test){
+        String t = null;
+
+        if(test) t= "yes";
+        else t= "no";
+
+        String xml = "<request id=\"" + Data.LISTA_USERS_CODE + "\">";
+        xml = xml + "<test>" + t + "</test>";
+
+        xml = xml + "</request>";
+        // enviar xml y recibir respuesta
+        Document doc = Client.sendRequest(xml);
+
+        // comprobar respuesta
+        if(doc != null){
+            List<Usuario> users = new LinkedList<>();
+            if(doc.getElementsByTagName("usuario") != null &&
+                    doc.getElementsByTagName("usuario").getLength() > 0){
+                for(int i = 0; i < doc.getElementsByTagName("usuario").getLength(); i++){
+                    Element e = (Element) doc.getElementsByTagName("usuario").item(i);
+
+                    String nombre = e.getElementsByTagName("nick").item(0).getTextContent();
+                    int score = Integer.parseInt(e.getElementsByTagName("score").item(0).getTextContent());
+
+                    List<Receta> recetas = new LinkedList<>();
+                    for(int j = 0; j < e.getElementsByTagName("receta").getLength(); j++){
+                        Element ee = (Element) doc.getElementsByTagName("receta").item(j);
+                        int id = Integer.parseInt(ee.getAttribute("id"));
+                        String rec = ee.getTextContent();
+
+                        Receta r = new Receta();
+                        r.setId(id);
+                        r.setNombre(rec);
+                        recetas.add(r);
+                    }
+
+                    Usuario u = new Usuario(nombre, score, recetas);
+                    users.add(u);
+                }
+            }
+            return users;
+        }
+        else{
+            return null;
         }
     }
 }

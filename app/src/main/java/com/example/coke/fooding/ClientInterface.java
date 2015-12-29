@@ -5,6 +5,7 @@ package com.example.coke.fooding;
 
 import com.example.coke.fooding.data.Ingrediente;
 import com.example.coke.fooding.data.Receta;
+import com.example.coke.fooding.data.Usuario;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -126,5 +127,13 @@ public class ClientInterface {
      */
     public static double valoracion_media_receta(int id, boolean test){
         return Access.valoracion_media_receta(id, test);
+    }
+
+    /**
+     * @param test : <true> si es test, <false> en caso contrario
+     * @return lista de usuarios del sistema
+     */
+    public static List<Usuario> get_usuarios(boolean test){
+        return Access.get_usuarios(test);
     }
 }

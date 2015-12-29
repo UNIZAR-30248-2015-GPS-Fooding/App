@@ -4,6 +4,8 @@
 
 package com.example.coke.fooding.data;
 
+import java.util.List;
+
 public class Usuario {
 
 	/**
@@ -15,14 +17,54 @@ public class Usuario {
 
 	/* atributos de los ingredientes */
 	private String nombre = null;
+	private int score = -1;
+	private List<Receta> recetas = null;
 	private String email = null;
 
 	/**
-	 * Metodo de creacion de ingredientes
+	 * Metodo de creacion de usuarios
 	 */
 	public Usuario(){
 	}
+
+	/**
+	 * @return mail del usuario
+	 */
+	public String getEmail(){
+		return email;
+	}
+
+	/**
+	 * @param mail e-mail del usuario
+	 */
+	public void setEmail(String mail){
+		this.email = mail;
+	}
+
+	/**
+	 * Metodo de creacion de usuarios
+	 */
+	public Usuario(String nombre, int score, List<Receta> recetas){
+		this.nombre = nombre;
+		this.score = score;
+		this.recetas = recetas;
+	}
 	
+	/**
+	 * @return el score
+	 */
+	public int getScore() {
+		return score;
+	}
+
+	/**
+	 * @param score
+	 *            el nuevo score
+	 */
+	public void setScore(int score) {
+		this.score = score;
+	}
+
 	/**
 	 * @return el nombre
 	 */
@@ -38,20 +80,18 @@ public class Usuario {
 		this.nombre = nombre;
 	}
 
-
 	/**
-	 * @return las uds
+	 * @return las recetas
 	 */
-	public String getEmail() {
-		return email;
+	public List<Receta> getRecetas() {
+		return recetas;
 	}
 
 	/**
-	 * @param uds
-	 *            las nuevas uds
+	 * @param recs
+	 *            las nuevas recetas
 	 */
-	public void setEmail(String email) {
-		this.email = email;
+	public void setRecetas(List<Receta> recs) {
+		this.recetas = recs;
 	}
-
 }
