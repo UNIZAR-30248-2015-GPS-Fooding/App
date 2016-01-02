@@ -25,6 +25,7 @@ public class ListaUsuariosFragment extends android.support.v4.app.Fragment {
     static Activity actividadPadre;
     static ListView lv;
     static List<Usuario> listaUsuarios = null;
+    static boolean test = false;
 
     public ListaUsuariosFragment (){
 
@@ -35,8 +36,6 @@ public class ListaUsuariosFragment extends android.support.v4.app.Fragment {
                              ViewGroup container, Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.lista_usuarios_fragment, container, false);
-
         actividadPadre = this.getActivity();
         View view = inflater.inflate(R.layout.fragment_lista_usuarios, container, false);
         lv = (ListView) view.findViewById(R.id.listUsu);
@@ -68,12 +67,7 @@ public class ListaUsuariosFragment extends android.support.v4.app.Fragment {
 
     public static void actualizarLista(List<Usuario> lista){
         if(lista== null){
-            //listaUsuarios = ClientInterface.getUsuarios();
-            listaUsuarios = new ArrayList<>();
-            Usuario u = new Usuario();
-            u.setNombre("nombre");
-            u.setEmail("email");
-            listaUsuarios.add(u);
+            listaUsuarios = ClientInterface.get_usuarios(test);
         }else{
             listaUsuarios = lista;
         }

@@ -1,9 +1,11 @@
 package com.example.coke.fooding;
 
 import android.app.Fragment;
+import android.content.ClipData;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
@@ -74,6 +76,11 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
 
                     u = new Usuario();
                     u.setEmail(mEmailView.getText().toString());
+
+                    //Activamos booleano de registrado
+                    MainActivity.registrado = true;
+                    MainActivity.navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(true);
+
 
                     Toast.makeText(getActivity(), "Logeado correctamente", Toast.LENGTH_SHORT).show();
                     // meter el usuario en fichero

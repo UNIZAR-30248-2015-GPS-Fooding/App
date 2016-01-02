@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -37,6 +38,7 @@ import android.widget.Toast;
 import android.app.AlertDialog.Builder;
 
 import com.example.coke.fooding.data.Receta;
+import com.example.coke.fooding.data.Usuario;
 import com.google.android.gms.maps.MapsInitializer;
 
 import java.io.File;
@@ -54,7 +56,10 @@ public class MainActivity extends AppCompatActivity
     private LinearLayout mLayout;
 
     public static File mPath = new File(Environment.getExternalStorageDirectory() + "/Fooding");
-    public static boolean registrado = false;
+    public static boolean registrado;
+
+    //Menu lateral
+    public static NavigationView navigationView;
 
     @Override
     protected void onDestroy(){
@@ -65,12 +70,15 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         //leer el fichero si hay algo escrito ese nombre de usuario
 
+        //Si estamos logeados, msotramos menu oculto
+        navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(registrado);
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        registrado = false;
         if (!mPath.exists()) {
             mPath.mkdirs();
         }
@@ -98,12 +106,14 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView2);
         imageView.setImageResource(R.mipmap.watermark);
 
+        //Si estamos logeados, msotramos menu oculto
+        navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(registrado);
 
         //Iniciamos la Actividad con el fragment ListaRecetas
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -217,12 +227,31 @@ public class MainActivity extends AppCompatActivity
             if (root.exists() && root.isFile() && registrado){
                 root.delete();
                 registrado = false;
+                navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(false);
                 Toast.makeText(MainActivity.this, "Sesion cerrada correctamente", Toast.LENGTH_SHORT).show();
             }
             else{
                 Toast.makeText(MainActivity.this, "ERROR. Primero debe hacer login", Toast.LENGTH_SHORT).show();
             }
 
+        }
+        else if (id == R.id.menu_usuario){
+            if (root.exists() && root.isFile() && registrado){
+
+                //TODO Cargar el usuario del fichero y usarlo para llamar a CuentaFragment()
+                //Ahora se crea un usuario de prueba
+                Usuario u = new Usuario();
+                u.setEmail("prueba@mail");
+                u.setNombre("nombre");
+                u.setScore(99);
+
+                android.support.v4.app.Fragment fragment = new CuentaFragment(u);
+                fragmentTransaction.replace(R.id.mainFrame, fragment);
+                fragmentTransaction.addToBackStack(null);
+            }
+            else{
+                Toast.makeText(MainActivity.this, "ERROR. Primero debe cerrar sesion.", Toast.LENGTH_SHORT).show();
+            }
         }
 
 

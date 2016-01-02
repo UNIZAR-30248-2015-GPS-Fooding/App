@@ -37,6 +37,7 @@ public class UsuarioDialog extends DialogFragment {
         //Cargamos elementos del layout
         View view = inflater.inflate(R.layout.usuario_dialog, container);
         TextView correo = (TextView) view.findViewById(R.id.correo);
+        final TextView puntos = (TextView) view.findViewById(R.id.puntos);
 
 
         //Mostramos nombre del user como titulo
@@ -48,12 +49,20 @@ public class UsuarioDialog extends DialogFragment {
         //Mostramos el correo
         correo.setText(usuarioSeleccionada.getEmail());
 
+        //Mostramos puntos
+        puntos.setText(usuarioSeleccionada.getScore());
+
         //Incrementa el numero de likes con el boton "+"
         final Button incrementarLikes = (Button) view.findViewById(R.id.likeButton);
         incrementarLikes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Incrementamos likes
+                int entero = Integer.parseInt(puntos.getText().toString());
+                entero++;
+                puntos.setText(Integer.toString(entero));
+                //TODO Falta modificar los puntos en la base de datos
+
             }
         });
 
@@ -63,6 +72,10 @@ public class UsuarioDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 //Incrementamos dislikes
+                int entero = Integer.parseInt(puntos.getText().toString());
+                entero++;
+                puntos.setText(Integer.toString(entero));
+                //TODO Falta modificar los puntos en la base de datos
             }
         });
 

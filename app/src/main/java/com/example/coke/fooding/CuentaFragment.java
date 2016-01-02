@@ -43,13 +43,13 @@ public class CuentaFragment extends android.support.v4.app.Fragment {
         //Obtenemos elementos del xml
         TextView correo = (TextView) view.findViewById(R.id.correo);
         TextView nombre = (TextView) view.findViewById(R.id.nombre);
-        TextView likes = (TextView) view.findViewById(R.id.likes);
-        TextView dislikes = (TextView) view.findViewById(R.id.dislikes);
+        TextView puntos = (TextView) view.findViewById(R.id.likes);
+        //TextView dislikes = (TextView) view.findViewById(R.id.dislikes);
 
         //Rellenamos datos
         correo.setText(u.getEmail());
         nombre.setText(u.getNombre());
-
+        puntos.setText((Integer.toString(u.getScore())));
         return view;
     }
 
