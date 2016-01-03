@@ -45,8 +45,8 @@ public class RecetaDialog extends DialogFragment {
         ImageView imageView = (ImageView) view.findViewById(R.id.icono);
        final TextView descripcion = (TextView) view.findViewById(R.id.descripcion);
         TextView elaboracion = (TextView) view.findViewById(R.id.descripcion2);
-
-
+        TextView autor = (TextView) view.findViewById(R.id.texto_autor);
+        TextView valoracion = (TextView) view.findViewById(R.id.valoracion);
 
         //Mostramos nombre
         getDialog().setTitle("     " + recetaSeleccionada.getNombre() + "     ");
@@ -78,6 +78,18 @@ public class RecetaDialog extends DialogFragment {
         String listaIngredientes = ingredientesReceta(recetaSeleccionada.getIngredientes(),cuentaComensales );
 
         descripcion.setText(listaIngredientes);
+
+        //TODO Mostrar autor de la receta
+        autor.setText("Autor");
+
+        //Mostramos valoracion
+        double media = (double) recetaSeleccionada.getMe_gusta() / (double) (recetaSeleccionada.getNo_me_gusta() + recetaSeleccionada.getMe_gusta()) ;
+        if(recetaSeleccionada.getMe_gusta() == 0 || (recetaSeleccionada.getNo_me_gusta() + recetaSeleccionada.getMe_gusta()) == 0){
+            valoracion.setText("Valoracion: 0.0% de votos positivos");
+        }
+        else{
+            valoracion.setText("Valoracion: " + media + "% de votos positivos");
+        }
 
 
         //Mostramos los comensales

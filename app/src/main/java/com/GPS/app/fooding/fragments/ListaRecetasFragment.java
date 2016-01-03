@@ -89,13 +89,21 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
         String[] listaNombres = new String[listaRecetas.size()];
         String[] listaTipo = new String[listaRecetas.size()];
         Integer[] listaIconos = new Integer[listaRecetas.size()];
-        Integer[] puntos = new Integer[listaRecetas.size()];
+        Double[] puntos = new Double[listaRecetas.size()];
 
         //creamos la lista de nombres y de logos
         for(int i=0;i<listaRecetas.size();i++){
             listaNombres[i] = listaRecetas.get(i).getNombre();
             listaTipo[i] = listaRecetas.get(i).getTipo();
-            puntos[i] = listaRecetas.get(i).getMe_gusta() - listaRecetas.get(i).getNo_me_gusta();
+
+            double media = (double) listaRecetas.get(i).getMe_gusta() / (double) (listaRecetas.get(i).getNo_me_gusta() + listaRecetas.get(i).getMe_gusta()) ;
+            if(listaRecetas.get(i).getMe_gusta() == 0 || (listaRecetas.get(i).getNo_me_gusta() + listaRecetas.get(i).getMe_gusta()) == 0){
+                puntos[i] = 0.0;
+            }
+            else{
+                puntos[i] = media;
+            }
+
             //Transformamos los logos a iconos
             if (listaTipo[i].equalsIgnoreCase("pasta")){
                 listaIconos[i] = R.mipmap.pasta_logo;

@@ -16,9 +16,9 @@ public class RecetaAdapter extends ArrayAdapter<String> {
     private final Activity context;
     private final String[] itemname;
     private final Integer[] imgid;
-    private final Integer[] puntos;
+    private final Double[] puntos;
 
-    public RecetaAdapter(Activity context, String[] itemname, Integer[] imgid, Integer[] puntos) {
+    public RecetaAdapter(Activity context, String[] itemname, Integer[] imgid, Double[] puntos) {
         super(context, R.layout.receta, itemname);
         // TODO Auto-generated constructor stub
 
@@ -39,7 +39,7 @@ public class RecetaAdapter extends ArrayAdapter<String> {
 
         txtTitle.setText(itemname[position]);
         imageView.setImageResource(imgid[position]);
-        extratxt.setText("Puntos: "+puntos[position]);
+        extratxt.setText(puntos[position] + "% de votos positivos");
         return rowView;
 
     };

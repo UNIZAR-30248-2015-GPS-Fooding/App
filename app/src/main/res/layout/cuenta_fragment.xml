@@ -83,7 +83,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+"
-                android:id="@+id/likeButton"
                 android:background="@mipmap/like_logo"/>
             <TextView
                 android:id="@+id/likes"
@@ -96,7 +95,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-"
-                android:id="@+id/dislikeButton"
                 android:background="@mipmap/dislike_logo"/>
             <TextView
                 android:id="@+id/dislikes"

@@ -84,35 +84,48 @@
             android:layout_width="match_parent" android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/autor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Autor: "
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/texto_autor" android:text="texto_autor"
+                android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+            <TextView
                 android:id="@+id/valoracion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Valoracion: "
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        </LinearLayout>
-
-        <LinearLayout android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="50dp"
-            android:layout_gravity="center">
-            <Button
-                style="?android:attr/buttonStyleSmall"
+            <LinearLayout android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+"
-                android:id="@+id/buttonMeGusta"
-                android:background="@mipmap/like_logo"/>
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:id="@+id/buttonNoMeGusta"
-                android:background="@mipmap/dislike_logo"/>
+                android:paddingTop="10dp"
+                android:layout_gravity="center">
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:id="@+id/buttonMeGusta"
+                    android:background="@mipmap/like_logo"/>
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:id="@+id/buttonNoMeGusta"
+                    android:background="@mipmap/dislike_logo"/>
+
+            </LinearLayout>
 
         </LinearLayout>
+
+
 
 
     </LinearLayout>
