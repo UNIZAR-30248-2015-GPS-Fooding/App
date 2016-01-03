@@ -420,15 +420,18 @@ public class Access {
 
     /**
      * @param test <true> si es test, <false> en caso contrario
+     * @param nick nick del usuario a buscar (null si se quieren buscar todos los usuarios
      * @return una lista de los usuarios de la BD
      */
-    public static List<Usuario> get_usuarios(boolean test){
+    public static List<Usuario> get_usuarios(String nick, boolean test){
         String t = null;
 
         if(test) t= "yes";
         else t= "no";
 
         String xml = "<request id=\"" + Data.LISTA_USERS_CODE + "\">";
+        if(nick != null)
+            xml = xml + "<nick>" + nick + "</nick>";
         xml = xml + "<test>" + t + "</test>";
 
         xml = xml + "</request>";

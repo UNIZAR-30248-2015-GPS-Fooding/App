@@ -436,7 +436,7 @@ public class MainActivity extends AppCompatActivity
                             public void onClick(DialogInterface dialog,int id) {
                                 String valueNombre = userInputNom.getText().toString();
                                 //TODO Modificar metodo para que busque los usuarios segun el criterio de busqueda
-                                List<Usuario> listaUsuarios = ClientInterface.get_usuarios(false);
+                                List<Usuario> listaUsuarios = ClientInterface.get_usuarios(valueNombre, false);
                                 ListaUsuariosFragment.actualizarLista(null);
                                 return;
                             }

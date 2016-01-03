@@ -85,7 +85,8 @@ public class ListaUsuariosFragment extends android.support.v4.app.Fragment {
 
     public static void actualizarLista(List<Usuario> lista){
         if(lista== null){
-            listaUsuarios = ClientInterface.get_usuarios(test);
+            // TODO pongo null pero ni idea de que va ahi (el nombre de usuario?)
+            listaUsuarios = ClientInterface.get_usuarios(null, test);
         }else{
             listaUsuarios = lista;
         }

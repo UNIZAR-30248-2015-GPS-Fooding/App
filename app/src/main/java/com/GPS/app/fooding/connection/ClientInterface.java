@@ -131,9 +131,10 @@ public class ClientInterface {
 
     /**
      * @param test : <true> si es test, <false> en caso contrario
+     * @param nick nick del usuario a buscar (null si se quieren buscar todos los usuarios
      * @return lista de usuarios del sistema
      */
-    public static List<Usuario> get_usuarios(boolean test){
-        return Access.get_usuarios(test);
+    public static List<Usuario> get_usuarios(String nick, boolean test){
+        return Access.get_usuarios(nick, test);
     }
 }
