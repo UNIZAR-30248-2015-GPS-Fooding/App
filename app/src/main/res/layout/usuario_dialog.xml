@@ -17,6 +17,7 @@
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:weightSum="1"
         android:layout_gravity="center"
+        android:padding="30dp"
         >
 
         <ImageView
@@ -34,16 +35,21 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Correo: "
+            android:text="Recetas: "
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    </LinearLayout>
         <TextView
-            android:id="@+id/correo"
+            android:id="@+id/recetas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="EJEMPLO"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="LISTA RECETAS" />
 
+    <LinearLayout android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="50dp"
+        android:layout_gravity="center">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,37 +62,8 @@
             android:layout_height="wrap_content"
             android:text="-1"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-
     </LinearLayout>
 
-
-
-
-        <LinearLayout android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-            android:paddingTop="50dp"
-            android:layout_gravity="center">
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="+"
-                android:id="@+id/likeButton"
-                android:background="@mipmap/like_logo"/>
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:id="@+id/dislikeButton"
-                android:background="@mipmap/dislike_logo"/>
-
-        </LinearLayout>
-
-
     </LinearLayout>
-
-
 
 </ScrollView>

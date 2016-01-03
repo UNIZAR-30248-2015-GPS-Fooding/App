@@ -28,11 +28,17 @@
             android:textColor="#ffa940" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right">
+
     <TextView
         android:id="@+id/numLikes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="%"
+        android:text=""
         android:layout_marginLeft="10dp"
         android:layout_marginTop="15dp"
         android:padding="2dp" />
@@ -40,25 +46,9 @@
     <ImageView
         android:id="@+id/iconLike"
         android:src="@mipmap/like_logo"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:padding="5dp"
-        android:paddingTop="30dp"/>
-
-    <TextView
-        android:id="@+id/numDislikes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="%"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
-        android:padding="2dp" />
-    <ImageView
-        android:id="@+id/iconDislike"
-        android:src="@mipmap/dislike_logo"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:padding="5dp"
-        android:paddingTop="30dp"/>
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="5dp" />
+    </LinearLayout>
 
 </LinearLayout>

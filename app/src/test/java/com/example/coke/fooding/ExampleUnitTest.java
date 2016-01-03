@@ -1,4 +1,4 @@
-package com.example.coke.fooding;
+package com.GPS.app.fooding;
 
 import org.junit.Test;
 
