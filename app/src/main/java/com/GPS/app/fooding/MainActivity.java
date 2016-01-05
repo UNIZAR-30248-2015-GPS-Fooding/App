@@ -350,6 +350,7 @@ public class MainActivity extends AppCompatActivity
 
                                 String valueTipo = saberTipo(tipoInputSpinner.getSelectedItemPosition());
                                 List<Receta> recetasNombre = ClientInterface.getRecetasFiltros(valueNombre, valueTipo,listaIngredientes);
+                                recetasNombre = ordenaRecetas(recetasNombre,userInputSpinner.getSelectedItemPosition());
                                 ListaRecetasFragment.actualizarLista(recetasNombre);
                                 return;
                             }
@@ -383,7 +384,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public static String saberTipo(int i ){
+    public static String saberTipo(int i){
         String tipo = "";
         switch(i){
             case 0:
@@ -435,9 +436,9 @@ public class MainActivity extends AppCompatActivity
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 String valueNombre = userInputNom.getText().toString();
-                                //TODO Modificar metodo para que busque los usuarios segun el criterio de busqueda
                                 List<Usuario> listaUsuarios = ClientInterface.get_usuarios(valueNombre, false);
-                                ListaUsuariosFragment.actualizarLista(null);
+                                listaUsuarios = ordenaUsuarios(listaUsuarios,userInputSpinner.getSelectedItemPosition());
+                                ListaUsuariosFragment.actualizarLista(listaUsuarios);
                                 return;
                             }
                         })
@@ -446,7 +447,7 @@ public class MainActivity extends AppCompatActivity
                             public void onClick(DialogInterface dialog, int id) {
                                 userInputNom.setText("");
                                 userInputSpinner.setSelection(0);
-                                ListaRecetasFragment.actualizarLista(null);
+                                ListaUsuariosFragment.actualizarLista(null);
                                 return;
                             }
                         })
@@ -461,6 +462,78 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+
+    public List<Usuario> ordenaUsuarios(List<Usuario> lista, int tipo){
+
+        //Ordenar por nombre
+        if(tipo == 1){
+            int i, j;
+            Usuario aux;
+            for(i=0;i<lista.size()-1;i++){
+                for(j=0;j<lista.size()-i-1;j++) {
+                    if (lista.get(j + 1).getNombre().toLowerCase().compareTo(lista.get(j).getNombre().toLowerCase()) < 0) {
+                        aux = lista.get(j + 1);
+                        lista.set(j+1,lista.get(j));
+                        lista.set(j,aux);
+                    }
+                }
+            }
+        }
+
+        //Ordenar por puntos
+        if(tipo == 2){
+            int i, j;
+            Usuario aux;
+            for(i=0;i<lista.size()-1;i++){
+                for(j=0;j<lista.size()-i-1;j++) {
+                    if (lista.get(j + 1).getScore() >= lista.get(j).getScore()) {
+                        aux = lista.get(j + 1);
+                        lista.set(j+1,lista.get(j));
+                        lista.set(j,aux);
+                    }
+                }
+            }
+        }
+
+        return lista;
+
+    }
+
+    public List<Receta> ordenaRecetas(List<Receta> lista, int tipo){
+
+        //Ordenar por nombre
+        if(tipo == 1){
+            int i, j;
+            Receta aux;
+            for(i=0;i<lista.size()-1;i++){
+                for(j=0;j<lista.size()-i-1;j++) {
+                    if (lista.get(j + 1).getNombre().toLowerCase().compareTo(lista.get(j).getNombre().toLowerCase()) < 0) {
+                        aux = lista.get(j + 1);
+                        lista.set(j+1,lista.get(j));
+                        lista.set(j,aux);
+                    }
+                }
+            }
+        }
+
+        //Ordenar por tipo
+        if(tipo == 2){
+            int i, j;
+            Receta aux;
+            for(i=0;i<lista.size()-1;i++){
+                for(j=0;j<lista.size()-i-1;j++) {
+                    if (lista.get(j + 1).getTipo().toLowerCase().compareTo(lista.get(j).getTipo().toLowerCase()) < 0) {
+                        aux = lista.get(j + 1);
+                        lista.set(j+1,lista.get(j));
+                        lista.set(j,aux);
+                    }
+                }
+            }
+        }
+
+        return lista;
+
+    }
 
 
 

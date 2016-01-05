@@ -136,7 +136,7 @@ public class RecetaDialog extends DialogFragment {
         meGusta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClientInterface.valorar_receta(recetaSeleccionada.getId(), 1, false);
+                ClientInterface.valorar_receta(recetaSeleccionada.getId(), 1, true);
                 Toast.makeText(getActivity(), "Me gusta", Toast.LENGTH_SHORT).show();
             }
         });
@@ -145,7 +145,7 @@ public class RecetaDialog extends DialogFragment {
         noMeGusta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClientInterface.valorar_receta(recetaSeleccionada.getId(),-1, false);
+                ClientInterface.valorar_receta(recetaSeleccionada.getId(),-1, true);
                 Toast.makeText(getActivity(), "No me gusta", Toast.LENGTH_SHORT).show();
             }
         });
