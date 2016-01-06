@@ -60,7 +60,6 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                // TODO Auto-generated method stub
                 //String Slecteditem = itemname[+position];
                 Receta recetaSeleccionada = listaRecetas.get(position);
                 //Toast.makeText(actividadPadre.getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();

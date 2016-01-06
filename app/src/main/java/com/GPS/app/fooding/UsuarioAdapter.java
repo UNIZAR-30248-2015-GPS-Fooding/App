@@ -20,7 +20,6 @@ public class UsuarioAdapter extends ArrayAdapter<String> {
 
     public UsuarioAdapter(Activity context, String[] itemname, Integer[] imgid, String[] puntos) {
         super(context, R.layout.usuario, itemname);
-        // TODO Auto-generated constructor stub
 
         this.context=context;
         this.itemname=itemname;

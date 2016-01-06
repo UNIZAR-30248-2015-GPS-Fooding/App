@@ -20,7 +20,6 @@ public class RecetaAdapter extends ArrayAdapter<String> {
 
     public RecetaAdapter(Activity context, String[] itemname, Integer[] imgid, Double[] puntos) {
         super(context, R.layout.receta, itemname);
-        // TODO Auto-generated constructor stub
 
         this.context=context;
         this.itemname=itemname;

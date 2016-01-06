@@ -47,7 +47,6 @@ public class ListaUsuariosFragment extends android.support.v4.app.Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                // TODO Auto-generated method stub
                 //String Slecteditem = itemname[+position];
                 Usuario usuarioSeleccionado = listaUsuarios.get(position);
                 //Toast.makeText(actividadPadre.getApplicationContext(), usuarioSeleccionado.getNombre(), Toast.LENGTH_SHORT).show();
