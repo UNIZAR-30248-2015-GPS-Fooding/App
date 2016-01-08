@@ -133,7 +133,7 @@ public class Access {
             NodeList nl = doc.getElementsByTagName("receta");
             List<Receta> recetas = new LinkedList<>();
 
-            if(nl != null && nl.getLength() > 0) {
+            if (nl != null && nl.getLength() > 0) {
                 for (int i = 0; i < nl.getLength(); i++) {
                     Element n = (Element) nl.item(i);
 
@@ -141,37 +141,37 @@ public class Access {
                     Receta r = new Receta();
 
                     // id
-                    if(n.getElementsByTagName("id") != null
+                    if (n.getElementsByTagName("id") != null
                             && n.getElementsByTagName("id").getLength() > 0) {
                         r.setId(Integer.parseInt(n.getElementsByTagName("id").item(0).getTextContent()));
                     }
 
                     // nombre
-                    if(n.getElementsByTagName("nombre") != null
+                    if (n.getElementsByTagName("nombre") != null
                             && n.getElementsByTagName("nombre").getLength() > 0) {
                         r.setNombre(n.getElementsByTagName("nombre").item(0).getTextContent());
                     }
 
                     // tipo
-                    if(n.getElementsByTagName("tipo") != null
+                    if (n.getElementsByTagName("tipo") != null
                             && n.getElementsByTagName("tipo").getLength() > 0) {
                         r.setTipo(n.getElementsByTagName("tipo").item(0).getTextContent());
                     }
 
                     // instrucciones
-                    if(n.getElementsByTagName("instrucciones") != null
+                    if (n.getElementsByTagName("instrucciones") != null
                             && n.getElementsByTagName("instrucciones").getLength() > 0) {
                         r.setInstrucciones(n.getElementsByTagName("instrucciones").item(0).getTextContent());
                     }
 
                     // me_gusta
-                    if(n.getElementsByTagName("me_gusta") != null
+                    if (n.getElementsByTagName("me_gusta") != null
                             && n.getElementsByTagName("me_gusta").getLength() > 0) {
                         r.setMe_gusta(Integer.parseInt(n.getElementsByTagName("me_gusta").item(0).getTextContent()));
                     }
 
                     // no_me_gusta
-                    if(n.getElementsByTagName("no_me_gusta") != null
+                    if (n.getElementsByTagName("no_me_gusta") != null
                             && n.getElementsByTagName("no_me_gusta").getLength() > 0) {
                         r.setNo_me_gusta(Integer.parseInt(n.getElementsByTagName("no_me_gusta").item(0).getTextContent()));
                     }
@@ -179,7 +179,7 @@ public class Access {
                     // ingredientes
                     List<Ingrediente> ings = new LinkedList<>();
                     NodeList nll = n.getElementsByTagName("ingrediente");
-                    if(nll != null && nll.getLength() > 0) {
+                    if (nll != null && nll.getLength() > 0) {
                         for (int j = 0; j < nll.getLength(); j++) {
                             Element nn = (Element) nll.item(j);
 
