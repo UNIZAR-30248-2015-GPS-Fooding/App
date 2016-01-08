@@ -44,7 +44,7 @@ public class Access {
             doc.getDocumentElement().normalize();
 
             // recorrer la lista de ingredientes
-            List<String> ings = new LinkedList<String>();
+            List<String> ings = new LinkedList<>();
             NodeList nl = doc.getElementsByTagName("ingrediente");
 
             if(nl != null && nl.getLength() > 0) {
@@ -76,7 +76,7 @@ public class Access {
             doc.getDocumentElement().normalize();
 
             // recorrer la lista de tipos
-            List<String> tipos = new LinkedList<String>();
+            List<String> tipos = new LinkedList<>();
             NodeList nl = doc.getElementsByTagName("tipo");
 
             if(nl != null && nl.getLength() > 0) {
@@ -131,7 +131,7 @@ public class Access {
 
             // recorrer lista de recetas
             NodeList nl = doc.getElementsByTagName("receta");
-            List<Receta> recetas = new LinkedList<Receta>();
+            List<Receta> recetas = new LinkedList<>();
 
             if(nl != null && nl.getLength() > 0) {
                 for (int i = 0; i < nl.getLength(); i++) {
@@ -177,7 +177,7 @@ public class Access {
                     }
 
                     // ingredientes
-                    List<Ingrediente> ings = new LinkedList<Ingrediente>();
+                    List<Ingrediente> ings = new LinkedList<>();
                     NodeList nll = n.getElementsByTagName("ingrediente");
                     if(nll != null && nll.getLength() > 0) {
                         for (int j = 0; j < nll.getLength(); j++) {
@@ -212,7 +212,7 @@ public class Access {
      * @return true si se ha creado el usuario y false en caso contrario
      */
     public static boolean crear_usuario(String mail, String nick, String pw, boolean test){
-        String t = null;
+        String t;
 
         if(test){
             t = "yes";
@@ -257,7 +257,7 @@ public class Access {
      * @return true si se ha logueado el usuario y false en caso contrario
      */
     public static boolean login_usuario(String mail, String pw, boolean test){
-        String t = null;
+        String t;
 
         if(test){
             t = "yes";
@@ -302,7 +302,7 @@ public class Access {
      * caso contrario
      */
     public static boolean crear_receta(String mail, String nombre, String tipo, String instrucciones, List<Ingrediente> ings, boolean test){
-        String t = null;
+        String t;
 
         if(test) t= "yes";
         else t= "no";
@@ -349,7 +349,7 @@ public class Access {
      * @return <true> si se ha podido valorar, <false> en caso contrario
      */
     public static boolean valorar_receta(int id, int valoracion, boolean test){
-        String t = null;
+        String t;
 
         if(test) t= "yes";
         else t= "no";
@@ -387,7 +387,7 @@ public class Access {
      * @return la valoracion media de la receta
      */
     public static double valoracion_media_receta(int id, boolean test){
-        String t = null;
+        String t;
 
         if(test) t= "yes";
         else t= "no";
@@ -424,7 +424,7 @@ public class Access {
      * @return una lista de los usuarios de la BD
      */
     public static List<Usuario> get_usuarios(String nick, boolean test){
-        String t = null;
+        String t;
 
         if(test) t= "yes";
         else t= "no";
@@ -448,24 +448,76 @@ public class Access {
 
                     String nombre = e.getElementsByTagName("nick").item(0).getTextContent();
                     int score = Integer.parseInt(e.getElementsByTagName("score").item(0).getTextContent());
+                    String email = e.getElementsByTagName("mail").item(0).getTextContent();
 
-                    List<Receta> recetas = new LinkedList<>();
-                    for(int j = 0; j < e.getElementsByTagName("receta").getLength(); j++){
-                        Element ee = (Element) doc.getElementsByTagName("receta").item(j);
-                        int id = Integer.parseInt(ee.getAttribute("id"));
-                        String rec = ee.getTextContent();
-
-                        Receta r = new Receta();
-                        r.setId(id);
-                        r.setNombre(rec);
-                        recetas.add(r);
-                    }
-
-                    Usuario u = new Usuario(nombre, score, recetas);
+                    Usuario u = new Usuario(nombre, score, null);
+                    u.setEmail(email);
                     users.add(u);
                 }
             }
             return users;
+        }
+        else{
+            return null;
+        }
+    }
+
+    /**
+     * @param mail email del usuario
+     * @param test <true> si es test, <false> en caso contrario
+     * @return usuario de la BD
+     */
+    public static Usuario info_usuario(String mail, boolean test){
+        String t;
+
+        if(test) t= "yes";
+        else t= "no";
+
+        String xml = "<request id=\"" + Data.USER_CODE + "\">";
+        if(mail != null)
+            xml = xml + "<nick>" + mail + "</nick>";
+        xml = xml + "<test>" + t + "</test>";
+
+        xml = xml + "</request>";
+        // enviar xml y recibir respuesta
+        Document doc = Client.sendRequest(xml);
+
+        // comprobar respuesta
+        if(doc != null){
+            String email = null;
+            String nick = null;
+            int score = -1;
+            List<Receta> recetas = new LinkedList<>();
+
+            if(doc.getElementsByTagName("mail") != null &&
+                    doc.getElementsByTagName("mail").getLength() > 0){
+                email = doc.getElementsByTagName("mail").item(0).getTextContent();
+            }
+            if(doc.getElementsByTagName("nick") != null &&
+                    doc.getElementsByTagName("nick").getLength() > 0){
+                nick = doc.getElementsByTagName("nick").item(0).getTextContent();
+            }
+            if(doc.getElementsByTagName("score") != null &&
+                    doc.getElementsByTagName("score").getLength() > 0){
+                score = Integer.parseInt(doc.getElementsByTagName("score").item(0).getTextContent());
+            }
+            if(doc.getElementsByTagName("receta") != null &&
+                    doc.getElementsByTagName("receta").getLength() > 0){
+                for(int j = 0; j < doc.getElementsByTagName("receta").getLength(); j++){
+                    Element ee = (Element) doc.getElementsByTagName("receta").item(j);
+                    int id = Integer.parseInt(ee.getAttribute("id"));
+                    String rec = ee.getTextContent();
+
+                    Receta r = new Receta();
+                    r.setId(id);
+                    r.setNombre(rec);
+                    recetas.add(r);
+                }
+            }
+
+            Usuario u = new Usuario(nick, score, recetas);
+            u.setEmail(email);
+            return u;
         }
         else{
             return null;

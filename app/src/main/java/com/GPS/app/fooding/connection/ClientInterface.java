@@ -137,4 +137,13 @@ public class ClientInterface {
     public static List<Usuario> get_usuarios(String nick, boolean test){
         return Access.get_usuarios(nick, test);
     }
+
+    /**
+     * @param mail email del usuario
+     * @param test <true> si es test, <false> en caso contrario
+     * @return usuario de la BD
+     */
+    public static Usuario info_usuario(String mail, boolean test){
+        return Access.info_usuario(mail, test);
+    }
 }
