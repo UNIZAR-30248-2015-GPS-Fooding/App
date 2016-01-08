@@ -194,8 +194,6 @@ public class MainActivity extends AppCompatActivity
             android.support.v4.app.Fragment fragment = new ListaRecetasFragment();
             fragmentTransaction.replace(R.id.mainFrame, fragment);
             fragmentTransaction.addToBackStack(null);
-
-
         }
         else if (id == R.id.menu_lista_usuarios) {
             android.support.v4.app.Fragment fragment = new ListaUsuariosFragment();

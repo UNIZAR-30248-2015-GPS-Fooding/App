@@ -175,8 +175,6 @@ public class CrearRecetaFragment extends android.support.v4.app.Fragment impleme
                     b.close();
                     System.out.println(correo);
 
-
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -190,6 +188,13 @@ public class CrearRecetaFragment extends android.support.v4.app.Fragment impleme
 
                 if(creado){
                     Toast.makeText(getActivity(), "Receta creada correctamente",Toast.LENGTH_SHORT ).show();
+                    //ir a la lista de recetas
+                    android.support.v4.app.FragmentTransaction trans = getFragmentManager().beginTransaction();
+                    android.support.v4.app.Fragment fragment = new ListaRecetasFragment();
+                    trans.replace(R.id.mainFrame, fragment);
+                    trans.addToBackStack(null);
+                    trans.commit();
+
                 }else{
                     Toast.makeText(getActivity(), "Receta no creada",Toast.LENGTH_SHORT).show();
                 }

@@ -1,5 +1,6 @@
 package com.GPS.app.fooding.fragments;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.GPS.app.fooding.MainActivity;
 import com.GPS.app.fooding.connection.ClientInterface;
 import com.GPS.app.fooding.R;
 
@@ -51,6 +53,11 @@ public class RegistrarseFragment extends android.support.v4.app.Fragment impleme
               //  Toast.makeText(getActivity(), "Email: " + mEmailView.getText() + " Pass: " + mPasswordView.getText() + " Nombre: " + mNombreView.getText(), Toast.LENGTH_SHORT).show();
                 if(creado){
                     Toast.makeText(getActivity(), "Se ha enviado un e-mail de verificación al correo introducido",Toast.LENGTH_SHORT ).show();
+                    android.support.v4.app.FragmentTransaction trans = getFragmentManager().beginTransaction();
+                    android.support.v4.app.Fragment fragment = new ListaRecetasFragment();
+                    trans.replace(R.id.mainFrame, fragment);
+                    trans.addToBackStack(null);
+                    trans.commit();
                 }else{
                     Toast.makeText(getActivity(), "Usuario no registrado",Toast.LENGTH_SHORT).show();
                 }

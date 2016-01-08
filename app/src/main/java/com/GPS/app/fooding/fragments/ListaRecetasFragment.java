@@ -49,10 +49,12 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
         floatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(actividadPadre.getApplicationContext(), "FAB CLICKED: agnadida Receta", Toast.LENGTH_LONG).show();
-                nombresReceta.add("Nueva Receta");
-                logosReceta.add(R.mipmap.fish_logo);
-                actualizarLista(null);
+                //navegacion a crear receta
+                android.support.v4.app.FragmentTransaction trans = getFragmentManager().beginTransaction();
+                android.support.v4.app.Fragment fragment = new CrearRecetaFragment();
+                trans.replace(R.id.mainFrame, fragment);
+                trans.addToBackStack(null);
+                trans.commit();
             }
         });
 
