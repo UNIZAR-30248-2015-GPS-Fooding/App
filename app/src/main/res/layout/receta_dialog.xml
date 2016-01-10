@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:fillViewport="true"
     android:orientation="vertical" >
 
     <LinearLayout
         android:id="@+id/edit_name"
-        android:layout_width="fill_parent"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:scrollbars="vertical"
@@ -16,10 +16,18 @@
         android:weightSum="1"
         android:padding="30dp">
 
+        <TextView
+            android:id="@+id/titulo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Título"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
         <ImageView
-        android:id="@+id/icono"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+            android:id="@+id/icono"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
 
         <TextView
         android:id="@+id/comensales"

@@ -31,7 +31,6 @@ public class RecetaDialog extends DialogFragment {
     private int cuentaComensales = 1;
 
 
-
     public RecetaDialog(Receta recetaSeleccionada) {
         // Constructor para pasarle datos de la receta
         this.recetaSeleccionada = recetaSeleccionada;
@@ -45,15 +44,13 @@ public class RecetaDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.receta_dialog, container);
         ImageView imageView = (ImageView) view.findViewById(R.id.icono);
         final TextView descripcion = (TextView) view.findViewById(R.id.descripcion);
+        TextView titulo = (TextView) view.findViewById(R.id.titulo);
         TextView elaboracion = (TextView) view.findViewById(R.id.descripcion2);
         TextView autor = (TextView) view.findViewById(R.id.texto_autor);
         TextView valoracion = (TextView) view.findViewById(R.id.texto_valoracion);
 
         //Mostramos nombre
-        getDialog().setTitle("     " + recetaSeleccionada.getNombre() + "     ");
-        int width = ViewGroup.LayoutParams.FILL_PARENT;
-        int height = ViewGroup.LayoutParams.FILL_PARENT;
-        getDialog().getWindow().setLayout(width, height);
+        titulo.setText(recetaSeleccionada.getNombre());
 
         //Mostramos icono
         if (recetaSeleccionada.getTipo().equalsIgnoreCase("pasta")){
@@ -82,8 +79,7 @@ public class RecetaDialog extends DialogFragment {
 
         descripcion.setText(listaIngredientes);
 
-        //TODO Mostrar autor de la receta
-
+        // Mostrar autor de la receta
         autor.setText(dataObtained.getAutor().getNombre());
 
 
