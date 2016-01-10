@@ -10,7 +10,7 @@ public class Receta {
 
 	/**
 	 * Clase para representar las recetas
-	 * 
+	 *
 	 * @version 1.0
 	 * @date 26/10/2015
 	 */
@@ -21,6 +21,7 @@ public class Receta {
 	private String tipo = null;
 	private String instrucciones = null;
 	private List<Ingrediente> ingredientes = null;
+	private Usuario autor = null;
 	private int me_gusta = 0;
 	private int no_me_gusta = 0;
 
@@ -31,14 +32,14 @@ public class Receta {
 	}
 
 	/**
-	 * @return el id
+	 * @return the id
 	 */
 	public int getId() {
 		return id;
 	}
 
 	/**
-	 * @param id el nuevo id
+	 * @param id the id to set
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -132,6 +133,22 @@ public class Receta {
 	 */
 	public void setNo_me_gusta(int no_me_gusta) {
 		this.no_me_gusta = no_me_gusta;
+	}
+
+	/**
+	 *
+	 * @return el autor de la receta
+	 */
+	public Usuario getAutor() {
+		return autor;
+	}
+
+	/**
+	 * @param autor
+	 *            el nuevo autor
+	 */
+	public void setAutor(Usuario autor) {
+		this.autor = autor;
 	}
 
 }

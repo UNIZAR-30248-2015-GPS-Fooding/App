@@ -232,6 +232,23 @@ public class Access {
                 r.setNo_me_gusta(Integer.parseInt(doc.getElementsByTagName("no_me_gusta").item(0).getTextContent()));
             }
 
+            // Usuario
+            Usuario us = new Usuario();
+
+            // mail usuario
+            if (doc.getElementsByTagName("mail_autor") != null
+                    && doc.getElementsByTagName("mail_autor").getLength() > 0) {
+                us.setEmail(doc.getElementsByTagName("mail_autor").item(0).getTextContent());
+            }
+
+            // nick usuario
+            if (doc.getElementsByTagName("nick_autor") != null
+                    && doc.getElementsByTagName("nick_autor").getLength() > 0) {
+                us.setNombre(doc.getElementsByTagName("nick_autor").item(0).getTextContent());
+            }
+
+            r.setAutor(us);
+
             // ingredientes
             List<Ingrediente> ings = new LinkedList<>();
             NodeList nll = doc.getElementsByTagName("ingrediente");

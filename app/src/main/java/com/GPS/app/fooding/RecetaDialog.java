@@ -84,7 +84,7 @@ public class RecetaDialog extends DialogFragment {
 
         //TODO Mostrar autor de la receta
 
-        autor.setText("Autor");
+        autor.setText(dataObtained.getAutor().getNombre());
 
 
         //Mostramos valoracion
