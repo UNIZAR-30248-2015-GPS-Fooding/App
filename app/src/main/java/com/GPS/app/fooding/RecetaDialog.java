@@ -111,10 +111,6 @@ public class RecetaDialog extends DialogFragment {
                 comensales.setText(contador);
 
                 descripcion.setText(ingredientesReceta(dataObtained.getIngredientes(),cuentaComensales));
-<<<<<<< HEAD
-
-=======
->>>>>>> 676747c334e44fe094a76d4307a89cfea583b993
             }
         });
 
@@ -130,10 +126,6 @@ public class RecetaDialog extends DialogFragment {
                     comensales.setText(contador);
 
                     descripcion.setText(ingredientesReceta(dataObtained.getIngredientes(),cuentaComensales));
-<<<<<<< HEAD
-
-=======
->>>>>>> 676747c334e44fe094a76d4307a89cfea583b993
                 }
             }
         });
