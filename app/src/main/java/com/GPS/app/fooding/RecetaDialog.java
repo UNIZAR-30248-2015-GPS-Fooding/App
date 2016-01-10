@@ -94,7 +94,7 @@ public class RecetaDialog extends DialogFragment {
             valoracion.setText(" 0.0% de votos positivos");
         }
         else{
-            valoracion.setText( media + "% de votos positivos");
+            valoracion.setText( media*100 + "% de votos positivos");
         }
 
         //Mostramos los comensales

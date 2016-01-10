@@ -158,7 +158,17 @@ public class Access {
                         r.setTipo(n.getElementsByTagName("tipo").item(0).getTextContent());
                     }
 
+                    // me_gusta
+                    if (n.getElementsByTagName("me_gusta") != null
+                            && n.getElementsByTagName("me_gusta").getLength() > 0) {
+                        r.setMe_gusta(Integer.parseInt(n.getElementsByTagName("me_gusta").item(0).getTextContent()));
+                    }
 
+                    // no_me_gusta
+                    if (n.getElementsByTagName("no_me_gusta") != null
+                            && n.getElementsByTagName("no_me_gusta").getLength() > 0) {
+                        r.setNo_me_gusta(Integer.parseInt(n.getElementsByTagName("no_me_gusta").item(0).getTextContent()));
+                    }
 
                     // agregar receta
                     recetas.add(r);
@@ -224,12 +234,14 @@ public class Access {
             if (doc.getElementsByTagName("me_gusta") != null
                     && doc.getElementsByTagName("me_gusta").getLength() > 0) {
                 r.setMe_gusta(Integer.parseInt(doc.getElementsByTagName("me_gusta").item(0).getTextContent()));
+                System.out.println(r.getMe_gusta());
             }
 
             // no_me_gusta
             if (doc.getElementsByTagName("no_me_gusta") != null
                     && doc.getElementsByTagName("no_me_gusta").getLength() > 0) {
                 r.setNo_me_gusta(Integer.parseInt(doc.getElementsByTagName("no_me_gusta").item(0).getTextContent()));
+                System.out.println(r.getNo_me_gusta());
             }
 
             // Usuario

@@ -102,7 +102,7 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
                 puntos[i] = 0.0;
             }
             else{
-                puntos[i] = media;
+                puntos[i] = media*100;
             }
 
             //Transformamos los logos a iconos
