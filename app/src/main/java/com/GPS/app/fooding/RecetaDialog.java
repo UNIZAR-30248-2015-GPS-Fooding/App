@@ -1,7 +1,10 @@
 package com.GPS.app.fooding;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.style.StyleSpan;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.text.SpannableString;
 
 import com.GPS.app.fooding.connection.ClientInterface;
 import com.GPS.app.fooding.data.Ingrediente;
@@ -50,7 +54,10 @@ public class RecetaDialog extends DialogFragment {
         TextView valoracion = (TextView) view.findViewById(R.id.texto_valoracion);
 
         //Mostramos nombre
-        titulo.setText(recetaSeleccionada.getNombre());
+        SpannableString spanString = new SpannableString(recetaSeleccionada.getNombre());
+        spanString.setSpan(new UnderlineSpan(), 0, spanString.length(), 0);
+        spanString.setSpan(new StyleSpan(Typeface.BOLD), 0, spanString.length(), 0);
+        titulo.setText(spanString);
 
         //Mostramos icono
         if (recetaSeleccionada.getTipo().equalsIgnoreCase("pasta")){
@@ -72,7 +79,7 @@ public class RecetaDialog extends DialogFragment {
             imageView.setImageResource(R.mipmap.random_logo);
         }
 
-        Receta dataObtained = Access.getReceta(recetaSeleccionada.getId());
+        final Receta dataObtained = Access.getReceta(recetaSeleccionada.getId());
 
         //Mostramos los ingredientes
         String listaIngredientes = ingredientesReceta(dataObtained.getIngredientes(),cuentaComensales );
@@ -106,7 +113,7 @@ public class RecetaDialog extends DialogFragment {
                 String contador=String.valueOf(cuentaComensales);
                 comensales.setText(contador);
 
-                descripcion.setText(ingredientesReceta(recetaSeleccionada.getIngredientes(),cuentaComensales));
+                descripcion.setText(ingredientesReceta(dataObtained.getIngredientes(),cuentaComensales));
 
             }
         });
@@ -122,7 +129,7 @@ public class RecetaDialog extends DialogFragment {
                     String contador = String.valueOf(cuentaComensales);
                     comensales.setText(contador);
 
-                    descripcion.setText(ingredientesReceta(recetaSeleccionada.getIngredientes(),cuentaComensales));
+                    descripcion.setText(ingredientesReceta(dataObtained.getIngredientes(),cuentaComensales));
 
                 }
             }
