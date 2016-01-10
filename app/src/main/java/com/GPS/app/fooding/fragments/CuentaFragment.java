@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.GPS.app.fooding.R;
 import com.GPS.app.fooding.data.Usuario;
 
+
+
 /**
  * Created by coke on 15/10/2015.
  */
@@ -45,6 +47,7 @@ public class CuentaFragment extends android.support.v4.app.Fragment {
         correo.setText(u.getEmail());
         nombre.setText(u.getNombre());
         puntos.setText((Integer.toString(u.getScore())));
+
         return view;
     }
 

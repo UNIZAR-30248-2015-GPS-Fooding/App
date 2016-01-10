@@ -25,10 +25,9 @@ public class RecetaDialog extends DialogFragment {
     private ImageView imageView;
     private Receta recetaSeleccionada;
 
-   // private LinearLayout btnIncrementar;
-
     private TextView comensales;
     private int cuentaComensales = 1;
+
 
 
     public RecetaDialog(Receta recetaSeleccionada) {
@@ -47,7 +46,7 @@ public class RecetaDialog extends DialogFragment {
         TextView titulo = (TextView) view.findViewById(R.id.titulo);
         TextView elaboracion = (TextView) view.findViewById(R.id.descripcion2);
         TextView autor = (TextView) view.findViewById(R.id.texto_autor);
-        TextView valoracion = (TextView) view.findViewById(R.id.texto_valoracion);
+        final TextView valoracion = (TextView) view.findViewById(R.id.texto_valoracion);
 
         //Mostramos nombre
         titulo.setText(recetaSeleccionada.getNombre());
@@ -72,26 +71,24 @@ public class RecetaDialog extends DialogFragment {
             imageView.setImageResource(R.mipmap.random_logo);
         }
 
-        Receta dataObtained = Access.getReceta(recetaSeleccionada.getId());
+        final Receta dataObtained = Access.getReceta(recetaSeleccionada.getId());
 
         //Mostramos los ingredientes
         String listaIngredientes = ingredientesReceta(dataObtained.getIngredientes(),cuentaComensales );
-
         descripcion.setText(listaIngredientes);
 
-        // Mostrar autor de la receta
+        //Autor de la receta
         autor.setText(dataObtained.getAutor().getNombre());
 
 
-        //Mostramos valoracion
-        double media = (double) recetaSeleccionada.getMe_gusta() / (double) (recetaSeleccionada.getNo_me_gusta() + recetaSeleccionada.getMe_gusta()) ;
-        if(recetaSeleccionada.getMe_gusta() == 0 || (recetaSeleccionada.getNo_me_gusta() + recetaSeleccionada.getMe_gusta()) == 0){
+        //Mostramos valoracion de la receta
+        double media = (double) dataObtained.getMe_gusta() / (double) (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) ;
+        if(dataObtained.getMe_gusta() == 0 || (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) == 0){
             valoracion.setText(" 0.0% de votos positivos");
         }
         else{
             valoracion.setText( media + "% de votos positivos");
         }
-
 
         //Mostramos los comensales
         comensales = (TextView) view.findViewById(R.id.numComensales);
@@ -106,8 +103,7 @@ public class RecetaDialog extends DialogFragment {
                 String contador=String.valueOf(cuentaComensales);
                 comensales.setText(contador);
 
-                descripcion.setText(ingredientesReceta(recetaSeleccionada.getIngredientes(),cuentaComensales));
-
+                descripcion.setText(ingredientesReceta(dataObtained.getIngredientes(),cuentaComensales));
             }
         });
 
@@ -122,32 +118,49 @@ public class RecetaDialog extends DialogFragment {
                     String contador = String.valueOf(cuentaComensales);
                     comensales.setText(contador);
 
-                    descripcion.setText(ingredientesReceta(recetaSeleccionada.getIngredientes(),cuentaComensales));
-
+                    descripcion.setText(ingredientesReceta(dataObtained.getIngredientes(),cuentaComensales));
                 }
             }
         });
 
         //Mostramos la elaboracion
+        elaboracion.setText(dataObtained.getInstrucciones());
 
-        elaboracion.setText(recetaSeleccionada.getInstrucciones());
-
-        //Decrementa el numero de comensales con el boton "-"
+        //Boton de me gusta
         final Button meGusta = (Button) view.findViewById(R.id.buttonMeGusta);
         meGusta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClientInterface.valorar_receta(recetaSeleccionada.getId(), 1, true);
+                ClientInterface.valorar_receta(dataObtained.getId(), 1, true);
                 Toast.makeText(getActivity(), "Me gusta", Toast.LENGTH_SHORT).show();
+
+               double media = (double) dataObtained.getMe_gusta() / (double) (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) ;
+                if(dataObtained.getMe_gusta() == 0 || (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) == 0){
+                    valoracion.setText(" 0.0% de votos positivos");
+                }
+                else{
+                    valoracion.setText( media + "% de votos positivos");
+                }
+
             }
         });
 
+        //Boton de no me gusta
         final Button noMeGusta = (Button) view.findViewById(R.id.buttonNoMeGusta);
         noMeGusta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClientInterface.valorar_receta(recetaSeleccionada.getId(),-1, true);
+                ClientInterface.valorar_receta(dataObtained.getId(),-1, true);
                 Toast.makeText(getActivity(), "No me gusta", Toast.LENGTH_SHORT).show();
+
+                double media = (double) dataObtained.getMe_gusta() / (double) (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) ;
+                if(dataObtained.getMe_gusta() == 0 || (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) == 0){
+                    valoracion.setText(" 0.0% de votos positivos");
+                }
+                else{
+                    valoracion.setText( media + "% de votos positivos");
+                }
+
             }
         });
 

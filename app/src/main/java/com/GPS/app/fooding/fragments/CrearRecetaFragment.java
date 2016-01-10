@@ -202,10 +202,4 @@ public class CrearRecetaFragment extends android.support.v4.app.Fragment impleme
                 break;
         }
     }
-
-
-
-
-
-
 }

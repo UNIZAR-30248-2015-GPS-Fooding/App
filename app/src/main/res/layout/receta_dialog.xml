@@ -25,9 +25,9 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ImageView
-            android:id="@+id/icono"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
+        android:id="@+id/icono"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 
         <TextView
         android:id="@+id/comensales"
