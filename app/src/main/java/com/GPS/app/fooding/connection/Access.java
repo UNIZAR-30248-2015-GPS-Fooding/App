@@ -109,7 +109,7 @@ public class Access {
         /* hacer la peticion al servidor */
 
         // crear la peticion
-        String xml = "<request id=\"" + Data.RECETA_CODE + "\">";
+        String xml = "<request id=\"" + Data.LIST_RECETA_CODE + "\">";
         if (nombre != null)  // comprobar si hay que poner nombre
             xml = xml + "<nombre>" + nombre + "</nombre>";
         if (tipo != null)    // comprobar si hay que poner tipo
@@ -158,48 +158,101 @@ public class Access {
                         r.setTipo(n.getElementsByTagName("tipo").item(0).getTextContent());
                     }
 
-                    // instrucciones
-                    if (n.getElementsByTagName("instrucciones") != null
-                            && n.getElementsByTagName("instrucciones").getLength() > 0) {
-                        r.setInstrucciones(n.getElementsByTagName("instrucciones").item(0).getTextContent());
-                    }
 
-                    // me_gusta
-                    if (n.getElementsByTagName("me_gusta") != null
-                            && n.getElementsByTagName("me_gusta").getLength() > 0) {
-                        r.setMe_gusta(Integer.parseInt(n.getElementsByTagName("me_gusta").item(0).getTextContent()));
-                    }
-
-                    // no_me_gusta
-                    if (n.getElementsByTagName("no_me_gusta") != null
-                            && n.getElementsByTagName("no_me_gusta").getLength() > 0) {
-                        r.setNo_me_gusta(Integer.parseInt(n.getElementsByTagName("no_me_gusta").item(0).getTextContent()));
-                    }
-
-                    // ingredientes
-                    List<Ingrediente> ings = new LinkedList<>();
-                    NodeList nll = n.getElementsByTagName("ingrediente");
-                    if (nll != null && nll.getLength() > 0) {
-                        for (int j = 0; j < nll.getLength(); j++) {
-                            Element nn = (Element) nll.item(j);
-
-                            // crear ingrediente
-                            Ingrediente ing = new Ingrediente();
-                            ing.setNombre(nn.getTextContent());
-                            ing.setCantidad(Integer.parseInt(nn.getAttribute("cantidad")));
-                            ing.setUds(nn.getAttribute("uds"));
-
-                            // agregar ingrediente
-                            ings.add(ing);
-                        }
-                        r.setIngredientes(ings);
-                    }
 
                     // agregar receta
                     recetas.add(r);
                 }
             }
             return recetas;
+        }
+        return null;
+    }
+
+    /**
+     * Obtiene las recetas de la BD del servidor cuyo id coincide con
+     * @param id
+     *
+     * @return una receta que coincide con el parametro de
+     * busqueda
+     */
+    public static Receta getReceta(int id) {
+        /* hacer la peticion al servidor */
+
+        // crear la peticion
+        String xml = "<request id=\"" + Data.RECETA_CODE + "\">";
+        if (id >= 0)  // comprobar si el id esta bien
+            xml = xml + "<id>" + id + "</id>";
+        xml = xml + "</request>";
+
+        // mandar la peticion
+        Document doc = Client.sendRequest(xml);
+
+        if (doc != null) {
+            // se ha recibido respuesta correcta
+
+            doc.getDocumentElement().normalize();
+
+            // crear nueva receta
+            Receta r = new Receta();
+
+            // id
+            if (doc.getElementsByTagName("id") != null
+                    && doc.getElementsByTagName("id").getLength() > 0) {
+                r.setId(Integer.parseInt(doc.getElementsByTagName("id").item(0).getTextContent()));
+            }
+
+            // nombre
+            if (doc.getElementsByTagName("nombre") != null
+                    && doc.getElementsByTagName("nombre").getLength() > 0) {
+                r.setNombre(doc.getElementsByTagName("nombre").item(0).getTextContent());
+            }
+
+            // tipo
+            if (doc.getElementsByTagName("tipo") != null
+                    && doc.getElementsByTagName("tipo").getLength() > 0) {
+                r.setTipo(doc.getElementsByTagName("tipo").item(0).getTextContent());
+            }
+
+            // instrucciones
+            if (doc.getElementsByTagName("instrucciones") != null
+                    && doc.getElementsByTagName("instrucciones").getLength() > 0) {
+                r.setInstrucciones(doc.getElementsByTagName("instrucciones").item(0).getTextContent());
+            }
+
+            // me_gusta
+            if (doc.getElementsByTagName("me_gusta") != null
+                    && doc.getElementsByTagName("me_gusta").getLength() > 0) {
+                r.setMe_gusta(Integer.parseInt(doc.getElementsByTagName("me_gusta").item(0).getTextContent()));
+            }
+
+            // no_me_gusta
+            if (doc.getElementsByTagName("no_me_gusta") != null
+                    && doc.getElementsByTagName("no_me_gusta").getLength() > 0) {
+                r.setNo_me_gusta(Integer.parseInt(doc.getElementsByTagName("no_me_gusta").item(0).getTextContent()));
+            }
+
+            // ingredientes
+            List<Ingrediente> ings = new LinkedList<>();
+            NodeList nll = doc.getElementsByTagName("ingrediente");
+            if (nll != null && nll.getLength() > 0) {
+                for (int j = 0; j < nll.getLength(); j++) {
+                    Element nn = (Element) nll.item(j);
+
+                    // crear ingrediente
+                    Ingrediente ing = new Ingrediente();
+                    ing.setNombre(nn.getTextContent());
+                    ing.setCantidad(Integer.parseInt(nn.getAttribute("cantidad")));
+                    ing.setUds(nn.getAttribute("uds"));
+
+                    // agregar ingrediente
+                    ings.add(ing);
+                }
+                r.setIngredientes(ings);
+            }
+
+
+            return r;
         }
         return null;
     }
@@ -429,7 +482,7 @@ public class Access {
         if(test) t= "yes";
         else t= "no";
 
-        String xml = "<request id=\"" + Data.LISTA_USERS_CODE + "\">";
+        String xml = "<request id=\"" + Data.LIST_USER_CODE + "\">";
         if(nick != null)
             xml = xml + "<nick>" + nick + "</nick>";
         xml = xml + "<test>" + t + "</test>";

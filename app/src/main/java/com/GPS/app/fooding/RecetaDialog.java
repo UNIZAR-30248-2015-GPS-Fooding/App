@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.GPS.app.fooding.connection.ClientInterface;
 import com.GPS.app.fooding.data.Ingrediente;
 import com.GPS.app.fooding.data.Receta;
+import com.GPS.app.fooding.connection.Access;
 
 import java.util.List;
 
@@ -74,8 +75,10 @@ public class RecetaDialog extends DialogFragment {
             imageView.setImageResource(R.mipmap.random_logo);
         }
 
+        Receta dataObtained = Access.getReceta(recetaSeleccionada.getId());
+
         //Mostramos los ingredientes
-        String listaIngredientes = ingredientesReceta(recetaSeleccionada.getIngredientes(),cuentaComensales );
+        String listaIngredientes = ingredientesReceta(dataObtained.getIngredientes(),cuentaComensales );
 
         descripcion.setText(listaIngredientes);
 
