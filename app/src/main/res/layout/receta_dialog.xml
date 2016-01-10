@@ -25,9 +25,15 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ImageView
+<<<<<<< HEAD
             android:id="@+id/icono"
             android:layout_width="match_parent"
             android:layout_height="100dp" />
+=======
+        android:id="@+id/icono"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+>>>>>>> 676747c334e44fe094a76d4307a89cfea583b993
 
         <TextView
         android:id="@+id/comensales"

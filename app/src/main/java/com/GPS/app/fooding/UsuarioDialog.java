@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.GPS.app.fooding.connection.Access;
 import com.GPS.app.fooding.data.Receta;
 import com.GPS.app.fooding.data.Usuario;
 

@@ -61,6 +61,7 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
 
                 if(logueado){
 
+                    // meter el usuario en fichero
                     try {
                         //File f = new File("ficheroUsuarios");
                         File root = new File(MainActivity.mPath, "ficheroUsuarios.txt");
@@ -81,7 +82,7 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
                     MainActivity.navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(true);
 
                     Toast.makeText(getActivity(), "Logeado correctamente", Toast.LENGTH_SHORT).show();
-                    // meter el usuario en fichero
+
 
                     android.support.v4.app.FragmentTransaction trans = getFragmentManager().beginTransaction();
                     android.support.v4.app.Fragment fragment = new ListaRecetasFragment();
