@@ -149,6 +149,8 @@ public class RecetaDialog extends DialogFragment {
                     if (exito) {
                         Toast.makeText(getActivity(), "Me gusta", Toast.LENGTH_SHORT).show();
 
+                        final Receta dataObtained = Access.getReceta(recetaSeleccionada.getId());
+
                         double media = (double) dataObtained.getMe_gusta() + 1 / (double) (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta() + 1);
                         if (dataObtained.getMe_gusta() == 0 || (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) + 1 == 0) {
                             valoracion.setText(" 0.0% de votos positivos");
@@ -182,8 +184,11 @@ public class RecetaDialog extends DialogFragment {
                     b.close();
 
                     boolean exito = ClientInterface.valorar_receta(dataObtained.getId(), -1, correo, false);
+
                     if (exito) {
                         Toast.makeText(getActivity(), "No me gusta", Toast.LENGTH_SHORT).show();
+
+                        final Receta dataObtained = Access.getReceta(recetaSeleccionada.getId());
 
                         double media = (double) dataObtained.getMe_gusta() / (double) (dataObtained.getNo_me_gusta() + 1 + dataObtained.getMe_gusta());
                         if (dataObtained.getMe_gusta() == 0 || (dataObtained.getNo_me_gusta() + 1 + dataObtained.getMe_gusta()) == 0) {
