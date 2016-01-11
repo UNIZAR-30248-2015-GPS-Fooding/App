@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity
 
         //Si estamos logeados, msotramos menu oculto
         navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(registrado);
+        navigationView.getMenu().findItem(R.id.menu_iniciar_sesion).setVisible(!registrado);
+        navigationView.getMenu().findItem(R.id.menu_registrarse).setVisible(!registrado);
 
     }
 
@@ -108,6 +110,8 @@ public class MainActivity extends AppCompatActivity
 
         //Si estamos logeados, msotramos menu oculto
         navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(registrado);
+        navigationView.getMenu().findItem(R.id.menu_iniciar_sesion).setVisible(!registrado);
+        navigationView.getMenu().findItem(R.id.menu_registrarse).setVisible(!registrado);
 
         //Iniciamos la Actividad con el fragment ListaRecetas
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -226,6 +230,8 @@ public class MainActivity extends AppCompatActivity
                 root.delete();
                 registrado = false;
                 navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(false);
+                navigationView.getMenu().findItem(R.id.menu_iniciar_sesion).setVisible(true);
+                navigationView.getMenu().findItem(R.id.menu_registrarse).setVisible(true);
                 Toast.makeText(MainActivity.this, "Sesion cerrada correctamente", Toast.LENGTH_SHORT).show();
             }
             else{

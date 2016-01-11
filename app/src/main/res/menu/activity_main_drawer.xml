@@ -5,23 +5,26 @@
         <item android:id="@+id/menu_inicio"
             android:title="Inicio" />
         <item android:id="@+id/menu_registrarse"
-            android:title="Registrarse" />
+            android:title="Registrarse"
+            android:visible="true"/>
         <item android:id="@+id/menu_iniciar_sesion"
-            android:title="Iniciar Sesion" />
+            android:title="Iniciar Sesion"
+            android:visible="true"/>
         <item android:id="@+id/menu_lista_recetas"
             android:title="Lista de Recetas" />
         <item android:id="@+id/menu_lista_usuarios"
             android:title="Lista de Usuarios" />
         <item android:id="@+id/menu_supermercados"
             android:title="Supermercados Cercanos" />
-        <item android:id="@+id/crear_receta"
-            android:title="Crear receta" />
+
     </group>
 
     <item android:title="Mi cuenta"
           android:id="@+id/menu_logueados"
           android:visible="false">
         <menu android:checkableBehavior="single">
+            <item android:id="@+id/crear_receta"
+                android:title="Crear receta" android:icon="@android:drawable/ic_menu_send"/>
             <item android:id="@+id/menu_usuario" android:icon="@android:drawable/ic_menu_send"
                 android:title="Mi Cuenta" />
             <item android:id="@+id/menu_favoritos" android:icon="@android:drawable/ic_menu_send"

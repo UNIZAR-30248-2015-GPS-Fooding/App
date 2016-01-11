@@ -85,6 +85,8 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
             //Activamos booleano de registrado
             MainActivity.registrado = true;
             MainActivity.navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(true);
+            MainActivity.navigationView.getMenu().findItem(R.id.menu_iniciar_sesion).setVisible(false);
+            MainActivity.navigationView.getMenu().findItem(R.id.menu_registrarse).setVisible(false);
 
             Toast.makeText(getActivity(), "Logeado correctamente", Toast.LENGTH_SHORT).show();
             android.support.v4.app.FragmentTransaction trans = getFragmentManager().beginTransaction();
