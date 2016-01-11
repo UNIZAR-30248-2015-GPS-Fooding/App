@@ -33,3 +33,5 @@ google_maps_api.xml
 .idea
 *.iml
 *.iml
+app/app.iml
+*.iml

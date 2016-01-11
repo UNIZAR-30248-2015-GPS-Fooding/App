@@ -152,7 +152,7 @@ public class RecetaDialog extends DialogFragment {
                         final Receta dataObtained = Access.getReceta(recetaSeleccionada.getId());
 
                         double media = (double) dataObtained.getMe_gusta() + 1 / (double) (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta() + 1);
-                        if (dataObtained.getMe_gusta() == 0 || (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) + 1 == 0) {
+                        if (dataObtained.getMe_gusta()+1 == 0 || (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) + 1 == 0) {
                             valoracion.setText(" 0.0% de votos positivos");
                         } else {
                             valoracion.setText(media * 100 + "% de votos positivos");

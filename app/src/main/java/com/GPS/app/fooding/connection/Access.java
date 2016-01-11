@@ -437,10 +437,17 @@ public class Access {
         if(test) t= "yes";
         else t= "no";
 
+        String val = "?";
+        if(valoracion>0){
+            val = "mg";
+        } else if(valoracion<0){
+            val = "nmg";
+        }
+
         String xml = "<request id=\"" + Data.VOTAR_CODE + "\">";
         xml = xml + "<id>" + id + "</id>";
         xml = xml + "<mail>" + mail + "</mail>" ;
-        xml = xml + "<voto>" + valoracion + "</voto>";
+        xml = xml + "<voto>\"" + val + "\"</voto>";
         xml = xml + "<test>" + t + "</test>";
         xml = xml + "</request>";
 

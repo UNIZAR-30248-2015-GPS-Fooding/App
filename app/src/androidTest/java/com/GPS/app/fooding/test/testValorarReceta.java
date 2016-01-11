@@ -54,18 +54,21 @@ public class testValorarReceta extends ActivityInstrumentationTestCase2<MainActi
         solo.drag(fromX, toX, fromY, toY, stepCount);
 
         //Verificamos que tiene 0% de votos
-        assertTrue(solo.searchText("0.0% de votos positivos"));
-        LoginFragment.doLoginStatic("test@testfooding.test", "testingu");
-        //Pulsamos boton MeGusta
-        solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.buttonMeGusta));
-        assertTrue(solo.searchText("100.0% de votos positivos"));
-        //Pulsamos boton NO MeGusta
-        solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.buttonNoMeGusta));
-        assertTrue(solo.searchText("0.0% de votos positivos"));
-        File root = new File(MainActivity.mPath, "ficheroUsuarios.txt");
-        if (root.exists() && root.isFile() && MainActivity.registrado) {
-            root.delete();
-            MainActivity.registrado = false;
+        try {
+            assertTrue(solo.searchText("0.0% de votos positivos"));
+            LoginFragment.doLoginStatic("test@testfooding.test", "testingu");
+            //Pulsamos boton MeGusta
+            solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.buttonMeGusta));
+            assertTrue(solo.searchText("100.0% de votos positivos"));
+            //Pulsamos boton NO MeGusta
+            solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.buttonNoMeGusta));
+            assertTrue(solo.searchText("0.0% de votos positivos"));
+        } finally {
+            File root = new File(MainActivity.mPath, "ficheroUsuarios.txt");
+            if (root.exists() && root.isFile() && MainActivity.registrado) {
+                root.delete();
+                MainActivity.registrado = false;
+            }
         }
     }
 }
