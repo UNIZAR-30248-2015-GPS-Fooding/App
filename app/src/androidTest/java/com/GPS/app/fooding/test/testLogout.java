@@ -48,10 +48,6 @@ public class testLogout extends ActivityInstrumentationTestCase2<MainActivity> {
 		toY = (screenHeight/2) - (screenHeight / 3);
 		solo.drag(fromX, toX, fromY, toY, stepCount);
 
-		//Click on Cerrar Sesion
-		solo.clickOnText(java.util.regex.Pattern.quote("Cerrar Sesión"));
-		assertTrue(solo.searchText("ERROR. Primero debe hacer login"));
-
 
 		//Click on ImageView
 		solo.clickOnView(solo.getView(android.widget.ImageButton.class, 0));
@@ -70,8 +66,19 @@ public class testLogout extends ActivityInstrumentationTestCase2<MainActivity> {
 		solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.email_sign_in_button));
 		assertTrue(solo.searchText("Logeado correctamente"));
 
+
+
+
 		//Click on ImageView
 		solo.clickOnView(solo.getView(android.widget.ImageButton.class, 0));
+
+		// Scroll Down // Drag Up
+		fromX = screenWidth/2;
+		toX = screenWidth/2;
+		fromY = (screenHeight/2) + (screenHeight/3);
+		toY = (screenHeight/2) - (screenHeight / 3);
+		solo.drag(fromX, toX, fromY, toY, stepCount);
+		
 		//Click on Cerrar Sesion
 		solo.clickOnText(java.util.regex.Pattern.quote("Cerrar Sesión"));
 		assertTrue(solo.searchText("Sesion cerrada correctamente"));
