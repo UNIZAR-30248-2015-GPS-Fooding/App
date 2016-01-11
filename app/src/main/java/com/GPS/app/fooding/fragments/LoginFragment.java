@@ -34,8 +34,7 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
 
     @Override
     public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState)
-    {
+                             ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.login_fragment, container, false);
@@ -55,52 +54,79 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
             case R.id.email_sign_in_button:
                 //switchFragment(HelpFragment.TAG);
 
-               // Toast.makeText(getActivity(), "Email: " + mEmailView.getText() + " Pass: " + mPasswordView.getText(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getActivity(), "Email: " + mEmailView.getText() + " Pass: " + mPasswordView.getText(), Toast.LENGTH_SHORT).show();
 
-                boolean logueado = ClientInterface.login_usuario(mEmailView.getText().toString(), mPasswordView.getText().toString(), pruebaTest);
-
-                if(logueado){
-
-                    // meter el usuario en fichero
-                    try {
-                        //File f = new File("ficheroUsuarios");
-                        File root = new File(MainActivity.mPath, "ficheroUsuarios.txt");
-                        FileWriter writer = new FileWriter(root);
-                        writer.append(mEmailView.getText().toString());
-                        writer.flush();
-                        writer.close();
-                        MainActivity.registrado = true;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    u = new Usuario();
-                    u.setEmail(mEmailView.getText().toString());
-
-                    //Activamos booleano de registrado
-                    MainActivity.registrado = true;
-                    MainActivity.navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(true);
-
-                    Toast.makeText(getActivity(), "Logeado correctamente", Toast.LENGTH_SHORT).show();
-
-
-                    android.support.v4.app.FragmentTransaction trans = getFragmentManager().beginTransaction();
-                    android.support.v4.app.Fragment fragment = new ListaRecetasFragment();
-                    trans.replace(R.id.mainFrame, fragment);
-                    trans.addToBackStack(null);
-                    trans.commit();
-
-                }
-                else{
-                    Toast.makeText(getActivity(), "Email o passwd fallido", Toast.LENGTH_SHORT).show();
-                }
-
+                doLogin(mEmailView.getText().toString(), mPasswordView.getText().toString());
                 break;
         }
     }
 
+    public void doLogin(String email, String passw) {
+
+        boolean logueado = ClientInterface.login_usuario(email, passw, pruebaTest);
+
+        if (logueado) {
+
+            // meter el usuario en fichero
+            try {
+                //File f = new File("ficheroUsuarios");
+                File root = new File(MainActivity.mPath, "ficheroUsuarios.txt");
+                FileWriter writer = new FileWriter(root);
+                writer.append(email);
+                writer.flush();
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            u = new Usuario();
+            u.setEmail(email);
+
+            //Activamos booleano de registrado
+            MainActivity.registrado = true;
+            MainActivity.navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(true);
+
+            Toast.makeText(getActivity(), "Logeado correctamente", Toast.LENGTH_SHORT).show();
+            android.support.v4.app.FragmentTransaction trans = getFragmentManager().beginTransaction();
+            android.support.v4.app.Fragment fragment = new ListaRecetasFragment();
+            trans.replace(R.id.mainFrame, fragment);
+            trans.addToBackStack(null);
+            trans.commit();
 
 
+        } else {
 
+            Toast.makeText(getActivity(), "Email o passwd fallido", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static void doLoginStatic(String email, String passw) {
+
+        boolean logueado = ClientInterface.login_usuario(email, passw, false);
+
+        if (logueado) {
+
+            // meter el usuario en fichero
+            try {
+                //File f = new File("ficheroUsuarios");
+                File root = new File(MainActivity.mPath, "ficheroUsuarios.txt");
+                FileWriter writer = new FileWriter(root);
+                writer.append(email);
+                writer.flush();
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            u = new Usuario();
+            u.setEmail(email);
+
+            //Activamos booleano de registrado
+            MainActivity.registrado = true;
+
+
+        } else {
+        }
+    }
 
 }

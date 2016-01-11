@@ -116,8 +116,8 @@ public class ClientInterface {
      * @param test : <true> si es test, <false> en caso contrario
      * @return <true> si se ha podido valorar la receta, <false> en caso contrario
      */
-    public static boolean valorar_receta(int id, int valoracion, boolean test){
-        return Access.valorar_receta(id, valoracion, test);
+    public static boolean valorar_receta(int id, int valoracion, String mail, boolean test){
+        return Access.valorar_receta(id, valoracion, mail, test);
     }
 
     /**

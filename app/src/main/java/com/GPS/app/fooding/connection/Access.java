@@ -428,9 +428,10 @@ public class Access {
      * @param id identificador de la receta
      * @param valoracion -1 o 1
      * @param test <true> si es test, <false> en caso contrario
+     * @param mail String con el mail
      * @return <true> si se ha podido valorar, <false> en caso contrario
      */
-    public static boolean valorar_receta(int id, int valoracion, boolean test){
+    public static boolean valorar_receta(int id, int valoracion, String mail, boolean test){
         String t;
 
         if(test) t= "yes";
@@ -438,10 +439,11 @@ public class Access {
 
         String xml = "<request id=\"" + Data.VOTAR_CODE + "\">";
         xml = xml + "<id>" + id + "</id>";
+        xml = xml + "<mail>" + mail + "</mail>" ;
         xml = xml + "<voto>" + valoracion + "</voto>";
         xml = xml + "<test>" + t + "</test>";
-
         xml = xml + "</request>";
+
         // enviar xml y recibir respuesta
         Document doc = Client.sendRequest(xml);
 

@@ -9,55 +9,63 @@ import com.robotium.solo.Timeout;
 
 import org.junit.Test;
 
+import java.io.File;
+
 
 public class testValorarReceta extends ActivityInstrumentationTestCase2<MainActivity> {
-  	private Solo solo;
+    private Solo solo;
 
-  	public testValorarReceta() {
-		super(MainActivity.class);
-  	}
+    public testValorarReceta() {
+        super(MainActivity.class);
+    }
 
-	@Override
-  	public void setUp() throws Exception {
+    @Override
+    public void setUp() throws Exception {
         super.setUp();
-		solo = new Solo(getInstrumentation());
-		getActivity();
+        solo = new Solo(getInstrumentation());
+        getActivity();
 
-  	}
+    }
 
-   	@Override
-   	public void tearDown() throws Exception {
-		solo.finishOpenedActivities();
-		super.tearDown();
-	}
+    @Override
+    public void tearDown() throws Exception {
+        solo.finishOpenedActivities();
+        super.tearDown();
+    }
 
-	@Test
-	public void testRun() {
-		//Wait for activity: 'com.example.coke.fooding.MainActivity'
-		solo.waitForActivity(com.GPS.app.fooding.MainActivity.class, 2000);
-		//Set default small timeout to 15575 milliseconds
-		Timeout.setSmallTimeout(15575);
-		//Click on "MAccarrones" de prueba
-		solo.clickOnText("Macarrones normales y corrientes");
+    @Test
+    public void testRun() {
+        //Wait for activity: 'com.example.coke.fooding.MainActivity'
+        solo.waitForActivity(com.GPS.app.fooding.MainActivity.class, 2000);
+        //Set default small timeout to 15575 milliseconds
+        Timeout.setSmallTimeout(15575);
+        //Click on "Macarrones" de prueba
+        solo.clickOnText("Macarrones normales y corrientes");
 
-		//Hacemos scroll
-		int screenWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
-		int screenHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight();
-		int fromX, toX, fromY, toY = 0,stepCount=10;
-		// Scroll Down // Drag Up
-		fromX = screenWidth/2;
-		toX = screenWidth/2;
-		fromY = (screenHeight/2) + (screenHeight/3);
-		toY = (screenHeight/2) - (screenHeight / 3);
-		solo.drag(fromX, toX, fromY, toY, stepCount);
+        //Hacemos scroll
+        int screenWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
+        int screenHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight();
+        int fromX, toX, fromY, toY = 0, stepCount = 10;
+        // Scroll Down // Drag Up
+        fromX = screenWidth / 2;
+        toX = screenWidth / 2;
+        fromY = (screenHeight / 2) + (screenHeight / 3);
+        toY = (screenHeight / 2) - (screenHeight / 3);
+        solo.drag(fromX, toX, fromY, toY, stepCount);
 
-		//Verificamos que tiene 0% de votos
-		assertTrue(solo.searchText("0.0% de votos positivos"));
-		//Pulsamos boton MeGusta
-		solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.buttonMeGusta));
-		assertTrue(solo.searchText("100.0% de votos positivos"));
-		//Pulsamos boton NO MeGusta
-		solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.buttonNoMeGusta));
-		assertTrue(solo.searchText("0.0% de votos positivos"));
-	}
+        //Verificamos que tiene 0% de votos
+        assertTrue(solo.searchText("0.0% de votos positivos"));
+        LoginFragment.doLoginStatic("test@testfooding.test", "testingu");
+        //Pulsamos boton MeGusta
+        solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.buttonMeGusta));
+        assertTrue(solo.searchText("100.0% de votos positivos"));
+        //Pulsamos boton NO MeGusta
+        solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.buttonNoMeGusta));
+        assertTrue(solo.searchText("0.0% de votos positivos"));
+        File root = new File(MainActivity.mPath, "ficheroUsuarios.txt");
+        if (root.exists() && root.isFile() && MainActivity.registrado) {
+            root.delete();
+            MainActivity.registrado = false;
+        }
+    }
 }

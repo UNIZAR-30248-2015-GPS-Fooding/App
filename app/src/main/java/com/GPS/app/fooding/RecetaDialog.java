@@ -19,6 +19,11 @@ import com.GPS.app.fooding.data.Ingrediente;
 import com.GPS.app.fooding.data.Receta;
 import com.GPS.app.fooding.connection.Access;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -31,7 +36,6 @@ public class RecetaDialog extends DialogFragment {
 
     private TextView comensales;
     private int cuentaComensales = 1;
-
 
 
     public RecetaDialog(Receta recetaSeleccionada) {
@@ -59,29 +63,24 @@ public class RecetaDialog extends DialogFragment {
         titulo.setText(spanString);
 
         //Mostramos icono
-        if (recetaSeleccionada.getTipo().equalsIgnoreCase("pasta")){
+        if (recetaSeleccionada.getTipo().equalsIgnoreCase("pasta")) {
             imageView.setImageResource(R.mipmap.pasta_logo);
-        }
-        else if (recetaSeleccionada.getTipo().equalsIgnoreCase("postre")){
+        } else if (recetaSeleccionada.getTipo().equalsIgnoreCase("postre")) {
             imageView.setImageResource(R.mipmap.dessert_logo);
-        }
-        else if (recetaSeleccionada.getTipo().equalsIgnoreCase("pescado")){
+        } else if (recetaSeleccionada.getTipo().equalsIgnoreCase("pescado")) {
             imageView.setImageResource(R.mipmap.fish_logo);
-        }
-        else if (recetaSeleccionada.getTipo().equalsIgnoreCase("carne")){
+        } else if (recetaSeleccionada.getTipo().equalsIgnoreCase("carne")) {
             imageView.setImageResource(R.mipmap.meat_logo);
-        }
-        else if (recetaSeleccionada.getTipo().equalsIgnoreCase("verdura")){
+        } else if (recetaSeleccionada.getTipo().equalsIgnoreCase("verdura")) {
             imageView.setImageResource(R.mipmap.vegetable_logo);
-        }
-        else {
+        } else {
             imageView.setImageResource(R.mipmap.random_logo);
         }
 
         final Receta dataObtained = Access.getReceta(recetaSeleccionada.getId());
 
         //Mostramos los ingredientes
-        String listaIngredientes = ingredientesReceta(dataObtained.getIngredientes(),cuentaComensales );
+        String listaIngredientes = ingredientesReceta(dataObtained.getIngredientes(), cuentaComensales);
         descripcion.setText(listaIngredientes);
 
         //Autor de la receta
@@ -89,12 +88,11 @@ public class RecetaDialog extends DialogFragment {
 
 
         //Mostramos valoracion de la receta
-        double media = (double) dataObtained.getMe_gusta() / (double) (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) ;
-        if(dataObtained.getMe_gusta() == 0 || (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) == 0){
+        double media = (double) dataObtained.getMe_gusta() / (double) (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta());
+        if (dataObtained.getMe_gusta() == 0 || (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) == 0) {
             valoracion.setText(" 0.0% de votos positivos");
-        }
-        else{
-            valoracion.setText( media*100 + "% de votos positivos");
+        } else {
+            valoracion.setText(media * 100 + "% de votos positivos");
         }
 
         //Mostramos los comensales
@@ -107,10 +105,10 @@ public class RecetaDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 cuentaComensales++;
-                String contador=String.valueOf(cuentaComensales);
+                String contador = String.valueOf(cuentaComensales);
                 comensales.setText(contador);
 
-                descripcion.setText(ingredientesReceta(dataObtained.getIngredientes(),cuentaComensales));
+                descripcion.setText(ingredientesReceta(dataObtained.getIngredientes(), cuentaComensales));
             }
         });
 
@@ -125,7 +123,7 @@ public class RecetaDialog extends DialogFragment {
                     String contador = String.valueOf(cuentaComensales);
                     comensales.setText(contador);
 
-                    descripcion.setText(ingredientesReceta(dataObtained.getIngredientes(),cuentaComensales));
+                    descripcion.setText(ingredientesReceta(dataObtained.getIngredientes(), cuentaComensales));
                 }
             }
         });
@@ -138,17 +136,35 @@ public class RecetaDialog extends DialogFragment {
         meGusta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClientInterface.valorar_receta(dataObtained.getId(), 1, true);
-                Toast.makeText(getActivity(), "Me gusta", Toast.LENGTH_SHORT).show();
+                File myFile = new File(MainActivity.mPath + "/" + "ficheroUsuarios.txt");
 
-               double media = (double) dataObtained.getMe_gusta() / (double) (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) ;
-                if(dataObtained.getMe_gusta() == 0 || (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) == 0){
-                    valoracion.setText(" 0.0% de votos positivos");
-                }
-                else{
-                    valoracion.setText( media + "% de votos positivos");
-                }
+                try {
+                    FileReader f = new FileReader(myFile);
+                    BufferedReader b = new BufferedReader(f);
+                    String correo = b.readLine();
+                    System.out.println(correo);
+                    b.close();
 
+                    boolean exito = ClientInterface.valorar_receta(dataObtained.getId(), 1, correo, false);
+                    if (exito) {
+                        Toast.makeText(getActivity(), "Me gusta", Toast.LENGTH_SHORT).show();
+
+                        double media = (double) dataObtained.getMe_gusta() + 1 / (double) (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta() + 1);
+                        if (dataObtained.getMe_gusta() == 0 || (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) + 1 == 0) {
+                            valoracion.setText(" 0.0% de votos positivos");
+                        } else {
+                            valoracion.setText(media * 100 + "% de votos positivos");
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "Error al valorar", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(), "Por favor, haz login para poder valorar", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(), "Por favor, haz login para poder valorar", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -157,15 +173,33 @@ public class RecetaDialog extends DialogFragment {
         noMeGusta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClientInterface.valorar_receta(dataObtained.getId(),-1, true);
-                Toast.makeText(getActivity(), "No me gusta", Toast.LENGTH_SHORT).show();
+                File myFile = new File(MainActivity.mPath + "/" + "ficheroUsuarios.txt");
 
-                double media = (double) dataObtained.getMe_gusta() / (double) (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) ;
-                if(dataObtained.getMe_gusta() == 0 || (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) == 0){
-                    valoracion.setText(" 0.0% de votos positivos");
-                }
-                else{
-                    valoracion.setText( media + "% de votos positivos");
+                try {
+                    FileReader f = new FileReader(myFile);
+                    BufferedReader b = new BufferedReader(f);
+                    String correo = b.readLine();
+                    b.close();
+
+                    boolean exito = ClientInterface.valorar_receta(dataObtained.getId(), -1, correo, false);
+                    if (exito) {
+                        Toast.makeText(getActivity(), "No me gusta", Toast.LENGTH_SHORT).show();
+
+                        double media = (double) dataObtained.getMe_gusta() / (double) (dataObtained.getNo_me_gusta() + 1 + dataObtained.getMe_gusta());
+                        if (dataObtained.getMe_gusta() == 0 || (dataObtained.getNo_me_gusta() + 1 + dataObtained.getMe_gusta()) == 0) {
+                            valoracion.setText(" 0.0% de votos positivos");
+                        } else {
+                            valoracion.setText(media * 100 + "% de votos positivos");
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "Error al valorar", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(), "Por favor, haz login para poder valorar", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(), "Por favor, haz login para poder valorar", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -179,13 +213,13 @@ public class RecetaDialog extends DialogFragment {
         return f;
     }
 
-    public String ingredientesReceta(List<Ingrediente> listaIngredientes, int cantidad){
+    public String ingredientesReceta(List<Ingrediente> listaIngredientes, int cantidad) {
         String ingredientes = "";
 
-        for(int i = 0; i< listaIngredientes.size(); i++){
-            
+        for (int i = 0; i < listaIngredientes.size(); i++) {
+
             ingredientes = ingredientes +
-                    listaIngredientes.get(i).getCantidad() * cantidad +" " +
+                    listaIngredientes.get(i).getCantidad() * cantidad + " " +
                     listaIngredientes.get(i).getUds() + " " +
                     listaIngredientes.get(i).getNombre() + "\n";
         }
