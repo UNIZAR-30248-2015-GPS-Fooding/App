@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity
         //Iniciamos la Actividad con el fragment ListaRecetas
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        android.support.v4.app.Fragment fragment = new ListaRecetasFragment();
+        android.support.v4.app.Fragment fragment = new ListaRecetasFragment("");
         fragmentTransaction.replace(R.id.mainFrame, fragment);
         fragmentTransaction.commit();
 
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity
 
       }
         else if (id == R.id.menu_lista_recetas) {
-            android.support.v4.app.Fragment fragment = new ListaRecetasFragment();
+            android.support.v4.app.Fragment fragment = new ListaRecetasFragment("");
             fragmentTransaction.replace(R.id.mainFrame, fragment);
             fragmentTransaction.addToBackStack(null);
         }
@@ -211,7 +211,9 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.addToBackStack(null);
         }
         else if (id == R.id.menu_favoritos) {
-            Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
+            android.support.v4.app.Fragment fragment = new ListaRecetasFragment("modoFavoritos");
+            fragmentTransaction.replace(R.id.mainFrame, fragment);
+            fragmentTransaction.addToBackStack(null);
         }
         else if (id == R.id.menu_supermercados){
             Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
@@ -349,7 +351,7 @@ public class MainActivity extends AppCompatActivity
                                 String valueTipo = saberTipo(tipoInputSpinner.getSelectedItemPosition());
                                 List<Receta> recetasNombre = ClientInterface.getRecetasFiltros(valueNombre, valueTipo,listaIngredientes);
                                 recetasNombre = ordenaRecetas(recetasNombre,userInputSpinner.getSelectedItemPosition());
-                                ListaRecetasFragment.actualizarLista(recetasNombre);
+                                ListaRecetasFragment.actualizarLista(recetasNombre,"");
                                 return;
                             }
                         })
@@ -367,7 +369,7 @@ public class MainActivity extends AppCompatActivity
                                 userInputIng3.setVisibility(View.GONE);
                                 userInputIng3.setSelection(0);
                                 botonAnadeIngrediente.setText("Añadir Ingrediente");
-                                ListaRecetasFragment.actualizarLista(null);
+                                ListaRecetasFragment.actualizarLista(null,"");
                                 return;
                             }
                         })

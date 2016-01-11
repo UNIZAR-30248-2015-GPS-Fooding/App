@@ -33,4 +33,20 @@
             android:text="TextView"
             android:layout_marginLeft="10dp"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right">
+
+        <ImageView
+            android:id="@+id/iconStar"
+            android:src="@mipmap/no_fav_logo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="5dp"
+            android:tag="favOFF"/>
+    </LinearLayout>
+
 </LinearLayout>

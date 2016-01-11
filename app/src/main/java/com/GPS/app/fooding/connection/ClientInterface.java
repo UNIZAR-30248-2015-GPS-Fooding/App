@@ -146,4 +146,28 @@ public class ClientInterface {
     public static Usuario info_usuario(String mail, boolean test){
         return Access.info_usuario(mail, test);
     }
+
+    //TODO ESTE METODO FALTA POR HACER
+    /**
+     * @param mail mail del usuario del que queremos buscar sus recetas favoritas
+     * @return lista de recetas favoritas del usuario con email=mail
+     */
+    public static List<Receta> get_favoritos(String mail){
+        //return Access.get_favoritos(mail);
+        return null;
+    }
+
+    //TODO ESTE METODO FALTA POR HACER
+    /**
+     * @param mail mail del usuario del que queremos buscar si la receta es favorita
+     * @param nombreReceta nombre de la receta que queremos saber si es favorita
+     * @return devuelve <true> si el usuario con email=mail tiene la receta con nombre=nombreReceta
+     *         como favorita, <false> en caso contrario
+     */
+    public static boolean esFavorita(String mail, String nombreReceta){
+        //return Access.esFavorita(mail, nombreReceta);
+        return false;
+    }
+
+
 }

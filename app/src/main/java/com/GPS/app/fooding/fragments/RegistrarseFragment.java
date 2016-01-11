@@ -54,7 +54,7 @@ public class RegistrarseFragment extends android.support.v4.app.Fragment impleme
                 if(creado){
                     Toast.makeText(getActivity(), "Se ha enviado un e-mail de verificación al correo introducido",Toast.LENGTH_SHORT ).show();
                     android.support.v4.app.FragmentTransaction trans = getFragmentManager().beginTransaction();
-                    android.support.v4.app.Fragment fragment = new ListaRecetasFragment();
+                    android.support.v4.app.Fragment fragment = new ListaRecetasFragment("");
                     trans.replace(R.id.mainFrame, fragment);
                     trans.addToBackStack(null);
                     trans.commit();

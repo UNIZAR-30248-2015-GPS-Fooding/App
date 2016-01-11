@@ -190,7 +190,7 @@ public class CrearRecetaFragment extends android.support.v4.app.Fragment impleme
                     Toast.makeText(getActivity(), "Receta creada correctamente",Toast.LENGTH_SHORT ).show();
                     //ir a la lista de recetas
                     android.support.v4.app.FragmentTransaction trans = getFragmentManager().beginTransaction();
-                    android.support.v4.app.Fragment fragment = new ListaRecetasFragment();
+                    android.support.v4.app.Fragment fragment = new ListaRecetasFragment("");
                     trans.replace(R.id.mainFrame, fragment);
                     trans.addToBackStack(null);
                     trans.commit();

@@ -12,12 +12,17 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.GPS.app.fooding.MainActivity;
 import com.GPS.app.fooding.connection.ClientInterface;
 import com.GPS.app.fooding.R;
 import com.GPS.app.fooding.RecetaAdapter;
 import com.GPS.app.fooding.RecetaDialog;
 import com.GPS.app.fooding.data.Receta;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +38,10 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
     static ArrayList<Integer> logosReceta = new ArrayList<>();
     static List<Receta> listaRecetas = null;
 
-    public ListaRecetasFragment (){
+    String modo = "";
 
+    public ListaRecetasFragment (String modo){
+        this.modo = modo;
     }
 
     @Override
@@ -71,7 +78,7 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
         });
 
         //ACTUALIZAMOS LA LISTA
-        actualizarLista(null);
+        actualizarLista(null, modo);
         return view;
     }
 
@@ -81,12 +88,33 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
         editNameDialog.show(fm, "fragment_edit_name");
     }
 
-    public static void actualizarLista(List<Receta> listaReceta){
-        if(listaReceta== null){
+    public static void actualizarLista(List<Receta> listaReceta, String modo){
+
+        if(modo.equalsIgnoreCase("modoFavoritos")){
+            File myFile = new File(MainActivity.mPath + "/" + "ficheroUsuarios.txt");
+            String correo = "";
+            try {
+                FileReader f = new FileReader(myFile);
+                BufferedReader b = new BufferedReader(f);
+                correo = b.readLine();
+                b.close();
+                System.out.println(correo);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //TODO Poner el metodo de Get_favoritos en lugar del getRecetas()
             listaRecetas = ClientInterface.getRecetas();
-        }else{
-            listaRecetas = listaReceta;
+            //listaReceta = ClientInterface.get_favoritos(correo);
         }
+        else{
+            if(listaReceta== null){
+                listaRecetas = ClientInterface.getRecetas();
+            }else{
+                listaRecetas = listaReceta;
+            }
+        }
+
         String[] listaNombres = new String[listaRecetas.size()];
         String[] listaTipo = new String[listaRecetas.size()];
         Integer[] listaIconos = new Integer[listaRecetas.size()];

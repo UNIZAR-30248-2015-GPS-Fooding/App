@@ -36,6 +36,24 @@ public class RecetaAdapter extends ArrayAdapter<String> {
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
         TextView extratxt = (TextView) rowView.findViewById(R.id.textView1);
 
+        final ImageView favView = (ImageView)rowView.findViewById(R.id.iconStar);
+        favView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //TODO Usar metodo que dado un nombre de receta y un email, te devuelva un boolean que diga si ese user tiene esa receta como fav
+
+                if (favView.getTag().equals("favON")){
+                    favView.setImageResource(R.mipmap.no_fav_logo);
+                    favView.setTag("favOFF");
+                }
+                else{
+                    favView.setImageResource(R.mipmap.fav_logo);
+                }
+
+            }
+        });
+
         txtTitle.setText(itemname[position]);
         imageView.setImageResource(imgid[position]);
         extratxt.setText(puntos[position] + "% de votos positivos");
