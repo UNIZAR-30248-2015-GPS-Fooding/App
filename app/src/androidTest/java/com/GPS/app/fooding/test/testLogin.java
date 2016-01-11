@@ -49,8 +49,11 @@ public class testLogin extends ActivityInstrumentationTestCase2<MainActivity> {
 		LoginFragment.pruebaTest = false;
 		solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.email_sign_in_button));
 		assertTrue(solo.searchText("Email o passwd fallido"));
+
 		LoginFragment.pruebaTest = true;
 		solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.email_sign_in_button));
-		assertTrue(solo.searchText("Logeado correctamente"));
+		//el test funciona si va a la pantalla de lista de recetas, busca
+		//macarrones para comprobarlo
+		assertTrue(solo.searchText("Macarrones"));
 	}
 }

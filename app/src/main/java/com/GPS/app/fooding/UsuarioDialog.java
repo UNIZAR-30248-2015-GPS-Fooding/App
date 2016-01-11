@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.GPS.app.fooding.connection.Access;
+import com.GPS.app.fooding.connection.ClientInterface;
 import com.GPS.app.fooding.data.Receta;
 import com.GPS.app.fooding.data.Usuario;
 
@@ -46,15 +47,16 @@ public class UsuarioDialog extends DialogFragment {
         getDialog().getWindow().setLayout(width, height);
 
         //Mostramos el correo
-        List<Receta> listaRecetas = usuarioSeleccionada.getRecetas();
+        Usuario u = ClientInterface.info_usuario(usuarioSeleccionada.getEmail(), false);
+        List<Receta> listaRecetas = u.getRecetas();
         String listatext = "";
         for(Receta r : listaRecetas){
-            listatext=listatext+r.getNombre()+"\n";
+            listatext = listatext + r.getNombre() + "\n";
         }
         recetas.setText(listatext);
 
         //Mostramos puntos
-        puntos.setText(Integer.toString(usuarioSeleccionada.getScore()));
+        puntos.setText(Integer.toString(u.getScore()));
 
         return view;
     }

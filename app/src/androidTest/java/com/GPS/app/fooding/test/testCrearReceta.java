@@ -3,6 +3,7 @@ package com.GPS.app.fooding.test;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.GPS.app.fooding.MainActivity;
+import com.GPS.app.fooding.fragments.CrearRecetaFragment;
 import com.robotium.solo.Solo;
 import com.robotium.solo.Timeout;
 
@@ -36,7 +37,8 @@ public class testCrearReceta extends ActivityInstrumentationTestCase2<MainActivi
 		//Click on Crear Receta
 		solo.clickOnText(java.util.regex.Pattern.quote("Crear receta"));
 		//Introducimos nombre receta
-		solo.enterText((android.widget.EditText) solo.getView(com.GPS.app.fooding.R.id.nombreReceta), "RecetaPrueba");
+		long tiempo = System.nanoTime();
+		solo.enterText((android.widget.EditText) solo.getView(com.GPS.app.fooding.R.id.nombreReceta), "RecetaPrueba"+ tiempo);
 		//Introducimos tipo
 		solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.spinnerTipoReceta));
 		//Click on Pescado
@@ -68,6 +70,6 @@ public class testCrearReceta extends ActivityInstrumentationTestCase2<MainActivi
 		solo.enterText((android.widget.EditText) solo.getView(com.GPS.app.fooding.R.id.textoNom), "RecetaPrueba");
         //Click on Filtrar
 		solo.clickOnView(solo.getView(android.R.id.button1));
-		assertTrue(solo.searchText("RecetaPrueba"));
+		assertTrue(solo.searchText("RecetaPrueba"+tiempo));
 	}
 }
