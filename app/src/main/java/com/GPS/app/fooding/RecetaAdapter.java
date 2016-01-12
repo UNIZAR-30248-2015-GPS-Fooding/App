@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.GPS.app.fooding.connection.ClientInterface;
+
 public class RecetaAdapter extends ArrayAdapter<String> {
 
     private final Activity context;
@@ -28,7 +30,7 @@ public class RecetaAdapter extends ArrayAdapter<String> {
     }
 
     @Override
-    public View getView(int position,View view,ViewGroup parent) {
+    public View getView(final int position,View view,ViewGroup parent) {
         LayoutInflater inflater=context.getLayoutInflater();
         View rowView=inflater.inflate(R.layout.receta, null,true);
 
@@ -37,20 +39,26 @@ public class RecetaAdapter extends ArrayAdapter<String> {
         TextView extratxt = (TextView) rowView.findViewById(R.id.textView1);
 
         final ImageView favView = (ImageView)rowView.findViewById(R.id.iconStar);
+        if (ClientInterface.esFavorita(MainActivity.mail, itemname[position])) {
+            favView.setImageResource(R.mipmap.fav_logo);
+        }
+        else{
+            favView.setImageResource(R.mipmap.no_fav_logo);
+        }
+
+
         favView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //TODO Usar metodo que dado un nombre de receta y un email, te devuelva un boolean que diga si ese user tiene esa receta como fav
-
-                if (favView.getTag().equals("favON")){
+                //TODO ESTO FUNCIONARÁ CUANDO ESTÉ IMPLEMENTADO EL METODO
+                if (ClientInterface.esFavorita(MainActivity.mail, itemname[position])) {
+                    ClientInterface.quitarFavorita(MainActivity.mail, itemname[position]);
                     favView.setImageResource(R.mipmap.no_fav_logo);
-                    favView.setTag("favOFF");
                 }
                 else{
+                    ClientInterface.hacerFavorita(MainActivity.mail, itemname[position]);
                     favView.setImageResource(R.mipmap.fav_logo);
                 }
-
             }
         });
 

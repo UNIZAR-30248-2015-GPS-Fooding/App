@@ -55,6 +55,9 @@ public class MainActivity extends AppCompatActivity
     //Menu lateral
     public static NavigationView navigationView;
 
+    //Usuario registrado
+    public static String mail;
+
     @Override
     protected void onDestroy(){
         super.onDestroy();

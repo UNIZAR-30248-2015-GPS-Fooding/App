@@ -67,6 +67,7 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
 
         if (logueado) {
 
+            MainActivity.mail = email;
             // meter el usuario en fichero
             try {
                 //File f = new File("ficheroUsuarios");

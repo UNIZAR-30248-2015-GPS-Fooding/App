@@ -103,9 +103,8 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //TODO Poner el metodo de Get_favoritos en lugar del getRecetas()
-            listaRecetas = ClientInterface.getRecetas();
-            //listaReceta = ClientInterface.get_favoritos(correo);
+            //TODO ESTO FUNCIONARÁ CUANDO ESTÉ IMPLEMENTADO EL METODO
+            listaRecetas = ClientInterface.get_favoritos(correo);
         }
         else{
             if(listaReceta== null){

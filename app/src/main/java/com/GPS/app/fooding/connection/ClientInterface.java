@@ -169,5 +169,29 @@ public class ClientInterface {
         return false;
     }
 
+    //TODO ESTE METODO FALTA POR HACER
+    /**
+     * @param mail mail del usuario del que queremos hacer la receta favorita
+     * @param nombreReceta nombre de la receta que queremos hacer favorita
+     * @return devuelve <true> si se ha añadido corretamente la receta a la lista de favoritos
+     * del usuario con email=mail, <false> en caso contrario
+     */
+    public static boolean hacerFavorita(String mail, String nombreReceta){
+        //return Access.hacerFavorita(mail, nombreReceta);
+        return false;
+    }
+
+    //TODO ESTE METODO FALTA POR HACER
+    /**
+     * @param mail mail del usuario del que queremos quitar la receta favorita
+     * @param nombreReceta nombre de la receta que queremos quitar favorita
+     * @return devuelve <true> si se ha quitado corretamente la receta a la lista de favoritos
+     * del usuario con email=mail, <false> en caso contrario
+     */
+    public static boolean quitarFavorita(String mail, String nombreReceta){
+        //return Access.quitarFavorita(mail, nombreReceta);
+        return false;
+    }
+
 
 }
