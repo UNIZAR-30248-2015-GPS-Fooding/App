@@ -51,7 +51,25 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_lista_recetas, container, false);
         lv = (ListView) view.findViewById(R.id.listRec);
 
+        String correo = "";
+        File myFile = new File(MainActivity.mPath + "/" + "ficheroUsuarios.txt");
+        try {
+            FileReader f = new FileReader(myFile);
+            BufferedReader b = new BufferedReader(f);
+            correo = b.readLine();
+            b.close();
+            System.out.println(correo);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         FloatingActionButton floatingButton = (FloatingActionButton) view.findViewById(R.id.fab);
+        if(correo!=null){
+            floatingButton.setVisibility(View.VISIBLE);
+        }else{
+            floatingButton.setVisibility(View.GONE);
+        }
         floatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

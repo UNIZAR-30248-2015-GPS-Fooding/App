@@ -37,6 +37,8 @@ import com.GPS.app.fooding.fragments.LoginFragment;
 import com.GPS.app.fooding.fragments.RegistrarseFragment;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
@@ -245,6 +247,21 @@ public class MainActivity extends AppCompatActivity
                 navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(false);
                 navigationView.getMenu().findItem(R.id.menu_iniciar_sesion).setVisible(true);
                 navigationView.getMenu().findItem(R.id.menu_registrarse).setVisible(true);
+
+                File myFile = new File(MainActivity.mPath + "/" + "ficheroUsuarios.txt");
+                try {
+                    FileWriter writer = new FileWriter(root);
+                    writer.append("");
+                    writer.flush();
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                android.support.v4.app.Fragment fragment = new ListaRecetasFragment("");
+                fragmentTransaction.replace(R.id.mainFrame, fragment);
+                fragmentTransaction.addToBackStack(null);
+                
                 Toast.makeText(MainActivity.this, "Sesion cerrada correctamente", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(MainActivity.this, "ERROR. Primero debe hacer login", Toast.LENGTH_SHORT).show();
