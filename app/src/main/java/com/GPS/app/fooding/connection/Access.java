@@ -47,7 +47,7 @@ public class Access {
             List<String> ings = new LinkedList<>();
             NodeList nl = doc.getElementsByTagName("ingrediente");
 
-            if(nl != null && nl.getLength() > 0) {
+            if (nl != null && nl.getLength() > 0) {
                 for (int i = 0; i < nl.getLength(); i++) {
                     // agregar cada ingrediente
                     Node n = nl.item(i);
@@ -66,12 +66,12 @@ public class Access {
      * @return una lista de tipos si ha funcionado correctamente o
      * null si no puede conectarse con el servidor
      */
-    public static List<String> getTipos(){
+    public static List<String> getTipos() {
         // hacer la peticion al servidor
         String xml = "<request id =\"" + Data.TIPO_CODE + "\"></request>";
         Document doc = Client.sendRequest(xml);
 
-        if(doc != null){
+        if (doc != null) {
             // se han recuperado tipos
             doc.getDocumentElement().normalize();
 
@@ -79,7 +79,7 @@ public class Access {
             List<String> tipos = new LinkedList<>();
             NodeList nl = doc.getElementsByTagName("tipo");
 
-            if(nl != null && nl.getLength() > 0) {
+            if (nl != null && nl.getLength() > 0) {
                 for (int i = 0; i < nl.getLength(); i++) {
                     // agregar cada tipo
                     Node n = nl.item(i);
@@ -87,8 +87,7 @@ public class Access {
                 }
             }
             return tipos;
-        }
-        else{
+        } else {
             return null;
         }
     }
@@ -97,7 +96,7 @@ public class Access {
      * Obtiene las recetas de la BD del servidor cuyo nombre coincide
      * con @param nombre, su tipo con @param tipo y todos los ingredientes
      * de @param ingredientes son ingredientes de la receta.
-     *
+     * <p/>
      * Si @param nombre es null, no se buscara por nombre.
      * Si @param tipo es null, no se buscara por tipo.
      * Si @param ingredientes es null, no se buscara por ingredientes.
@@ -181,8 +180,8 @@ public class Access {
 
     /**
      * Obtiene las recetas de la BD del servidor cuyo id coincide con
-     * @param id
      *
+     * @param id
      * @return una receta que coincide con el parametro de
      * busqueda
      */
@@ -194,7 +193,7 @@ public class Access {
         if (id >= 0)  // comprobar si el id esta bien
             xml = xml + "<id>" + id + "</id>";
         xml = xml + "</request>";
-
+        System.out.println(xml);
         // mandar la peticion
         Document doc = Client.sendRequest(xml);
 
@@ -293,13 +292,12 @@ public class Access {
      *
      * @return true si se ha creado el usuario y false en caso contrario
      */
-    public static boolean crear_usuario(String mail, String nick, String pw, boolean test){
+    public static boolean crear_usuario(String mail, String nick, String pw, boolean test) {
         String t;
 
-        if(test){
+        if (test) {
             t = "yes";
-        }
-        else{
+        } else {
             t = "no";
         }
 
@@ -315,35 +313,33 @@ public class Access {
         Document doc = Client.sendRequest(xml);
 
         // comprobar respuesta
-        if(doc != null){
+        if (doc != null) {
             doc.getDocumentElement().normalize();
 
-            if(doc.getElementsByTagName("hecho") != null &&
-                    doc.getElementsByTagName("hecho").getLength() > 0){
+            if (doc.getElementsByTagName("hecho") != null &&
+                    doc.getElementsByTagName("hecho").getLength() > 0) {
                 t = doc.getElementsByTagName("hecho").item(0).getTextContent();
-               return t.equalsIgnoreCase("yes");
-            }
-            else{
+                return t.equalsIgnoreCase("yes");
+            } else {
                 return false;
             }
-        }
-        else{
+        } else {
             return false;
         }
     }
 
     /**
      * Intenta loguear a un usuario en la BD. Este usuario tendra
-     * @param mail como e-mail y @param pw como password
      *
+     * @param mail como e-mail y @param pw como password
      * @return true si se ha logueado el usuario y false en caso contrario
      */
-    public static boolean login_usuario(String mail, String pw, boolean test){
+    public static boolean login_usuario(String mail, String pw, boolean test) {
         String t;
 
-        if(test){
+        if (test) {
             t = "yes";
-        }else{
+        } else {
             t = "no;";
         }
         // crear xml
@@ -357,37 +353,35 @@ public class Access {
         Document doc = Client.sendRequest(xml);
 
         // comprobar respuesta
-        if(doc != null){
+        if (doc != null) {
             doc.getDocumentElement().normalize();
 
-            if(doc.getElementsByTagName("hecho") != null &&
-                    doc.getElementsByTagName("hecho").getLength() > 0){
+            if (doc.getElementsByTagName("hecho") != null &&
+                    doc.getElementsByTagName("hecho").getLength() > 0) {
                 t = doc.getElementsByTagName("hecho").item(0).getTextContent();
                 return t.equalsIgnoreCase("yes");
-            }
-            else{
+            } else {
                 return false;
             }
-        }
-        else{
+        } else {
             return false;
         }
     }
 
     /**
-     * @param mail : mail del usuario
-     * @param nombre : nombre de la nueva receta
-     * @param tipo : tipo de la nueva receta
+     * @param mail          : mail del usuario
+     * @param nombre        : nombre de la nueva receta
+     * @param tipo          : tipo de la nueva receta
      * @param instrucciones : instrucciones de la nueva receta
-     * @param ings : ingredientes de la nueva receta
+     * @param ings          : ingredientes de la nueva receta
      * @return <true> si se ha podido crear la receta, <false> en
      * caso contrario
      */
-    public static boolean crear_receta(String mail, String nombre, String tipo, String instrucciones, List<Ingrediente> ings, boolean test){
+    public static boolean crear_receta(String mail, String nombre, String tipo, String instrucciones, List<Ingrediente> ings, boolean test) {
         String t;
 
-        if(test) t= "yes";
-        else t= "no";
+        if (test) t = "yes";
+        else t = "no";
 
         String xml = "<request id=\"" + Data.CREAR_REC_CODE + "\">";
         xml = xml + "<mail>" + mail + "</mail>";
@@ -396,7 +390,7 @@ public class Access {
         xml = xml + "<instrucciones>" + instrucciones + "</instrucciones>";
         xml = xml + "<test>" + t + "</test>";
 
-        for(Ingrediente i : ings){
+        for (Ingrediente i : ings) {
             xml = xml + "<ingrediente cantidad=\"" + i.getCantidad()
                     + "\" uds=\"" + i.getUds() + "\">"
                     + i.getNombre() + "</ingrediente>";
@@ -407,81 +401,78 @@ public class Access {
         Document doc = Client.sendRequest(xml);
 
         // comprobar respuesta
-        if(doc != null){
+        if (doc != null) {
             doc.getDocumentElement().normalize();
 
-            if(doc.getElementsByTagName("hecho") != null &&
-                    doc.getElementsByTagName("hecho").getLength() > 0){
+            if (doc.getElementsByTagName("hecho") != null &&
+                    doc.getElementsByTagName("hecho").getLength() > 0) {
                 t = doc.getElementsByTagName("hecho").item(0).getTextContent();
                 return t.equalsIgnoreCase("yes");
-            }
-            else{
+            } else {
                 return false;
             }
-        }
-        else{
+        } else {
             return false;
         }
     }
 
     /**
-     * @param id identificador de la receta
+     * @param id         identificador de la receta
      * @param valoracion -1 o 1
-     * @param test <true> si es test, <false> en caso contrario
-     * @param mail String con el mail
+     * @param test       <true> si es test, <false> en caso contrario
+     * @param mail       String con el mail
      * @return <true> si se ha podido valorar, <false> en caso contrario
      */
-    public static boolean valorar_receta(int id, int valoracion, String mail, boolean test){
+    public static boolean valorar_receta(int id, int valoracion, String mail, boolean test) {
         String t;
 
-        if(test) t= "yes";
-        else t= "no";
+        if (test) t = "yes";
+        else t = "no";
 
         String val = "?";
-        if(valoracion>0){
+        if (valoracion > 0) {
             val = "mg";
-        } else if(valoracion<0){
+        } else if (valoracion < 0) {
             val = "nmg";
         }
 
         String xml = "<request id=\"" + Data.VOTAR_CODE + "\">";
         xml = xml + "<id>" + id + "</id>";
-        xml = xml + "<mail>" + mail + "</mail>" ;
-        xml = xml + "<voto>\"" + val + "\"</voto>";
+        xml = xml + "<mail>" + mail + "</mail>";
+        xml = xml + "<voto>" + val + "</voto>";
         xml = xml + "<test>" + t + "</test>";
         xml = xml + "</request>";
 
+        System.out.println(xml);
         // enviar xml y recibir respuesta
         Document doc = Client.sendRequest(xml);
 
         // comprobar respuesta
-        if(doc != null){
+        if (doc != null) {
             doc.getDocumentElement().normalize();
 
-            if(doc.getElementsByTagName("hecho") != null &&
-                    doc.getElementsByTagName("hecho").getLength() > 0){
+            if (doc.getElementsByTagName("hecho") != null &&
+                    doc.getElementsByTagName("hecho").getLength() > 0) {
                 t = doc.getElementsByTagName("hecho").item(0).getTextContent();
                 return t.equalsIgnoreCase("yes");
-            }
-            else{
+            } else {
                 return false;
             }
-        }
-        else{
+        } else {
             return false;
         }
     }
 
     /**
-     * @param id identificador de la receta
+     * @param id   identificador de la receta
      * @param test <true> si es test, <false> en caso contrario
      * @return la valoracion media de la receta
      */
-    public static double valoracion_media_receta(int id, boolean test){
+    public static double valoracion_media_receta(int id, boolean test) {
         String t;
 
-        if(test) t= "yes";
-        else t= "no";
+        if (test) t = "yes";
+        else t = "no";
 
         String xml = "<request id=\"" + Data.VOTAR_CODE + "\">";
         xml = xml + "<id>" + id + "</id>";
@@ -492,19 +483,17 @@ public class Access {
         Document doc = Client.sendRequest(xml);
 
         // comprobar respuesta
-        if(doc != null){
+        if (doc != null) {
             doc.getDocumentElement().normalize();
 
-            if(doc.getElementsByTagName("valoracion") != null &&
-                    doc.getElementsByTagName("valoracion").getLength() > 0){
+            if (doc.getElementsByTagName("valoracion") != null &&
+                    doc.getElementsByTagName("valoracion").getLength() > 0) {
                 t = doc.getElementsByTagName("valoracion").item(0).getTextContent();
                 return Double.valueOf(t);
-            }
-            else{
+            } else {
                 return -2;
             }
-        }
-        else{
+        } else {
             return -2;
         }
     }
@@ -514,14 +503,14 @@ public class Access {
      * @param nick nick del usuario a buscar (null si se quieren buscar todos los usuarios
      * @return una lista de los usuarios de la BD
      */
-    public static List<Usuario> get_usuarios(String nick, boolean test){
+    public static List<Usuario> get_usuarios(String nick, boolean test) {
         String t;
 
-        if(test) t= "yes";
-        else t= "no";
+        if (test) t = "yes";
+        else t = "no";
 
         String xml = "<request id=\"" + Data.LIST_USER_CODE + "\">";
-        if(nick != null)
+        if (nick != null)
             xml = xml + "<nick>" + nick + "</nick>";
         xml = xml + "<test>" + t + "</test>";
 
@@ -530,11 +519,11 @@ public class Access {
         Document doc = Client.sendRequest(xml);
 
         // comprobar respuesta
-        if(doc != null){
+        if (doc != null) {
             List<Usuario> users = new LinkedList<>();
-            if(doc.getElementsByTagName("usuario") != null &&
-                    doc.getElementsByTagName("usuario").getLength() > 0){
-                for(int i = 0; i < doc.getElementsByTagName("usuario").getLength(); i++){
+            if (doc.getElementsByTagName("usuario") != null &&
+                    doc.getElementsByTagName("usuario").getLength() > 0) {
+                for (int i = 0; i < doc.getElementsByTagName("usuario").getLength(); i++) {
                     Element e = (Element) doc.getElementsByTagName("usuario").item(i);
 
                     String nombre = e.getElementsByTagName("nick").item(0).getTextContent();
@@ -547,8 +536,7 @@ public class Access {
                 }
             }
             return users;
-        }
-        else{
+        } else {
             return null;
         }
     }
@@ -558,14 +546,14 @@ public class Access {
      * @param test <true> si es test, <false> en caso contrario
      * @return usuario de la BD
      */
-    public static Usuario info_usuario(String mail, boolean test){
+    public static Usuario info_usuario(String mail, boolean test) {
         String t;
 
-        if(test) t= "yes";
-        else t= "no";
+        if (test) t = "yes";
+        else t = "no";
 
         String xml = "<request id=\"" + Data.USER_CODE + "\">";
-        if(mail != null)
+        if (mail != null)
             xml = xml + "<mail>" + mail + "</mail>";
         xml = xml + "<test>" + t + "</test>";
 
@@ -574,27 +562,27 @@ public class Access {
         Document doc = Client.sendRequest(xml);
 
         // comprobar respuesta
-        if(doc != null){
+        if (doc != null) {
             String email = null;
             String nick = null;
             int score = -1;
             List<Receta> recetas = new LinkedList<>();
 
-            if(doc.getElementsByTagName("mail") != null &&
-                    doc.getElementsByTagName("mail").getLength() > 0){
+            if (doc.getElementsByTagName("mail") != null &&
+                    doc.getElementsByTagName("mail").getLength() > 0) {
                 email = doc.getElementsByTagName("mail").item(0).getTextContent();
             }
-            if(doc.getElementsByTagName("nick") != null &&
-                    doc.getElementsByTagName("nick").getLength() > 0){
+            if (doc.getElementsByTagName("nick") != null &&
+                    doc.getElementsByTagName("nick").getLength() > 0) {
                 nick = doc.getElementsByTagName("nick").item(0).getTextContent();
             }
-            if(doc.getElementsByTagName("score") != null &&
-                    doc.getElementsByTagName("score").getLength() > 0){
+            if (doc.getElementsByTagName("score") != null &&
+                    doc.getElementsByTagName("score").getLength() > 0) {
                 score = Integer.parseInt(doc.getElementsByTagName("score").item(0).getTextContent());
             }
-            if(doc.getElementsByTagName("receta") != null &&
-                    doc.getElementsByTagName("receta").getLength() > 0){
-                for(int j = 0; j < doc.getElementsByTagName("receta").getLength(); j++){
+            if (doc.getElementsByTagName("receta") != null &&
+                    doc.getElementsByTagName("receta").getLength() > 0) {
+                for (int j = 0; j < doc.getElementsByTagName("receta").getLength(); j++) {
                     Element ee = (Element) doc.getElementsByTagName("receta").item(j);
                     int id = Integer.parseInt(ee.getAttribute("id"));
                     String rec = ee.getTextContent();
@@ -609,9 +597,54 @@ public class Access {
             Usuario u = new Usuario(nick, score, recetas);
             u.setEmail(email);
             return u;
-        }
-        else{
+        } else {
             return null;
         }
+    }
+
+
+    /**
+     * Obtiene las recetas de la BD del servidor cuyo id coincide con
+     *
+     * @param id
+     * @return una receta que coincide con el parametro de
+     * busqueda
+     */
+    public static boolean esFavorita(String mail, int id, boolean test) {
+        /* hacer la peticion al servidor */
+
+        String testS = "";
+        if (test) {
+            testS = "yes";
+        } else {
+            testS = "no";
+        }
+        // crear la peticion
+        String xml = "<request id=\"" + Data.CHECK_FAV_CODE + "\">";
+        xml = xml + "<mail>" + mail + "</mail>";
+        if (id >= 0)  // comprobar si el id esta bien
+            xml = xml + "<id>" + id + "</id>";
+        xml = xml + "<test>" + testS + "</test>";
+        xml = xml + "</request>";
+
+        // mandar la peticion
+        Document doc = Client.sendRequest(xml);
+
+        if (doc != null) {
+            // se ha recibido respuesta correcta
+
+            doc.getDocumentElement().normalize();
+
+            boolean returned = false;
+
+            // id
+            if (doc.getElementsByTagName("favorita") != null
+                    && doc.getElementsByTagName("favorita").getLength() > 0) {
+                returned = doc.getElementsByTagName("favorita").item(0).getTextContent().equals("yes");
+            }
+
+            return returned;
+        }
+        return false;
     }
 }

@@ -40,14 +40,13 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
 
     String modo = "";
 
-    public ListaRecetasFragment (String modo){
+    public ListaRecetasFragment(String modo) {
         this.modo = modo;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState)
-    {
+                             ViewGroup container, Bundle savedInstanceState) {
         actividadPadre = this.getActivity();
         View view = inflater.inflate(R.layout.fragment_lista_recetas, container, false);
         lv = (ListView) view.findViewById(R.id.listRec);
@@ -88,9 +87,9 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
         editNameDialog.show(fm, "fragment_edit_name");
     }
 
-    public static void actualizarLista(List<Receta> listaReceta, String modo){
+    public static void actualizarLista(List<Receta> listaReceta, String modo) {
 
-        if(modo.equalsIgnoreCase("modoFavoritos")){
+        if (modo.equalsIgnoreCase("modoFavoritos")) {
             File myFile = new File(MainActivity.mPath + "/" + "ficheroUsuarios.txt");
             String correo = "";
             try {
@@ -105,11 +104,10 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
             }
             //TODO ESTO FUNCIONARÁ CUANDO ESTÉ IMPLEMENTADO EL METODO
             listaRecetas = ClientInterface.get_favoritos(correo);
-        }
-        else{
-            if(listaReceta== null){
+        } else {
+            if (listaReceta == null) {
                 listaRecetas = ClientInterface.getRecetas();
-            }else{
+            } else {
                 listaRecetas = listaReceta;
             }
         }
@@ -117,44 +115,40 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
         String[] listaNombres = new String[listaRecetas.size()];
         String[] listaTipo = new String[listaRecetas.size()];
         Integer[] listaIconos = new Integer[listaRecetas.size()];
+        int[] listaIds = new int[listaRecetas.size()];
         Double[] puntos = new Double[listaRecetas.size()];
 
         //creamos la lista de nombres y de logos
-        for(int i=0;i<listaRecetas.size();i++){
+        for (int i = 0; i < listaRecetas.size(); i++) {
             listaNombres[i] = listaRecetas.get(i).getNombre();
             listaTipo[i] = listaRecetas.get(i).getTipo();
+            listaIds[i] = listaRecetas.get(i).getId();
 
-            double media = (double) listaRecetas.get(i).getMe_gusta() / (double) (listaRecetas.get(i).getNo_me_gusta() + listaRecetas.get(i).getMe_gusta()) ;
-            if(listaRecetas.get(i).getMe_gusta() == 0 || (listaRecetas.get(i).getNo_me_gusta() + listaRecetas.get(i).getMe_gusta()) == 0){
+            double media = (double) listaRecetas.get(i).getMe_gusta() / (double) (listaRecetas.get(i).getNo_me_gusta() + listaRecetas.get(i).getMe_gusta());
+            if (listaRecetas.get(i).getMe_gusta() == 0 || (listaRecetas.get(i).getNo_me_gusta() + listaRecetas.get(i).getMe_gusta()) == 0) {
                 puntos[i] = 0.0;
-            }
-            else{
-                puntos[i] = media*100;
+            } else {
+                puntos[i] = media * 100;
             }
 
             //Transformamos los logos a iconos
-            if (listaTipo[i].equalsIgnoreCase("pasta")){
+            if (listaTipo[i].equalsIgnoreCase("pasta")) {
                 listaIconos[i] = R.mipmap.pasta_logo;
-            }
-            else if (listaTipo[i].equalsIgnoreCase("postre")){
+            } else if (listaTipo[i].equalsIgnoreCase("postre")) {
                 listaIconos[i] = R.mipmap.dessert_logo;
-            }
-            else if (listaTipo[i].equalsIgnoreCase("pescado")){
+            } else if (listaTipo[i].equalsIgnoreCase("pescado")) {
                 listaIconos[i] = R.mipmap.fish_logo;
-            }
-            else if (listaTipo[i].equalsIgnoreCase("carne")){
+            } else if (listaTipo[i].equalsIgnoreCase("carne")) {
                 listaIconos[i] = R.mipmap.meat_logo;
-            }
-            else if (listaTipo[i].equalsIgnoreCase("verdura")){
+            } else if (listaTipo[i].equalsIgnoreCase("verdura")) {
                 listaIconos[i] = R.mipmap.vegetable_logo;
-            }
-            else{
+            } else {
                 listaIconos[i] = R.mipmap.random_logo;
             }
 
         }
 
-        RecetaAdapter adapter=new RecetaAdapter(actividadPadre, listaNombres , listaIconos,puntos);
+        RecetaAdapter adapter = new RecetaAdapter(actividadPadre, listaNombres, listaIds, listaIconos, puntos);
         lv.setAdapter(adapter);
     }
 

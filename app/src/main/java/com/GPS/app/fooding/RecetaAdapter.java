@@ -17,13 +17,14 @@ import com.GPS.app.fooding.connection.ClientInterface;
 public class RecetaAdapter extends ArrayAdapter<String> {
 
     private final Activity context;
+    private final int[] ids;
     private final String[] itemname;
     private final Integer[] imgid;
     private final Double[] puntos;
 
-    public RecetaAdapter(Activity context, String[] itemname, Integer[] imgid, Double[] puntos) {
+    public RecetaAdapter(Activity context, String[] itemname, int[] ids, Integer[] imgid, Double[] puntos) {
         super(context, R.layout.receta, itemname);
-
+        this.ids = ids;
         this.context=context;
         this.itemname=itemname;
         this.imgid=imgid;
@@ -40,7 +41,7 @@ public class RecetaAdapter extends ArrayAdapter<String> {
         TextView extratxt = (TextView) rowView.findViewById(R.id.textView1);
 
         final ImageView favView = (ImageView)rowView.findViewById(R.id.iconStar);
-        if (ClientInterface.esFavorita(MainActivity.mail, itemname[position])) {
+        if (ClientInterface.esFavorita(MainActivity.mail, ids[position], false)) {
             favView.setImageResource(R.mipmap.fav_logo);
         }
         else{
@@ -55,8 +56,8 @@ public class RecetaAdapter extends ArrayAdapter<String> {
                 //Si está logueado
                 if (MainActivity.registrado){
                     //TODO ESTO FUNCIONARÁ CUANDO ESTÉ IMPLEMENTADO EL METODO
-                    if (ClientInterface.esFavorita(MainActivity.mail, itemname[position])) {
-                        ClientInterface.quitarFavorita(MainActivity.mail, itemname[position]);
+                    if (ClientInterface.esFavorita(MainActivity.mail, ids[position],false)) {
+                        ClientInterface.quitarFavorita(MainActivity.mail, ids[position]);
                         favView.setImageResource(R.mipmap.no_fav_logo);
                         Toast.makeText(getContext(), "Favorito eliminado correctamente", Toast.LENGTH_SHORT).show();
                     }
@@ -77,7 +78,7 @@ public class RecetaAdapter extends ArrayAdapter<String> {
 
         txtTitle.setText(itemname[position]);
         imageView.setImageResource(imgid[position]);
-        extratxt.setText(puntos[position] + "% de votos positivos");
+        extratxt.setText(MainActivity.DF.format(puntos[position]) + "% de votos positivos");
         return rowView;
 
     };

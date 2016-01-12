@@ -37,6 +37,7 @@ import com.GPS.app.fooding.fragments.LoginFragment;
 import com.GPS.app.fooding.fragments.RegistrarseFragment;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -59,12 +60,15 @@ public class MainActivity extends AppCompatActivity
     //Usuario registrado
     public static String mail;
 
+    // Formato valoracion
+    public static final DecimalFormat DF = new DecimalFormat("0.0");
+
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         super.onDestroy();
     }
 
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         //leer el fichero si hay algo escrito ese nombre de usuario
 
@@ -114,7 +118,7 @@ public class MainActivity extends AppCompatActivity
 
         tipos.add("Ninguno");
         List<String> lista = ClientInterface.getTipos();
-        if (lista ==null){
+        if (lista == null) {
 
             //Mostramos pantalla de error
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -123,8 +127,7 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.mainFrame, fragment);
             fragmentTransaction.commit();
             //System.exit(0);
-        }
-        else {
+        } else {
             tipos.addAll(lista);
 
             ingredientes.add("Ninguno");
@@ -146,7 +149,7 @@ public class MainActivity extends AppCompatActivity
      * Volver a atras a la anterior Entrada de la pila de entradas
      */
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         FragmentManager fm = getFragmentManager();
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();
@@ -195,71 +198,58 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.menu_inicio) {
             Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.menu_registrarse) {
+        } else if (id == R.id.menu_registrarse) {
             android.support.v4.app.Fragment fragment = new RegistrarseFragment();
             fragmentTransaction.replace(R.id.mainFrame, fragment);
             fragmentTransaction.addToBackStack(null);
             //Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.menu_iniciar_sesion) {
-            if (root.exists() && root.isFile() && registrado){
+        } else if (id == R.id.menu_iniciar_sesion) {
+            if (root.exists() && root.isFile() && registrado) {
                 Toast.makeText(MainActivity.this, "ERROR. Primero debe cerrar sesion.", Toast.LENGTH_SHORT).show();
-            }
-            else{
+            } else {
                 android.support.v4.app.Fragment fragment = new LoginFragment();
                 fragmentTransaction.replace(R.id.mainFrame, fragment);
                 fragmentTransaction.addToBackStack(null);
             }
 
-      }
-        else if (id == R.id.menu_lista_recetas) {
+        } else if (id == R.id.menu_lista_recetas) {
             android.support.v4.app.Fragment fragment = new ListaRecetasFragment("");
             fragmentTransaction.replace(R.id.mainFrame, fragment);
             fragmentTransaction.addToBackStack(null);
-        }
-        else if (id == R.id.menu_lista_usuarios) {
+        } else if (id == R.id.menu_lista_usuarios) {
             android.support.v4.app.Fragment fragment = new ListaUsuariosFragment();
             fragmentTransaction.replace(R.id.mainFrame, fragment);
             fragmentTransaction.addToBackStack(null);
             //Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.menu_supermercados) {
+        } else if (id == R.id.menu_supermercados) {
             Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
 
-        }
-        else if(id == R.id.crear_receta){
+        } else if (id == R.id.crear_receta) {
             android.support.v4.app.Fragment fragment = new CrearRecetaFragment();
             fragmentTransaction.replace(R.id.mainFrame, fragment);
             fragmentTransaction.addToBackStack(null);
-        }
-        else if (id == R.id.menu_favoritos) {
+        } else if (id == R.id.menu_favoritos) {
             android.support.v4.app.Fragment fragment = new ListaRecetasFragment("modoFavoritos");
             fragmentTransaction.replace(R.id.mainFrame, fragment);
             fragmentTransaction.addToBackStack(null);
-        }
-        else if (id == R.id.menu_supermercados){
+        } else if (id == R.id.menu_supermercados) {
             Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.menu_ingredientes) {
+        } else if (id == R.id.menu_ingredientes) {
             Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.menu_cerrar_sesion) {
-            if (root.exists() && root.isFile() && registrado){
+        } else if (id == R.id.menu_cerrar_sesion) {
+            if (root.exists() && root.isFile() && registrado) {
                 root.delete();
                 registrado = false;
                 navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(false);
                 navigationView.getMenu().findItem(R.id.menu_iniciar_sesion).setVisible(true);
                 navigationView.getMenu().findItem(R.id.menu_registrarse).setVisible(true);
                 Toast.makeText(MainActivity.this, "Sesion cerrada correctamente", Toast.LENGTH_SHORT).show();
-            }
-            else{
+            } else {
                 Toast.makeText(MainActivity.this, "ERROR. Primero debe hacer login", Toast.LENGTH_SHORT).show();
             }
 
-        }
-        else if (id == R.id.menu_usuario){
-            if (root.exists() && root.isFile() && registrado){
+        } else if (id == R.id.menu_usuario) {
+            if (root.exists() && root.isFile() && registrado) {
 
                 //TODO Cargar el usuario del fichero y usarlo para llamar a CuentaFragment()
                 //Ahora se crea un usuario de prueba
@@ -271,8 +261,7 @@ public class MainActivity extends AppCompatActivity
                 android.support.v4.app.Fragment fragment = new CuentaFragment(u);
                 fragmentTransaction.replace(R.id.mainFrame, fragment);
                 fragmentTransaction.addToBackStack(null);
-            }
-            else{
+            } else {
                 Toast.makeText(MainActivity.this, "ERROR. Primero debe cerrar sesion.", Toast.LENGTH_SHORT).show();
             }
         }
@@ -322,33 +311,31 @@ public class MainActivity extends AppCompatActivity
         final Spinner userInputIng3 = (Spinner) promptsView
                 .findViewById(R.id.TextoIng3);
         String[] ingrecientesRecetas = ingredientes.toArray(new String[ingredientes.size()]);
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_dropdown_item, ingrecientesRecetas);
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, ingrecientesRecetas);
         userInputIng.setAdapter(adapter3);
         userInputIng2.setAdapter(adapter3);
         userInputIng3.setAdapter(adapter3);
 
         final Spinner tipoInputSpinner = (Spinner) promptsView.findViewById(R.id.dialog_spinner2);
         String[] tiposRecetas = tipos.toArray(new String[tipos.size()]);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_dropdown_item, tiposRecetas);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tiposRecetas);
         tipoInputSpinner.setAdapter(adapter2);
 
         final Spinner userInputSpinner = (Spinner) promptsView
                 .findViewById(R.id.dialog_spinner);
-        String[] tiposOrdenación = {"Ninguno","Por Nombre", "Por Tipo"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_dropdown_item, tiposOrdenación);
+        String[] tiposOrdenación = {"Ninguno", "Por Nombre", "Por Tipo"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tiposOrdenación);
         userInputSpinner.setAdapter(adapter);
 
         final Button botonAnadeIngrediente = (Button) promptsView.findViewById(R.id.angry_btn);
         botonAnadeIngrediente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (userInputIng.getVisibility() == View.GONE){
+                if (userInputIng.getVisibility() == View.GONE) {
                     userInputIng.setVisibility(View.VISIBLE);
-                }
-                else if (userInputIng2.getVisibility() == View.GONE){
+                } else if (userInputIng2.getVisibility() == View.GONE) {
                     userInputIng2.setVisibility(View.VISIBLE);
-                }
-                else{
+                } else {
                     userInputIng3.setVisibility(View.VISIBLE);
                     botonAnadeIngrediente.setText("Maximo numero de Ingredientes");
                 }
@@ -360,23 +347,23 @@ public class MainActivity extends AppCompatActivity
                 .setCancelable(false)
                 .setPositiveButton("Filtrar",
                         new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
+                            public void onClick(DialogInterface dialog, int id) {
                                 String valueNombre = userInputNom.getText().toString();
                                 List<String> listaIngredientes = new LinkedList<String>();
-                                if (!userInputIng.getSelectedItem().toString().equalsIgnoreCase("Ninguno")){
+                                if (!userInputIng.getSelectedItem().toString().equalsIgnoreCase("Ninguno")) {
                                     listaIngredientes.add(userInputIng.getSelectedItem().toString());
                                 }
-                                if (!userInputIng2.getSelectedItem().toString().equalsIgnoreCase("Ninguno")){
+                                if (!userInputIng2.getSelectedItem().toString().equalsIgnoreCase("Ninguno")) {
                                     listaIngredientes.add(userInputIng2.getSelectedItem().toString());
                                 }
-                                if (!userInputIng3.getSelectedItem().toString().equalsIgnoreCase("Ninguno")){
+                                if (!userInputIng3.getSelectedItem().toString().equalsIgnoreCase("Ninguno")) {
                                     listaIngredientes.add(userInputIng3.getSelectedItem().toString());
                                 }
 
                                 String valueTipo = saberTipo(tipoInputSpinner.getSelectedItemPosition());
-                                List<Receta> recetasNombre = ClientInterface.getRecetasFiltros(valueNombre, valueTipo,listaIngredientes);
-                                recetasNombre = ordenaRecetas(recetasNombre,userInputSpinner.getSelectedItemPosition());
-                                ListaRecetasFragment.actualizarLista(recetasNombre,"");
+                                List<Receta> recetasNombre = ClientInterface.getRecetasFiltros(valueNombre, valueTipo, listaIngredientes);
+                                recetasNombre = ordenaRecetas(recetasNombre, userInputSpinner.getSelectedItemPosition());
+                                ListaRecetasFragment.actualizarLista(recetasNombre, "");
                                 return;
                             }
                         })
@@ -394,7 +381,7 @@ public class MainActivity extends AppCompatActivity
                                 userInputIng3.setVisibility(View.GONE);
                                 userInputIng3.setSelection(0);
                                 botonAnadeIngrediente.setText("Añadir Ingrediente");
-                                ListaRecetasFragment.actualizarLista(null,"");
+                                ListaRecetasFragment.actualizarLista(null, "");
                                 return;
                             }
                         })
@@ -409,9 +396,9 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public static String saberTipo(int i){
+    public static String saberTipo(int i) {
         String tipo = "";
-        switch(i){
+        switch (i) {
             case 0:
                 tipo = null;
                 break;
@@ -450,8 +437,8 @@ public class MainActivity extends AppCompatActivity
                 .findViewById(R.id.textoNom_user);
         final Spinner userInputSpinner = (Spinner) promptsView
                 .findViewById(R.id.dialog_spinner_user);
-        String[] tiposOrdenación = {"Ninguno","Por Nombre", "Por Puntos"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_dropdown_item, tiposOrdenación);
+        String[] tiposOrdenación = {"Ninguno", "Por Nombre", "Por Puntos"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tiposOrdenación);
         userInputSpinner.setAdapter(adapter);
 
         // set dialog message
@@ -459,10 +446,10 @@ public class MainActivity extends AppCompatActivity
                 .setCancelable(false)
                 .setPositiveButton("Filtrar",
                         new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
+                            public void onClick(DialogInterface dialog, int id) {
                                 String valueNombre = userInputNom.getText().toString();
                                 List<Usuario> listaUsuarios = ClientInterface.get_usuarios(valueNombre, false);
-                                listaUsuarios = ordenaUsuarios(listaUsuarios,userInputSpinner.getSelectedItemPosition());
+                                listaUsuarios = ordenaUsuarios(listaUsuarios, userInputSpinner.getSelectedItemPosition());
                                 ListaUsuariosFragment.actualizarLista(listaUsuarios);
                                 return;
                             }
@@ -488,33 +475,33 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public List<Usuario> ordenaUsuarios(List<Usuario> lista, int tipo){
+    public List<Usuario> ordenaUsuarios(List<Usuario> lista, int tipo) {
 
         //Ordenar por nombre
-        if(tipo == 1){
+        if (tipo == 1) {
             int i, j;
             Usuario aux;
-            for(i=0;i<lista.size()-1;i++){
-                for(j=0;j<lista.size()-i-1;j++) {
+            for (i = 0; i < lista.size() - 1; i++) {
+                for (j = 0; j < lista.size() - i - 1; j++) {
                     if (lista.get(j + 1).getNombre().toLowerCase().compareTo(lista.get(j).getNombre().toLowerCase()) < 0) {
                         aux = lista.get(j + 1);
-                        lista.set(j+1,lista.get(j));
-                        lista.set(j,aux);
+                        lista.set(j + 1, lista.get(j));
+                        lista.set(j, aux);
                     }
                 }
             }
         }
 
         //Ordenar por puntos
-        if(tipo == 2){
+        if (tipo == 2) {
             int i, j;
             Usuario aux;
-            for(i=0;i<lista.size()-1;i++){
-                for(j=0;j<lista.size()-i-1;j++) {
+            for (i = 0; i < lista.size() - 1; i++) {
+                for (j = 0; j < lista.size() - i - 1; j++) {
                     if (lista.get(j + 1).getScore() >= lista.get(j).getScore()) {
                         aux = lista.get(j + 1);
-                        lista.set(j+1,lista.get(j));
-                        lista.set(j,aux);
+                        lista.set(j + 1, lista.get(j));
+                        lista.set(j, aux);
                     }
                 }
             }
@@ -524,33 +511,33 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public List<Receta> ordenaRecetas(List<Receta> lista, int tipo){
+    public List<Receta> ordenaRecetas(List<Receta> lista, int tipo) {
 
         //Ordenar por nombre
-        if(tipo == 1){
+        if (tipo == 1) {
             int i, j;
             Receta aux;
-            for(i=0;i<lista.size()-1;i++){
-                for(j=0;j<lista.size()-i-1;j++) {
+            for (i = 0; i < lista.size() - 1; i++) {
+                for (j = 0; j < lista.size() - i - 1; j++) {
                     if (lista.get(j + 1).getNombre().toLowerCase().compareTo(lista.get(j).getNombre().toLowerCase()) < 0) {
                         aux = lista.get(j + 1);
-                        lista.set(j+1,lista.get(j));
-                        lista.set(j,aux);
+                        lista.set(j + 1, lista.get(j));
+                        lista.set(j, aux);
                     }
                 }
             }
         }
 
         //Ordenar por tipo
-        if(tipo == 2){
+        if (tipo == 2) {
             int i, j;
             Receta aux;
-            for(i=0;i<lista.size()-1;i++){
-                for(j=0;j<lista.size()-i-1;j++) {
+            for (i = 0; i < lista.size() - 1; i++) {
+                for (j = 0; j < lista.size() - i - 1; j++) {
                     if (lista.get(j + 1).getTipo().toLowerCase().compareTo(lista.get(j).getTipo().toLowerCase()) < 0) {
                         aux = lista.get(j + 1);
-                        lista.set(j+1,lista.get(j));
-                        lista.set(j,aux);
+                        lista.set(j + 1, lista.get(j));
+                        lista.set(j, aux);
                     }
                 }
             }
@@ -559,7 +546,6 @@ public class MainActivity extends AppCompatActivity
         return lista;
 
     }
-
 
 
 }

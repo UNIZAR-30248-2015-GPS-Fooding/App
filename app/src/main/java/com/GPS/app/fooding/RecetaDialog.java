@@ -92,7 +92,7 @@ public class RecetaDialog extends DialogFragment {
         if (dataObtained.getMe_gusta() == 0 || (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) == 0) {
             valoracion.setText(" 0.0% de votos positivos");
         } else {
-            valoracion.setText(media * 100 + "% de votos positivos");
+            valoracion.setText(MainActivity.DF.format(media * 100) + "% de votos positivos");
         }
 
         //Mostramos los comensales
@@ -151,11 +151,11 @@ public class RecetaDialog extends DialogFragment {
 
                         final Receta dataObtained = Access.getReceta(recetaSeleccionada.getId());
 
-                        double media = (double) dataObtained.getMe_gusta() + 1 / (double) (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta() + 1);
-                        if (dataObtained.getMe_gusta()+1 == 0 || (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) + 1 == 0) {
-                            valoracion.setText(" 0.0% de votos positivos");
+                        double media = (double) (dataObtained.getMe_gusta() ) / (double) (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta());
+                        if (dataObtained.getMe_gusta() + 1 == 0 || (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) + 1 == 0) {
+                            valoracion.setText("0.0% de votos positivos");
                         } else {
-                            valoracion.setText(media * 100 + "% de votos positivos");
+                            valoracion.setText(MainActivity.DF.format(media * 100) + "% de votos positivos");
                         }
                     } else {
                         Toast.makeText(getActivity(), "Error al valorar", Toast.LENGTH_SHORT).show();
@@ -190,11 +190,11 @@ public class RecetaDialog extends DialogFragment {
 
                         final Receta dataObtained = Access.getReceta(recetaSeleccionada.getId());
 
-                        double media = (double) dataObtained.getMe_gusta() / (double) (dataObtained.getNo_me_gusta() + 1 + dataObtained.getMe_gusta());
+                        double media = (double) dataObtained.getMe_gusta() / (double) (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta());
                         if (dataObtained.getMe_gusta() == 0 || (dataObtained.getNo_me_gusta() + 1 + dataObtained.getMe_gusta()) == 0) {
-                            valoracion.setText(" 0.0% de votos positivos");
+                            valoracion.setText("0.0% de votos positivos");
                         } else {
-                            valoracion.setText(media * 100 + "% de votos positivos");
+                            valoracion.setText(MainActivity.DF.format(media * 100) + "% de votos positivos");
                         }
                     } else {
                         Toast.makeText(getActivity(), "Error al valorar", Toast.LENGTH_SHORT).show();
@@ -212,29 +212,26 @@ public class RecetaDialog extends DialogFragment {
 
         //Boton de favoritos
         final ImageView favView = (ImageView) view.findViewById(R.id.iconStar);
-        if (ClientInterface.esFavorita(MainActivity.mail, dataObtained.getNombre())) {
+        if (ClientInterface.esFavorita(MainActivity.mail, dataObtained.getId(), false)) {
             favView.setImageResource(R.mipmap.fav_logo);
-        }
-        else{
+        } else {
             favView.setImageResource(R.mipmap.no_fav_logo);
         }
         favView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (MainActivity.registrado){
+                if (MainActivity.registrado) {
                     //TODO ESTO FUNCIONARÁ CUANDO ESTÉ IMPLEMENTADO EL METODO
-                    if (ClientInterface.esFavorita(MainActivity.mail, dataObtained.getNombre())) {
-                        ClientInterface.quitarFavorita(MainActivity.mail,dataObtained.getNombre());
+                    if (ClientInterface.esFavorita(MainActivity.mail, dataObtained.getId(), false)) {
+                        ClientInterface.quitarFavorita(MainActivity.mail, dataObtained.getId());
                         favView.setImageResource(R.mipmap.no_fav_logo);
                         Toast.makeText(getActivity(), "Favorito eliminado correctamente", Toast.LENGTH_SHORT).show();
-                    }
-                    else{
+                    } else {
                         ClientInterface.hacerFavorita(MainActivity.mail, dataObtained.getNombre());
                         favView.setImageResource(R.mipmap.fav_logo);
                         Toast.makeText(getActivity(), "Favorito añadido correctamente", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else{
+                } else {
                     Toast.makeText(getActivity(), "Debes estar registrado para usar la funcion Favorito", Toast.LENGTH_SHORT).show();
                 }
 

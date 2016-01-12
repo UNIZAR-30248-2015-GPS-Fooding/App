@@ -160,13 +160,12 @@ public class ClientInterface {
     //TODO ESTE METODO FALTA POR HACER
     /**
      * @param mail mail del usuario del que queremos buscar si la receta es favorita
-     * @param nombreReceta nombre de la receta que queremos saber si es favorita
+     * @param idReceta id de la receta que queremos saber si es favorita
      * @return devuelve <true> si el usuario con email=mail tiene la receta con nombre=nombreReceta
      *         como favorita, <false> en caso contrario
      */
-    public static boolean esFavorita(String mail, String nombreReceta){
-        //return Access.esFavorita(mail, nombreReceta);
-        return false;
+    public static boolean esFavorita(String mail, int idReceta, boolean test){
+        return Access.esFavorita(mail, idReceta, test);
     }
 
     //TODO ESTE METODO FALTA POR HACER
@@ -184,11 +183,11 @@ public class ClientInterface {
     //TODO ESTE METODO FALTA POR HACER
     /**
      * @param mail mail del usuario del que queremos quitar la receta favorita
-     * @param nombreReceta nombre de la receta que queremos quitar favorita
+     * @param idReceta id de la receta que queremos quitar favorita
      * @return devuelve <true> si se ha quitado corretamente la receta a la lista de favoritos
      * del usuario con email=mail, <false> en caso contrario
      */
-    public static boolean quitarFavorita(String mail, String nombreReceta){
+    public static boolean quitarFavorita(String mail, int idReceta){
         //return Access.quitarFavorita(mail, nombreReceta);
         return false;
     }
