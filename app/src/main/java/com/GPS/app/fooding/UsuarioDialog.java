@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.GPS.app.fooding.connection.Access;
 import com.GPS.app.fooding.connection.ClientInterface;
 import com.GPS.app.fooding.data.Receta;
 import com.GPS.app.fooding.data.Usuario;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -48,10 +50,11 @@ public class UsuarioDialog extends DialogFragment {
 
         //Mostramos el correo
         Usuario u = ClientInterface.info_usuario(usuarioSeleccionada.getEmail(), false);
+ //       Toast.makeText(getActivity(), u.getRecetas().get(1).toString(),Toast.LENGTH_SHORT).show();
         List<Receta> listaRecetas = u.getRecetas();
         String listatext = "";
-        for(Receta r : listaRecetas){
-            listatext = listatext + r.getNombre() + "\n";
+        for(int i=0; i< listaRecetas.size(); i++){
+           listatext = listatext + listaRecetas.get(i).getNombre() + "\n";
         }
         recetas.setText(listatext);
 

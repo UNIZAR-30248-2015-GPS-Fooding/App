@@ -8,9 +8,15 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.GPS.app.fooding.MainActivity;
 import com.GPS.app.fooding.R;
+import com.GPS.app.fooding.connection.ClientInterface;
 import com.GPS.app.fooding.data.Usuario;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 
 /**
@@ -43,8 +49,26 @@ public class CuentaFragment extends android.support.v4.app.Fragment {
         TextView puntos = (TextView) view.findViewById(R.id.likes);
         //TextView dislikes = (TextView) view.findViewById(R.id.dislikes);
 
+        String email = "";
+
+        File myFile = new File(MainActivity.mPath + "/" + "ficheroUsuarios.txt");
+
+        try {
+            FileReader f = new FileReader(myFile);
+            BufferedReader b = new BufferedReader(f);
+            email = b.readLine();
+            b.close();
+            System.out.println(correo);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        u = ClientInterface.info_usuario(email, false);
+
         //Rellenamos datos
-        correo.setText(u.getEmail());
+        //correo.setText(u.getEmail());
+        correo.setText(email);
         nombre.setText(u.getNombre());
         puntos.setText((Integer.toString(u.getScore())));
 

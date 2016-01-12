@@ -566,7 +566,7 @@ public class Access {
 
         String xml = "<request id=\"" + Data.USER_CODE + "\">";
         if(mail != null)
-            xml = xml + "<nick>" + mail + "</nick>";
+            xml = xml + "<mail>" + mail + "</mail>";
         xml = xml + "<test>" + t + "</test>";
 
         xml = xml + "</request>";

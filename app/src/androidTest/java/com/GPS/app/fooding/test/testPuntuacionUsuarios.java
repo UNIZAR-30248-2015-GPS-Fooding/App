@@ -37,12 +37,13 @@ public class testPuntuacionUsuarios extends ActivityInstrumentationTestCase2<Mai
 		solo.clickOnText(java.util.regex.Pattern.quote("Lista de Usuarios"));
 		//Verificamos que se muestra el porcentaje de
 		//TODO Verificar que se muestra porcentaje de votos
-		assertTrue(solo.searchText("----"));
+		//solo.clickOnText("Fooding");
+		//assertTrue(solo.searchText("Puntos: 1000"));
 
 		//Pulsamos en Fooding para verificar que aparece los puntos en la pantalla del usuario
 		solo.clickOnText(java.util.regex.Pattern.quote("Fooding"));
 		//Verificamos que muestra el total de votos
 		//TODO Verificar que se muestra porcentaje de votos
-		assertTrue(solo.searchText("Fooding"));
+		assertTrue(solo.searchText("Puntos: 1000"));
 	}
 }
