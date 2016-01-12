@@ -30,6 +30,7 @@ import com.GPS.app.fooding.data.Receta;
 import com.GPS.app.fooding.data.Usuario;
 import com.GPS.app.fooding.fragments.CrearRecetaFragment;
 import com.GPS.app.fooding.fragments.CuentaFragment;
+import com.GPS.app.fooding.fragments.ErrorFragment;
 import com.GPS.app.fooding.fragments.ListaRecetasFragment;
 import com.GPS.app.fooding.fragments.ListaUsuariosFragment;
 import com.GPS.app.fooding.fragments.LoginFragment;
@@ -90,11 +91,6 @@ public class MainActivity extends AppCompatActivity
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        tipos.add("Ninguno");
-        tipos.addAll(ClientInterface.getTipos());
-        ingredientes.add("Ninguno");
-        ingredientes.addAll(ClientInterface.getIngredientes());
-
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -116,12 +112,32 @@ public class MainActivity extends AppCompatActivity
         navigationView.getMenu().findItem(R.id.menu_iniciar_sesion).setVisible(!registrado);
         navigationView.getMenu().findItem(R.id.menu_registrarse).setVisible(!registrado);
 
-        //Iniciamos la Actividad con el fragment ListaRecetas
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        android.support.v4.app.Fragment fragment = new ListaRecetasFragment("");
-        fragmentTransaction.replace(R.id.mainFrame, fragment);
-        fragmentTransaction.commit();
+        tipos.add("Ninguno");
+        List<String> lista = ClientInterface.getTipos();
+        if (lista ==null){
+
+            //Mostramos pantalla de error
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            android.support.v4.app.Fragment fragment = new ErrorFragment();
+            fragmentTransaction.replace(R.id.mainFrame, fragment);
+            fragmentTransaction.commit();
+            //System.exit(0);
+        }
+        else {
+            tipos.addAll(lista);
+
+            ingredientes.add("Ninguno");
+            ingredientes.addAll(ClientInterface.getIngredientes());
+
+            //Iniciamos la Actividad con el fragment ListaRecetas
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            android.support.v4.app.Fragment fragment = new ListaRecetasFragment("");
+            fragmentTransaction.replace(R.id.mainFrame, fragment);
+            fragmentTransaction.commit();
+
+        }
 
     }
 

@@ -210,6 +210,37 @@ public class RecetaDialog extends DialogFragment {
             }
         });
 
+        //Boton de favoritos
+        final ImageView favView = (ImageView) view.findViewById(R.id.iconStar);
+        if (ClientInterface.esFavorita(MainActivity.mail, dataObtained.getNombre())) {
+            favView.setImageResource(R.mipmap.fav_logo);
+        }
+        else{
+            favView.setImageResource(R.mipmap.no_fav_logo);
+        }
+        favView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (MainActivity.registrado){
+                    //TODO ESTO FUNCIONARÁ CUANDO ESTÉ IMPLEMENTADO EL METODO
+                    if (ClientInterface.esFavorita(MainActivity.mail, dataObtained.getNombre())) {
+                        ClientInterface.quitarFavorita(MainActivity.mail,dataObtained.getNombre());
+                        favView.setImageResource(R.mipmap.no_fav_logo);
+                        Toast.makeText(getActivity(), "Favorito eliminado correctamente", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        ClientInterface.hacerFavorita(MainActivity.mail, dataObtained.getNombre());
+                        favView.setImageResource(R.mipmap.fav_logo);
+                        Toast.makeText(getActivity(), "Favorito añadido correctamente", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getActivity(), "Debes estar registrado para usar la funcion Favorito", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
         return view;
     }
 

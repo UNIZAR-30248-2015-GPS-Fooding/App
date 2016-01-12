@@ -126,6 +126,7 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
 
             //Activamos booleano de registrado
             MainActivity.registrado = true;
+            MainActivity.mail = email;
 
 
         } else {

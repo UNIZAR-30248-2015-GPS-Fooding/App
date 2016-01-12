@@ -3,6 +3,7 @@ package com.GPS.app.fooding.test;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.GPS.app.fooding.MainActivity;
+import com.GPS.app.fooding.connection.ClientInterface;
 import com.GPS.app.fooding.fragments.LoginFragment;
 import com.robotium.solo.Solo;
 import com.robotium.solo.Timeout;
@@ -52,18 +53,35 @@ public class testFavoritos extends ActivityInstrumentationTestCase2<MainActivity
         fromY = (screenHeight / 2) + (screenHeight / 3);
         toY = (screenHeight / 2) - (screenHeight / 3);
         solo.drag(fromX, toX, fromY, toY, stepCount);
-        //TODO verificar que no se puede marcar como favorito si no esas registrado
 
+        //Intenamos marcar como faovrito sin estar registrado
+        solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.iconStar));
+        //Verificamos que no lo permite
+        assertTrue(solo.searchText("Debes estar registrado para usar la funcion Favorito"));
 
         try {
 
             //nos registramos
             LoginFragment.doLoginStatic("test@testfooding.test", "testingu");
-            //TODO Pulsar el boton para añadir a favorito y verficar que está como favorito con el metodo de la interface
 
-            //TODO Pulsar el boton para añadir a favorito y verficar que ya NO está favorito con el metodo de la interface
+            //Intenamos marcar como favorito estando registrado
+            solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.iconStar));
+            //Verificamos que SI lo permite
+            assertTrue(solo.searchText("Favorito añadido correctamente"));
+            //Verificamos que se ha realizado correctamente en la BD
+            assertTrue(ClientInterface.esFavorita(MainActivity.mail, "Macarrones normales y corrientes"));
 
-            //TODO Pulsar el boton para añadir a favorito y verficar que está de nuevo como favorito con el metodo de la interface
+            //Intenamos QUITAR como favorito estando registrado
+            solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.iconStar));
+            //Verificamos que SI lo permite
+            assertTrue(solo.searchText("Favorito eliminado correctamente"));
+            //Verificamos que se ha realizado correctamente en la BD
+            assertFalse(ClientInterface.esFavorita(MainActivity.mail, "Macarrones normales y corrientes"));
+
+            //Volvemos a marcar como favorito
+            solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.iconStar));
+            //Verificamos que SI lo permite
+            assertTrue(solo.searchText("Favorito añadido correctamente"));
 
             //Click on ImageView
             solo.clickOnView(solo.getView(android.widget.ImageButton.class, 0));
@@ -75,7 +93,7 @@ public class testFavoritos extends ActivityInstrumentationTestCase2<MainActivity
             solo.drag(fromX, toX, fromY, toY, stepCount);
             //Click on Favoritos
             solo.clickOnText(java.util.regex.Pattern.quote("Mis Favoritos"));
-            //TODO Verificar que se muestra la receta
+            //Verificamos que se muestra esa receta en la lista de favoritos
             assertTrue(solo.searchText("Macarrones normales y corrientes"));
 
         } finally {

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.GPS.app.fooding.connection.ClientInterface;
 
@@ -50,15 +51,27 @@ public class RecetaAdapter extends ArrayAdapter<String> {
         favView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO ESTO FUNCIONARÁ CUANDO ESTÉ IMPLEMENTADO EL METODO
-                if (ClientInterface.esFavorita(MainActivity.mail, itemname[position])) {
-                    ClientInterface.quitarFavorita(MainActivity.mail, itemname[position]);
-                    favView.setImageResource(R.mipmap.no_fav_logo);
+
+                //Si está logueado
+                if (MainActivity.registrado){
+                    //TODO ESTO FUNCIONARÁ CUANDO ESTÉ IMPLEMENTADO EL METODO
+                    if (ClientInterface.esFavorita(MainActivity.mail, itemname[position])) {
+                        ClientInterface.quitarFavorita(MainActivity.mail, itemname[position]);
+                        favView.setImageResource(R.mipmap.no_fav_logo);
+                        Toast.makeText(getContext(), "Favorito eliminado correctamente", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        ClientInterface.hacerFavorita(MainActivity.mail, itemname[position]);
+                        favView.setImageResource(R.mipmap.fav_logo);
+                        Toast.makeText(getContext(), "Favorito añadido correctamente", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else{
-                    ClientInterface.hacerFavorita(MainActivity.mail, itemname[position]);
-                    favView.setImageResource(R.mipmap.fav_logo);
+                    Toast.makeText(getContext(), "Debes estar registrado para usar la funcion Favorito", Toast.LENGTH_SHORT).show();
                 }
+
+
+
             }
         });
 
