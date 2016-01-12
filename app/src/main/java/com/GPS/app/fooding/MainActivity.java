@@ -197,7 +197,9 @@ public class MainActivity extends AppCompatActivity
         File root = new File(mPath, "ficheroUsuarios.txt");
 
         if (id == R.id.menu_inicio) {
-            Toast.makeText(MainActivity.this, "Funcion no disponible", Toast.LENGTH_SHORT).show();
+            android.support.v4.app.Fragment fragment = new ListaRecetasFragment("");
+            fragmentTransaction.replace(R.id.mainFrame, fragment);
+            fragmentTransaction.addToBackStack(null);
         } else if (id == R.id.menu_registrarse) {
             android.support.v4.app.Fragment fragment = new RegistrarseFragment();
             fragmentTransaction.replace(R.id.mainFrame, fragment);
