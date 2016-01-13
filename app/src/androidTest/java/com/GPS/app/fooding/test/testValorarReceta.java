@@ -50,10 +50,10 @@ public class testValorarReceta extends ActivityInstrumentationTestCase2<MainActi
 
         //Click on "Macarrones" de prueba
         solo.clickOnText("Macarrones normales y corrientes");
-        Receta dataObtained = Access.getReceta(34);
+        Receta data1 = Access.getReceta(34);
         double media = 0.0;
-        if(dataObtained.getMe_gusta()+dataObtained.getNo_me_gusta()!=0) {
-            media = (double) (dataObtained.getMe_gusta()) / (double) (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta());
+        if(data1.getMe_gusta()+data1.getNo_me_gusta()!=0) {
+            media = (double) (data1.getMe_gusta()) / (double) (data1.getNo_me_gusta() + data1.getMe_gusta());
         }
         //Hacemos scroll
         int screenWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
@@ -71,25 +71,29 @@ public class testValorarReceta extends ActivityInstrumentationTestCase2<MainActi
             assertTrue(solo.searchText(MainActivity.DF.format(media * 100) + "% de votos positivos"));
             LoginFragment.doLoginStatic("test@testfooding.test", "testingu");
             //Pulsamos boton MeGusta
+            System.out.println("Empiezo a darle me gusta");
             solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.buttonMeGusta));
-            dataObtained = Access.getReceta(34);
+            System.out.println("Le he dado a me gusta");
+            Receta data2 = Access.getReceta(34);
             media = 0.0;
-            if(dataObtained.getMe_gusta()+dataObtained.getNo_me_gusta()!=0) {
-                media = (double) (dataObtained.getMe_gusta()) / (double) (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta());
+            if(data2.getMe_gusta()+data2.getNo_me_gusta()!=0) {
+                media = (double) (data2.getMe_gusta()) / (double) (data2.getNo_me_gusta() + data2.getMe_gusta());
             }
-            System.out.println("jaja"+dataObtained.getMe_gusta());
-            System.out.println("jaja"+dataObtained.getNo_me_gusta());
+            System.out.println("jaja"+data2.getMe_gusta());
+            System.out.println("jaja"+data2.getNo_me_gusta());
             System.out.println(MainActivity.DF.format(media * 100));
             assertTrue(solo.searchText(MainActivity.DF.format(media * 100) + "% de votos positivos"));
             //Pulsamos boton NO MeGusta
+            System.out.println("Empiezo a darle no me gusta");
             solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.buttonNoMeGusta));
-            dataObtained = Access.getReceta(34);
+            System.out.println("Le he dado a no me gusta");
+            Receta data3 = Access.getReceta(34);
             media = 0.0;
-            if(dataObtained.getMe_gusta()+dataObtained.getNo_me_gusta()!=0) {
-                media = (double) (dataObtained.getMe_gusta()) / (double) (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta());
+            if(data3.getMe_gusta()+data3.getNo_me_gusta()!=0) {
+                media = (double) (data3.getMe_gusta()) / (double) (data3.getNo_me_gusta() + data3.getMe_gusta());
             }
-            System.out.println("lols"+dataObtained.getMe_gusta());
-            System.out.println("lols"+dataObtained.getNo_me_gusta());
+            System.out.println("lols"+data3.getMe_gusta());
+            System.out.println("lols"+data3.getNo_me_gusta());
             System.out.println(MainActivity.DF.format(media * 100));
             assertTrue(solo.searchText(MainActivity.DF.format(media * 100) + "% de votos positivos"));
         } finally {

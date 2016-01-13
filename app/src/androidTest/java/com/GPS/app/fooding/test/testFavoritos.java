@@ -69,14 +69,14 @@ public class testFavoritos extends ActivityInstrumentationTestCase2<MainActivity
             //Verificamos que SI lo permite
             assertTrue(solo.searchText("Favorito añadido correctamente"));
             //Verificamos que se ha realizado correctamente en la BD
-            assertTrue(ClientInterface.esFavorita(MainActivity.mail, "Macarrones normales y corrientes"));
+            assertTrue(ClientInterface.esFavorita(MainActivity.mail, 34, true));
 
             //Intenamos QUITAR como favorito estando registrado
             solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.iconStar));
             //Verificamos que SI lo permite
             assertTrue(solo.searchText("Favorito eliminado correctamente"));
             //Verificamos que se ha realizado correctamente en la BD
-            assertFalse(ClientInterface.esFavorita(MainActivity.mail, "Macarrones normales y corrientes"));
+            assertFalse(ClientInterface.esFavorita(MainActivity.mail, 34, true));
 
             //Volvemos a marcar como favorito
             solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.iconStar));
