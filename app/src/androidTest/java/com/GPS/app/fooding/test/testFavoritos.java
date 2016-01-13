@@ -3,6 +3,7 @@ package com.GPS.app.fooding.test;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.GPS.app.fooding.MainActivity;
+import com.GPS.app.fooding.R;
 import com.GPS.app.fooding.connection.ClientInterface;
 import com.GPS.app.fooding.fragments.LoginFragment;
 import com.robotium.solo.Solo;
@@ -11,6 +12,7 @@ import com.robotium.solo.Timeout;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 
 public class testFavoritos extends ActivityInstrumentationTestCase2<MainActivity> {
@@ -62,25 +64,27 @@ public class testFavoritos extends ActivityInstrumentationTestCase2<MainActivity
         try {
             //nos logueamos
             LoginFragment.doLoginStatic("test@testfooding.test", "testingu");
-
+            MainActivity.navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(true);
+            try {
+                TimeUnit.SECONDS.sleep(3);
+            } catch (InterruptedException e) {
+                ;
+            }
             //Intenamos marcar como favorito estando registrado
             solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.iconStar));
             //Verificamos que SI lo permite
-            assertTrue(solo.searchText("Favorito añadido correctamente"));
-            //Verificamos que se ha realizado correctamente en la BD
-            assertTrue(ClientInterface.esFavorita(MainActivity.mail, 34, true));
+            assertTrue(solo.searchText("Favorito añadido"));
 
             //Intenamos QUITAR como favorito estando registrado
             solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.iconStar));
             //Verificamos que SI lo permite
-            assertTrue(solo.searchText("Favorito eliminado correctamente"));
-            //Verificamos que se ha realizado correctamente en la BD
-            assertFalse(ClientInterface.esFavorita(MainActivity.mail, 34, true));
+            assertTrue(solo.searchText("Favorito eliminado"));
 
             //Volvemos a marcar como favorito
             solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.iconStar));
             //Verificamos que SI lo permite
-            assertTrue(solo.searchText("Favorito añadido correctamente"));
+            assertTrue(solo.searchText("Favorito añadido"));
+            solo.goBack();
 
             //Click on ImageView
             solo.clickOnView(solo.getView(android.widget.ImageButton.class, 0));
@@ -92,10 +96,16 @@ public class testFavoritos extends ActivityInstrumentationTestCase2<MainActivity
             solo.drag(fromX, toX, fromY, toY, stepCount);
             //Click on Favoritos
             solo.clickOnText(java.util.regex.Pattern.quote("Mis Favoritos"));
+            try {
+                TimeUnit.SECONDS.sleep(3);
+            } catch (InterruptedException e) {
+                ;
+            }
             //Verificamos que se muestra esa receta en la lista de favoritos
             assertTrue(solo.searchText("Macarrones normales y corrientes"));
 
         } finally {
+            MainActivity.navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(false);
             File root = new File(MainActivity.mPath, "ficheroUsuarios.txt");
             if (root.exists() && root.isFile() && MainActivity.registrado) {
                 root.delete();
