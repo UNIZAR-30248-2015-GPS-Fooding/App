@@ -38,6 +38,7 @@ public class testFavoritos extends ActivityInstrumentationTestCase2<MainActivity
 
     @Test
     public void testRun() {
+
         //Wait for activity: 'com.example.coke.fooding.MainActivity'
         solo.waitForActivity(com.GPS.app.fooding.MainActivity.class, 2000);
         //Set default small timeout to 15575 milliseconds
@@ -62,9 +63,14 @@ public class testFavoritos extends ActivityInstrumentationTestCase2<MainActivity
         assertTrue(solo.searchText("Debes estar"));
 
         try {
-            //nos logueamos
+            // Logueamos y sacamos menu favoritos a la palestra
             LoginFragment.doLoginStatic("test@testfooding.test", "testingu");
-            MainActivity.navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(true);
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    MainActivity.navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(true);
+                }
+            });
             try {
                 TimeUnit.SECONDS.sleep(3);
             } catch (InterruptedException e) {
@@ -105,7 +111,12 @@ public class testFavoritos extends ActivityInstrumentationTestCase2<MainActivity
             assertTrue(solo.searchText("Macarrones normales y corrientes"));
 
         } finally {
-            MainActivity.navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(false);
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    MainActivity.navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(false);
+                }
+            });
             File root = new File(MainActivity.mPath, "ficheroUsuarios.txt");
             if (root.exists() && root.isFile() && MainActivity.registrado) {
                 root.delete();

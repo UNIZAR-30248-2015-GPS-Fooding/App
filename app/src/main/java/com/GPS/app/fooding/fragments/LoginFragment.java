@@ -108,7 +108,6 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
         boolean logueado = ClientInterface.login_usuario(email, passw, false);
 
         if (logueado) {
-
             // meter el usuario en fichero
             try {
                 //File f = new File("ficheroUsuarios");
