@@ -61,6 +61,7 @@
 
                 <EditText android:id="@+id/cant" android:layout_width="54dp"
                     android:layout_height="wrap_content" android:hint="@string/cantidad"
+                    android:inputType="number"
                     android:imeActionId="@+id/login"
                     android:maxLines="1" android:singleLine="true" />
 

@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by coke on 28/10/2015.
+ * Created by Fooding on 28/10/2015.
  */
 public class RecetaDialog extends DialogFragment {
 

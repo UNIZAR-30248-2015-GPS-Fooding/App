@@ -1,7 +1,11 @@
 package com.GPS.app.fooding;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by coke on 28/10/2015.
+ * Created by Fooding on 28/10/2015.
  */
 public class UsuarioDialog extends DialogFragment {
 
@@ -38,15 +42,23 @@ public class UsuarioDialog extends DialogFragment {
 
         //Cargamos elementos del layout
         View view = inflater.inflate(R.layout.usuario_dialog, container);
+        TextView titulo = (TextView) view.findViewById(R.id.nombreUsuario);
         TextView recetas = (TextView) view.findViewById(R.id.recetas);
         final TextView puntos = (TextView) view.findViewById(R.id.puntos);
 
 
         //Mostramos nombre del user como titulo
-        getDialog().setTitle(usuarioSeleccionada.getNombre());
-        int width = ViewGroup.LayoutParams.FILL_PARENT;
-        int height = ViewGroup.LayoutParams.FILL_PARENT;
-        getDialog().getWindow().setLayout(width, height);
+        //String nombre = usuarioSeleccionada.getNombre();
+        //titulo.setText(nombre);
+        SpannableString spanString = new SpannableString(usuarioSeleccionada.getNombre());
+        spanString.setSpan(new UnderlineSpan(), 0, spanString.length(), 0);
+        spanString.setSpan(new StyleSpan(Typeface.BOLD), 0, spanString.length(), 0);
+        titulo.setText(spanString);
+
+        //getDialog().setTitle(usuarioSeleccionada.getNombre());
+        //int width = ViewGroup.LayoutParams.FILL_PARENT;
+       // int height = ViewGroup.LayoutParams.FILL_PARENT;
+       // getDialog().getWindow().setLayout(width, height);
 
         //Mostramos el correo
         Usuario u = ClientInterface.info_usuario(usuarioSeleccionada.getEmail(), false);

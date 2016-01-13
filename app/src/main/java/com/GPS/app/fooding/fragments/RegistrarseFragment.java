@@ -15,7 +15,7 @@ import com.GPS.app.fooding.connection.ClientInterface;
 import com.GPS.app.fooding.R;
 
 /**
- * Created by coke on 15/10/2015.
+ * Created by Fooding on 15/10/2015.
  */
 public class RegistrarseFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
 

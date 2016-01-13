@@ -1,7 +1,7 @@
 package com.GPS.app.fooding;
 
 /**
- * Created by coke on 07/10/2015.
+ * Created by Fooding on 07/10/2015.
  */
 import android.app.Activity;
 import android.view.LayoutInflater;

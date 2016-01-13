@@ -45,7 +45,7 @@
 
     <ImageView
         android:id="@+id/iconLike"
-        android:src="@mipmap/like_logo"
+        android:src="@mipmap/silver_logo"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:padding="5dp" />

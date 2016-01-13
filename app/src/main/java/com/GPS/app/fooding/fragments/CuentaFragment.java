@@ -20,7 +20,7 @@ import java.io.IOException;
 
 
 /**
- * Created by coke on 15/10/2015.
+ * Created by Fooding on 15/10/2015.
  */
 
 public class CuentaFragment extends android.support.v4.app.Fragment {

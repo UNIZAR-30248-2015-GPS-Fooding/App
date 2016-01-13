@@ -36,7 +36,9 @@ import com.GPS.app.fooding.fragments.ListaUsuariosFragment;
 import com.GPS.app.fooding.fragments.LoginFragment;
 import com.GPS.app.fooding.fragments.RegistrarseFragment;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -54,7 +56,12 @@ public class MainActivity extends AppCompatActivity
     private LinearLayout mLayout;
 
     public static File mPath = new File(Environment.getExternalStorageDirectory() + "/Fooding");
-    public static boolean registrado;
+
+    public static boolean registrado = false;
+    File ficheroUsuarios = new File(mPath, "ficheroUsuarios.txt");
+
+
+
 
     //Menu lateral
     public static NavigationView navigationView;
@@ -88,6 +95,23 @@ public class MainActivity extends AppCompatActivity
         if (!mPath.exists()) {
             mPath.mkdirs();
         }
+       /** //TODO: Lo comentado es lo que yo he intentado
+        if(ficheroUsuarios.exists() && ficheroUsuarios.length() != 0){
+            String correo ="";
+            try {
+                FileReader f = new FileReader(ficheroUsuarios);
+                BufferedReader b = new BufferedReader(f);
+                correo = b.readLine();
+                b.close();
+                System.out.println(correo);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Usuario u = ClientInterface.info_usuario(correo, false);
+            registrado = true;
+            navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(registrado);
+        }*/
 
         //leer el fichero de usuarios
         //mira si hay usuarios
