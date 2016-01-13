@@ -647,4 +647,141 @@ public class Access {
         }
         return false;
     }
+
+    /**
+     * Obtiene las recetas de la BD del servidor cuyo id coincide con
+     *
+     * @param id
+     * @return una receta que coincide con el parametro de
+     * busqueda
+     */
+    public static boolean hacerFavorita(String mail, int id, boolean test) {
+        /* hacer la peticion al servidor */
+        String testS = "";
+        if (test) {
+            testS = "yes";
+        } else {
+            testS = "no";
+        }
+        // crear la peticion
+        String xml = "<request id=\"" + Data.FAV_CODE + "\">";
+        xml = xml + "<mail>" + mail + "</mail>";
+        if (id >= 0)  // comprobar si el id esta bien
+            xml = xml + "<id>" + id + "</id>";
+        xml = xml + "<test>" + testS + "</test>";
+        xml = xml + "</request>";
+
+        // mandar la peticion
+        Document doc = Client.sendRequest(xml);
+
+        if (doc != null) {
+            // se ha recibido respuesta correcta
+
+            doc.getDocumentElement().normalize();
+
+            boolean returned = false;
+
+            // id
+            if (doc.getElementsByTagName("hecho") != null
+                    && doc.getElementsByTagName("hecho").getLength() > 0) {
+                returned = doc.getElementsByTagName("hecho").item(0).getTextContent().equals("yes");
+            }
+
+            return returned;
+        }
+        return false;
+    }
+
+    /**
+     * Obtiene las recetas de la BD del servidor cuyo id coincide con
+     *
+     * @param id
+     * @return una receta que coincide con el parametro de
+     * busqueda
+     */
+    public static boolean quitarFavorita(String mail, int id, boolean test) {
+        /* El servidor deshace el favorito si al hacer favorito la receta ya es favorita */
+        return hacerFavorita(mail, id, test);
+    }
+
+    /**
+     * Obtiene las recetas de la BD del servidor cuyo nombre coincide
+     * con @param nombre, su tipo con @param tipo y todos los ingredientes
+     * de @param ingredientes son ingredientes de la receta.
+     * <p/>
+     * Si @param nombre es null, no se buscara por nombre.
+     * Si @param tipo es null, no se buscara por tipo.
+     * Si @param ingredientes es null, no se buscara por ingredientes.
+     *
+     * @return una lista de las recetas que coinciden con los parametros de
+     * busqueda
+     */
+    public static List<Receta> get_favoritos(String mail, boolean test) {
+        /* hacer la peticion al servidor */
+        String testS = "no";
+        if(test)
+            testS = "yes";
+        // crear la peticion
+        String xml = "<request id=\"" + Data.LIST_FAV_CODE + "\">";
+        xml = xml + "<mail>" + mail + "</mail>";
+        xml = xml + "<test>" + testS + "</test>";
+        xml = xml + "</request>";
+
+        // mandar la peticion
+        Document doc = Client.sendRequest(xml);
+
+        if (doc != null) {
+            // se ha recibido respuesta correcta
+
+            doc.getDocumentElement().normalize();
+
+            // recorrer lista de recetas
+            NodeList nl = doc.getElementsByTagName("receta");
+            List<Receta> recetas = new LinkedList<>();
+
+            if (nl != null && nl.getLength() > 0) {
+                for (int i = 0; i < nl.getLength(); i++) {
+                    Element n = (Element) nl.item(i);
+
+                    // crear nueva receta
+                    Receta r = new Receta();
+
+                    // id
+                    if (n.getElementsByTagName("id") != null
+                            && n.getElementsByTagName("id").getLength() > 0) {
+                        r.setId(Integer.parseInt(n.getElementsByTagName("id").item(0).getTextContent()));
+                    }
+
+                    // nombre
+                    if (n.getElementsByTagName("nombre") != null
+                            && n.getElementsByTagName("nombre").getLength() > 0) {
+                        r.setNombre(n.getElementsByTagName("nombre").item(0).getTextContent());
+                    }
+
+                    // tipo
+                    if (n.getElementsByTagName("tipo") != null
+                            && n.getElementsByTagName("tipo").getLength() > 0) {
+                        r.setTipo(n.getElementsByTagName("tipo").item(0).getTextContent());
+                    }
+
+                    // me_gusta
+                    if (n.getElementsByTagName("me_gusta") != null
+                            && n.getElementsByTagName("me_gusta").getLength() > 0) {
+                        r.setMe_gusta(Integer.parseInt(n.getElementsByTagName("me_gusta").item(0).getTextContent()));
+                    }
+
+                    // no_me_gusta
+                    if (n.getElementsByTagName("no_me_gusta") != null
+                            && n.getElementsByTagName("no_me_gusta").getLength() > 0) {
+                        r.setNo_me_gusta(Integer.parseInt(n.getElementsByTagName("no_me_gusta").item(0).getTextContent()));
+                    }
+
+                    // agregar receta
+                    recetas.add(r);
+                }
+            }
+            return recetas;
+        }
+        return null;
+    }
 }

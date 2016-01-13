@@ -120,8 +120,7 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //TODO ESTO FUNCIONARÁ CUANDO ESTÉ IMPLEMENTADO EL METODO
-            listaRecetas = ClientInterface.get_favoritos(correo);
+            listaRecetas = ClientInterface.get_favoritos(correo, false);
         } else {
             if (listaReceta == null) {
                 listaRecetas = ClientInterface.getRecetas();

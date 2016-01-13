@@ -57,11 +57,10 @@ public class testFavoritos extends ActivityInstrumentationTestCase2<MainActivity
         //Intenamos marcar como faovrito sin estar registrado
         solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.iconStar));
         //Verificamos que no lo permite
-        assertTrue(solo.searchText("Debes estar registrado para usar la funcion Favorito"));
+        assertTrue(solo.searchText("Debes estar"));
 
         try {
-
-            //nos registramos
+            //nos logueamos
             LoginFragment.doLoginStatic("test@testfooding.test", "testingu");
 
             //Intenamos marcar como favorito estando registrado

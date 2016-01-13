@@ -151,7 +151,7 @@ public class RecetaDialog extends DialogFragment {
 
                         final Receta dataObtained = Access.getReceta(recetaSeleccionada.getId());
 
-                        double media = (double) (dataObtained.getMe_gusta() ) / (double) (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta());
+                        double media = (double) (dataObtained.getMe_gusta()) / (double) (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta());
                         if (dataObtained.getMe_gusta() + 1 == 0 || (dataObtained.getNo_me_gusta() + dataObtained.getMe_gusta()) + 1 == 0) {
                             valoracion.setText("0.0% de votos positivos");
                         } else {
@@ -221,18 +221,17 @@ public class RecetaDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (MainActivity.registrado) {
-                    //TODO ESTO FUNCIONARÁ CUANDO ESTÉ IMPLEMENTADO EL METODO
                     if (ClientInterface.esFavorita(MainActivity.mail, dataObtained.getId(), false)) {
-                        ClientInterface.quitarFavorita(MainActivity.mail, dataObtained.getId());
+                        ClientInterface.quitarFavorita(MainActivity.mail, dataObtained.getId(), false);
                         favView.setImageResource(R.mipmap.no_fav_logo);
                         Toast.makeText(getActivity(), "Favorito eliminado correctamente", Toast.LENGTH_SHORT).show();
                     } else {
-                        ClientInterface.hacerFavorita(MainActivity.mail, dataObtained.getNombre());
+                        ClientInterface.hacerFavorita(MainActivity.mail, dataObtained.getId(), false);
                         favView.setImageResource(R.mipmap.fav_logo);
                         Toast.makeText(getActivity(), "Favorito añadido correctamente", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Debes estar registrado para usar la funcion Favorito", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Debes estar registrado para poder marcar como favorito", Toast.LENGTH_SHORT).show();
                 }
 
             }

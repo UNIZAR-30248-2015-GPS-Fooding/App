@@ -147,17 +147,14 @@ public class ClientInterface {
         return Access.info_usuario(mail, test);
     }
 
-    //TODO ESTE METODO FALTA POR HACER
     /**
      * @param mail mail del usuario del que queremos buscar sus recetas favoritas
      * @return lista de recetas favoritas del usuario con email=mail
      */
-    public static List<Receta> get_favoritos(String mail){
-        //return Access.get_favoritos(mail);
-        return null;
+    public static List<Receta> get_favoritos(String mail, boolean test){
+        return Access.get_favoritos(mail, test);
     }
 
-    //TODO ESTE METODO FALTA POR HACER
     /**
      * @param mail mail del usuario del que queremos buscar si la receta es favorita
      * @param idReceta id de la receta que queremos saber si es favorita
@@ -168,28 +165,24 @@ public class ClientInterface {
         return Access.esFavorita(mail, idReceta, test);
     }
 
-    //TODO ESTE METODO FALTA POR HACER
     /**
      * @param mail mail del usuario del que queremos hacer la receta favorita
-     * @param nombreReceta nombre de la receta que queremos hacer favorita
+     * @param idReceta nombre de la receta que queremos hacer favorita
      * @return devuelve <true> si se ha añadido corretamente la receta a la lista de favoritos
      * del usuario con email=mail, <false> en caso contrario
      */
-    public static boolean hacerFavorita(String mail, String nombreReceta){
-        //return Access.hacerFavorita(mail, nombreReceta);
-        return false;
+    public static boolean hacerFavorita(String mail, int idReceta, boolean test){
+        return Access.hacerFavorita(mail, idReceta, test);
     }
 
-    //TODO ESTE METODO FALTA POR HACER
     /**
      * @param mail mail del usuario del que queremos quitar la receta favorita
      * @param idReceta id de la receta que queremos quitar favorita
      * @return devuelve <true> si se ha quitado corretamente la receta a la lista de favoritos
      * del usuario con email=mail, <false> en caso contrario
      */
-    public static boolean quitarFavorita(String mail, int idReceta){
-        //return Access.quitarFavorita(mail, nombreReceta);
-        return false;
+    public static boolean quitarFavorita(String mail, int idReceta, boolean test){
+        return Access.quitarFavorita(mail, idReceta, test);
     }
 
 

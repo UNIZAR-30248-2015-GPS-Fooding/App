@@ -55,14 +55,13 @@ public class RecetaAdapter extends ArrayAdapter<String> {
 
                 //Si está logueado
                 if (MainActivity.registrado){
-                    //TODO ESTO FUNCIONARÁ CUANDO ESTÉ IMPLEMENTADO EL METODO
                     if (ClientInterface.esFavorita(MainActivity.mail, ids[position],false)) {
-                        ClientInterface.quitarFavorita(MainActivity.mail, ids[position]);
+                        ClientInterface.quitarFavorita(MainActivity.mail, ids[position], false);
                         favView.setImageResource(R.mipmap.no_fav_logo);
                         Toast.makeText(getContext(), "Favorito eliminado correctamente", Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        ClientInterface.hacerFavorita(MainActivity.mail, itemname[position]);
+                        ClientInterface.hacerFavorita(MainActivity.mail, ids[position], false);
                         favView.setImageResource(R.mipmap.fav_logo);
                         Toast.makeText(getContext(), "Favorito añadido correctamente", Toast.LENGTH_SHORT).show();
                     }

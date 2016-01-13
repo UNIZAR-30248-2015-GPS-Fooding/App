@@ -1,18 +1,16 @@
 package com.GPS.app.fooding.test;
 
 import android.test.ActivityInstrumentationTestCase2;
-
 import com.GPS.app.fooding.MainActivity;
 import com.GPS.app.fooding.connection.Access;
 import com.GPS.app.fooding.data.Receta;
 import com.GPS.app.fooding.fragments.LoginFragment;
 import com.robotium.solo.Solo;
 import com.robotium.solo.Timeout;
-
 import org.junit.Test;
-
 import java.io.File;
 import java.text.DecimalFormat;
+import java.util.concurrent.TimeUnit;
 
 
 public class testValorarReceta extends ActivityInstrumentationTestCase2<MainActivity> {
@@ -49,6 +47,11 @@ public class testValorarReceta extends ActivityInstrumentationTestCase2<MainActi
         }
 
         //Click on "Macarrones" de prueba
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            ;
+        }
         solo.clickOnText("Macarrones normales y corrientes");
         Receta data1 = Access.getReceta(34);
         double media = 0.0;
@@ -71,30 +74,30 @@ public class testValorarReceta extends ActivityInstrumentationTestCase2<MainActi
             assertTrue(solo.searchText(MainActivity.DF.format(media * 100) + "% de votos positivos"));
             LoginFragment.doLoginStatic("test@testfooding.test", "testingu");
             //Pulsamos boton MeGusta
-            System.out.println("Empiezo a darle me gusta");
             solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.buttonMeGusta));
-            System.out.println("Le he dado a me gusta");
+            try {
+                TimeUnit.SECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                ;
+            }
             Receta data2 = Access.getReceta(34);
             media = 0.0;
             if(data2.getMe_gusta()+data2.getNo_me_gusta()!=0) {
                 media = (double) (data2.getMe_gusta()) / (double) (data2.getNo_me_gusta() + data2.getMe_gusta());
             }
-            System.out.println("jaja"+data2.getMe_gusta());
-            System.out.println("jaja"+data2.getNo_me_gusta());
-            System.out.println(MainActivity.DF.format(media * 100));
             assertTrue(solo.searchText(MainActivity.DF.format(media * 100) + "% de votos positivos"));
             //Pulsamos boton NO MeGusta
-            System.out.println("Empiezo a darle no me gusta");
             solo.clickOnView(solo.getView(com.GPS.app.fooding.R.id.buttonNoMeGusta));
-            System.out.println("Le he dado a no me gusta");
+            try {
+                TimeUnit.SECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                ;
+            }
             Receta data3 = Access.getReceta(34);
             media = 0.0;
             if(data3.getMe_gusta()+data3.getNo_me_gusta()!=0) {
                 media = (double) (data3.getMe_gusta()) / (double) (data3.getNo_me_gusta() + data3.getMe_gusta());
             }
-            System.out.println("lols"+data3.getMe_gusta());
-            System.out.println("lols"+data3.getNo_me_gusta());
-            System.out.println(MainActivity.DF.format(media * 100));
             assertTrue(solo.searchText(MainActivity.DF.format(media * 100) + "% de votos positivos"));
         } finally {
             File root = new File(MainActivity.mPath, "ficheroUsuarios.txt");
