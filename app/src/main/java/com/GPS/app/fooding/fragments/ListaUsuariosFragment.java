@@ -30,14 +30,13 @@ public class ListaUsuariosFragment extends android.support.v4.app.Fragment {
     static List<Usuario> listaUsuarios = null;
     static boolean test = false;
 
-    public ListaUsuariosFragment (){
+    public ListaUsuariosFragment() {
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState)
-    {
+                             ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         actividadPadre = this.getActivity();
         View view = inflater.inflate(R.layout.fragment_lista_usuarios, container, false);
@@ -67,6 +66,7 @@ public class ListaUsuariosFragment extends android.support.v4.app.Fragment {
 
     /**
      * Modificamos el action bar con la nueva opcion de buscar usuarios
+     *
      * @param menu
      * @param inflater
      */
@@ -82,24 +82,32 @@ public class ListaUsuariosFragment extends android.support.v4.app.Fragment {
         editNameDialog.show(fm, "fragment_edit_name");
     }
 
-    public static void actualizarLista(List<Usuario> lista){
-        if(lista== null){
+    public static void actualizarLista(List<Usuario> lista) {
+        if (lista == null) {
             listaUsuarios = ClientInterface.get_usuarios(null, test);
-        }else{
+        } else {
             listaUsuarios = lista;
         }
         String[] listaNombres = new String[listaUsuarios.size()];
         Integer[] listaIconos = new Integer[listaUsuarios.size()];
         String[] listaPuntos = new String[listaUsuarios.size()];
+        Integer[] listaIconosP = new Integer[listaUsuarios.size()];
 
         //creamos la lista de nombres y de logos
-        for(int i=0;i<listaUsuarios.size();i++){
+        for (int i = 0; i < listaUsuarios.size(); i++) {
             listaNombres[i] = listaUsuarios.get(i).getNombre();
             listaIconos[i] = R.mipmap.user_logo;
             listaPuntos[i] = Integer.toString(listaUsuarios.get(i).getScore());
+            Integer icon = R.mipmap.bronce_logo;
+            if (listaUsuarios.get(i).getScore() > 300 && listaUsuarios.get(i).getScore() < 600) {
+                icon = R.mipmap.silver_logo;
+            } else if (listaUsuarios.get(i).getScore() >= 600) {
+                icon = R.mipmap.gold_logo;
+            }
+            listaIconosP[i] = icon;
         }
 
-        UsuarioAdapter adapter=new UsuarioAdapter(actividadPadre, listaNombres , listaIconos, listaPuntos);
+        UsuarioAdapter adapter = new UsuarioAdapter(actividadPadre, listaNombres, listaIconos, listaIconosP, listaPuntos);
         lv.setAdapter(adapter);
     }
 

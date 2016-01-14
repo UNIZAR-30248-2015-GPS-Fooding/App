@@ -17,14 +17,16 @@ public class UsuarioAdapter extends ArrayAdapter<String> {
     private final String[] itemname;
     private final String[] puntos;
     private final Integer[] imgid;
+    private final Integer[] imgid2;
 
-    public UsuarioAdapter(Activity context, String[] itemname, Integer[] imgid, String[] puntos) {
+    public UsuarioAdapter(Activity context, String[] itemname, Integer[] imgid, Integer[] imgid2, String[] puntos) {
         super(context, R.layout.usuario, itemname);
 
         this.context=context;
         this.itemname=itemname;
         this.puntos=puntos;
         this.imgid=imgid;
+        this.imgid2=imgid2;
     }
 
     @Override
@@ -35,10 +37,12 @@ public class UsuarioAdapter extends ArrayAdapter<String> {
         TextView txtTitle = (TextView) rowView.findViewById(R.id.itemUser);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.iconUser);
         TextView puntostxt = (TextView) rowView.findViewById(R.id.numLikes);
+        ImageView imageView2 = (ImageView) rowView.findViewById(R.id.iconLike);
 
         txtTitle.setText(itemname[position]);
         imageView.setImageResource(imgid[position]);
         puntostxt.setText(puntos[position]);
+        imageView2.setImageResource(imgid2[position]);
         return rowView;
 
     };
