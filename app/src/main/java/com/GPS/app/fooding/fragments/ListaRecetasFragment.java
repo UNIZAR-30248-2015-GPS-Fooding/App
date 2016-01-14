@@ -2,6 +2,7 @@ package com.GPS.app.fooding.fragments;
 
 import android.app.Activity;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -38,10 +39,13 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
     static ArrayList<Integer> logosReceta = new ArrayList<>();
     static List<Receta> listaRecetas = null;
 
-    String modo = "";
+    static String modo = "";
+
+    static Activity ACT;
 
     public ListaRecetasFragment(String modo) {
         this.modo = modo;
+        ACT = getActivity();
     }
 
     @Override
@@ -107,6 +111,7 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
 
     public static void actualizarLista(List<Receta> listaReceta, String modo) {
 
+        /*
         if (modo.equalsIgnoreCase("modoFavoritos")) {
             File myFile = new File(MainActivity.mPath + "/" + "ficheroUsuarios.txt");
             String correo = "";
@@ -163,10 +168,135 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
                 listaIconos[i] = R.mipmap.random_logo;
             }
 
+        }*/
+
+        if (listaReceta != null) {
+            listaRecetas = listaReceta;
+            String[] listaNombres = new String[listaRecetas.size()];
+            String[] listaTipo = new String[listaRecetas.size()];
+            Integer[] listaIconos = new Integer[listaRecetas.size()];
+            int[] listaIds = new int[listaRecetas.size()];
+            Double[] puntos = new Double[listaRecetas.size()];
+
+            //creamos la lista de nombres y de logos
+            for (int i = 0; i < listaRecetas.size(); i++) {
+                listaNombres[i] = listaRecetas.get(i).getNombre();
+                listaTipo[i] = listaRecetas.get(i).getTipo();
+                listaIds[i] = listaRecetas.get(i).getId();
+
+                double media = (double) listaRecetas.get(i).getMe_gusta() / (double) (listaRecetas.get(i).getNo_me_gusta() + listaRecetas.get(i).getMe_gusta());
+                if (listaRecetas.get(i).getMe_gusta() == 0 || (listaRecetas.get(i).getNo_me_gusta() + listaRecetas.get(i).getMe_gusta()) == 0) {
+                    puntos[i] = 0.0;
+                } else {
+                    puntos[i] = media * 100;
+                }
+
+                //Transformamos los logos a iconos
+                if (listaTipo[i].equalsIgnoreCase("pasta")) {
+                    listaIconos[i] = R.mipmap.pasta_logo;
+                } else if (listaTipo[i].equalsIgnoreCase("postre")) {
+                    listaIconos[i] = R.mipmap.dessert_logo;
+                } else if (listaTipo[i].equalsIgnoreCase("pescado")) {
+                    listaIconos[i] = R.mipmap.fish_logo;
+                } else if (listaTipo[i].equalsIgnoreCase("carne")) {
+                    listaIconos[i] = R.mipmap.meat_logo;
+                } else if (listaTipo[i].equalsIgnoreCase("verdura")) {
+                    listaIconos[i] = R.mipmap.vegetable_logo;
+                } else {
+                    listaIconos[i] = R.mipmap.random_logo;
+                }
+
+            }
+
+            RecetaAdapter adapter = new RecetaAdapter(actividadPadre, listaNombres, listaIds, listaIconos, puntos);
+            lv.setAdapter(adapter);
+        } else{
+            String[] listaNombres = new String[1];
+            String[] listaTipo = new String[1];
+            Integer[] listaIconos = new Integer[1];
+            int[] listaIds = new int[1];
+            Double[] puntos = new Double[1];
+
+            listaNombres[0] = "Cargando";
+            listaTipo[0] = "?";
+            listaIconos[0] = R.mipmap.random_logo;
+            listaIds[0] = -1;
+            puntos[0] = 0.0;
+            new GetRecetas().execute(ACT);
+            RecetaAdapter adapter = new RecetaAdapter(actividadPadre, listaNombres, listaIds, listaIconos, puntos);
+            lv.setAdapter(adapter);
+        }
+    }
+
+    private static class GetRecetas extends AsyncTask<Activity,String,String> {
+
+        protected String doInBackground(Activity... list) {
+            Activity a = list[0];
+
+            if (modo.equalsIgnoreCase("modoFavoritos")) {
+                File myFile = new File(MainActivity.mPath + "/" + "ficheroUsuarios.txt");
+                String correo = "";
+                try {
+                    FileReader f = new FileReader(myFile);
+                    BufferedReader b = new BufferedReader(f);
+                    correo = b.readLine();
+                    b.close();
+                    System.out.println(correo);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                listaRecetas = ClientInterface.get_favoritos(correo, false);
+            } else {
+                    listaRecetas = ClientInterface.getRecetas();
+            }
+
+            String[] listaNombres = new String[listaRecetas.size()];
+            String[] listaTipo = new String[listaRecetas.size()];
+            Integer[] listaIconos = new Integer[listaRecetas.size()];
+            int[] listaIds = new int[listaRecetas.size()];
+            Double[] puntos = new Double[listaRecetas.size()];
+
+            //creamos la lista de nombres y de logos
+            for (int i = 0; i < listaRecetas.size(); i++) {
+                listaNombres[i] = listaRecetas.get(i).getNombre();
+                listaTipo[i] = listaRecetas.get(i).getTipo();
+                listaIds[i] = listaRecetas.get(i).getId();
+
+                double media = (double) listaRecetas.get(i).getMe_gusta() / (double) (listaRecetas.get(i).getNo_me_gusta() + listaRecetas.get(i).getMe_gusta());
+                if (listaRecetas.get(i).getMe_gusta() == 0 || (listaRecetas.get(i).getNo_me_gusta() + listaRecetas.get(i).getMe_gusta()) == 0) {
+                    puntos[i] = 0.0;
+                } else {
+                    puntos[i] = media * 100;
+                }
+
+                //Transformamos los logos a iconos
+                if (listaTipo[i].equalsIgnoreCase("pasta")) {
+                    listaIconos[i] = R.mipmap.pasta_logo;
+                } else if (listaTipo[i].equalsIgnoreCase("postre")) {
+                    listaIconos[i] = R.mipmap.dessert_logo;
+                } else if (listaTipo[i].equalsIgnoreCase("pescado")) {
+                    listaIconos[i] = R.mipmap.fish_logo;
+                } else if (listaTipo[i].equalsIgnoreCase("carne")) {
+                    listaIconos[i] = R.mipmap.meat_logo;
+                } else if (listaTipo[i].equalsIgnoreCase("verdura")) {
+                    listaIconos[i] = R.mipmap.vegetable_logo;
+                } else {
+                    listaIconos[i] = R.mipmap.random_logo;
+                }
+
+            }
+            final RecetaAdapter adapter = new RecetaAdapter(actividadPadre, listaNombres, listaIds, listaIconos, puntos);
+            actividadPadre.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    lv.setAdapter(adapter);
+                }
+            });
+
+            return "";
         }
 
-        RecetaAdapter adapter = new RecetaAdapter(actividadPadre, listaNombres, listaIds, listaIconos, puntos);
-        lv.setAdapter(adapter);
     }
 
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.GPS.app.fooding.connection.ClientInterface;
@@ -88,6 +89,7 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
             MainActivity.navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(true);
             MainActivity.navigationView.getMenu().findItem(R.id.menu_iniciar_sesion).setVisible(false);
             MainActivity.navigationView.getMenu().findItem(R.id.menu_registrarse).setVisible(false);
+            MainActivity.correoT.setText(email);
 
             Toast.makeText(getActivity(), "Logeado correctamente", Toast.LENGTH_SHORT).show();
             android.support.v4.app.FragmentTransaction trans = getFragmentManager().beginTransaction();

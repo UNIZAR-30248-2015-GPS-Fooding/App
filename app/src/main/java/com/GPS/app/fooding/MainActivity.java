@@ -3,6 +3,7 @@ package com.GPS.app.fooding;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
@@ -23,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.GPS.app.fooding.connection.ClientInterface;
@@ -60,9 +62,6 @@ public class MainActivity extends AppCompatActivity
     public static boolean registrado = false;
     File ficheroUsuarios = new File(mPath, "ficheroUsuarios.txt");
 
-
-
-
     //Menu lateral
     public static NavigationView navigationView;
 
@@ -71,6 +70,9 @@ public class MainActivity extends AppCompatActivity
 
     // Formato valoracion
     public static final DecimalFormat DF = new DecimalFormat("0.0");
+
+    // Text view de correo
+    public static TextView correoT;
 
     @Override
     protected void onDestroy() {
@@ -95,27 +97,22 @@ public class MainActivity extends AppCompatActivity
         if (!mPath.exists()) {
             mPath.mkdirs();
         }
-       /** //TODO: Lo comentado es lo que yo he intentado
+        String correo ="Invitado";
         if(ficheroUsuarios.exists() && ficheroUsuarios.length() != 0){
-            String correo ="";
             try {
                 FileReader f = new FileReader(ficheroUsuarios);
                 BufferedReader b = new BufferedReader(f);
                 correo = b.readLine();
                 b.close();
-                System.out.println(correo);
-
+                Usuario u = ClientInterface.info_usuario(correo, false);
+                if(u!=null)
+                    registrado = true;
+                else
+                    correo = "Invitado";
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Usuario u = ClientInterface.info_usuario(correo, false);
-            registrado = true;
-            navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(registrado);
-        }*/
-
-        //leer el fichero de usuarios
-        //mira si hay usuarios
-        //y crea una variable para el usuario
+        }
 
         //Permitir conexion con servidor
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -141,7 +138,18 @@ public class MainActivity extends AppCompatActivity
         navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(registrado);
         navigationView.getMenu().findItem(R.id.menu_iniciar_sesion).setVisible(!registrado);
         navigationView.getMenu().findItem(R.id.menu_registrarse).setVisible(!registrado);
+        correoT = (TextView) findViewById(R.id.textViewCorreo);
+        correoT.setText(correo);
+        new GetRecetas().execute("");
 
+        //Iniciamos la Actividad con el fragment ListaRecetas
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        android.support.v4.app.Fragment fragment = new ListaRecetasFragment("");
+        fragmentTransaction.replace(R.id.mainFrame, fragment);
+        fragmentTransaction.commit();
+
+        /*
         tipos.add("Ninguno");
         List<String> lista = ClientInterface.getTipos();
         if (lista == null) {
@@ -167,7 +175,7 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
         }
-
+*/
     }
 
 
@@ -271,6 +279,7 @@ public class MainActivity extends AppCompatActivity
                 navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(false);
                 navigationView.getMenu().findItem(R.id.menu_iniciar_sesion).setVisible(true);
                 navigationView.getMenu().findItem(R.id.menu_registrarse).setVisible(true);
+                correoT.setText("Invitado");
 
                 File myFile = new File(MainActivity.mPath + "/" + "ficheroUsuarios.txt");
                 try {
@@ -590,5 +599,38 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    private class GetRecetas extends AsyncTask<String,String,String> {
+
+        protected String doInBackground(String... i) {
+            tipos.add("Ninguno");
+            List<String> lista = ClientInterface.getTipos();
+            if (lista == null) {
+
+                //Mostramos pantalla de error
+                android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                android.support.v4.app.Fragment fragment = new ErrorFragment();
+                fragmentTransaction.replace(R.id.mainFrame, fragment);
+                fragmentTransaction.commit();
+            } else {
+                tipos.addAll(lista);
+
+                ingredientes.add("Ninguno");
+                ingredientes.addAll(ClientInterface.getIngredientes());
+
+                //Iniciamos la Actividad con el fragment ListaRecetas
+                android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                android.support.v4.app.Fragment fragment = new ListaRecetasFragment("");
+                fragmentTransaction.replace(R.id.mainFrame, fragment);
+                fragmentTransaction.commit();
+
+            }
+            return "";
+        }
+
+    }
 
 }
+
+

@@ -6,6 +6,8 @@ import com.GPS.app.fooding.MainActivity;
 import com.robotium.solo.Solo;
 import com.robotium.solo.Timeout;
 
+import java.util.concurrent.TimeUnit;
+
 
 public class testBusquedaUsuario extends ActivityInstrumentationTestCase2<MainActivity> {
   	private Solo solo;
@@ -33,6 +35,11 @@ public class testBusquedaUsuario extends ActivityInstrumentationTestCase2<MainAc
 		Timeout.setSmallTimeout(15575);
 		//Click on ImageView
 		solo.clickOnView(solo.getView(android.widget.ImageButton.class, 0));
+		try {
+			TimeUnit.SECONDS.sleep(7);
+		} catch (InterruptedException e) {
+			;
+		}
 		//Click on Lista Usuarios
 		solo.clickOnText(java.util.regex.Pattern.quote("Lista de Usuarios"));
 		//Verificamos que existe usuario Fooding
