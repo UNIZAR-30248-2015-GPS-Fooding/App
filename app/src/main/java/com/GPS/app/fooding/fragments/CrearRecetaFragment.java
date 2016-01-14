@@ -198,7 +198,6 @@ public class CrearRecetaFragment extends android.support.v4.app.Fragment impleme
                     trans.replace(R.id.mainFrame, fragment);
                     trans.remove(this);
                     trans.commit();
-                    manager.popBackStack();
 
                 }else{
                     Toast.makeText(getActivity(), "Receta no creada. Hubo un error al procesar la petición",Toast.LENGTH_SHORT).show();
@@ -209,7 +208,6 @@ public class CrearRecetaFragment extends android.support.v4.app.Fragment impleme
                     trans.replace(R.id.mainFrame, fragment);
                     trans.remove(this);
                     trans.commit();
-                    manager.popBackStack();
                 }
 
                 break;

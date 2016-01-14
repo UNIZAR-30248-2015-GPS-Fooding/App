@@ -99,7 +99,6 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
             trans.replace(R.id.mainFrame, fragment);
             trans.remove(this);
             trans.commit();
-            manager.popBackStack();
 
         } else {
 
