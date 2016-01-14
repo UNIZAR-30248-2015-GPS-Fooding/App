@@ -1,6 +1,7 @@
 package com.GPS.app.fooding.fragments;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,12 +93,13 @@ public class LoginFragment extends android.support.v4.app.Fragment implements Vi
             MainActivity.correoT.setText(email);
 
             Toast.makeText(getActivity(), "Logeado correctamente", Toast.LENGTH_SHORT).show();
+            FragmentManager manager = getActivity().getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction trans = getFragmentManager().beginTransaction();
             android.support.v4.app.Fragment fragment = new ListaRecetasFragment("");
             trans.replace(R.id.mainFrame, fragment);
-            trans.addToBackStack(null);
+            trans.remove(this);
             trans.commit();
-
+            manager.popBackStack();
 
         } else {
 

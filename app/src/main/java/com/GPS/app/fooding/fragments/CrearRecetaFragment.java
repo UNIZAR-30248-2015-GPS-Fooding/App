@@ -1,6 +1,7 @@
 package com.GPS.app.fooding.fragments;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -145,12 +146,14 @@ public class CrearRecetaFragment extends android.support.v4.app.Fragment impleme
                     i.setUds(uds1.getText().toString());
                     listIngr.add(i);
                 }
+                i = new Ingrediente();
                 if(!tipoInputSpinnerIngredientes2.getSelectedItem().toString().equalsIgnoreCase("Seleccione ingrediente")){
                     i.setCantidad(Integer.parseInt(cant2.getText().toString()));
                     i.setNombre(tipoInputSpinnerIngredientes2.getSelectedItem().toString());
                     i.setUds(uds2.getText().toString());
                     listIngr.add(i);
                 }
+                i = new Ingrediente();
                 if(!tipoInputSpinnerIngredientes3.getSelectedItem().toString().equalsIgnoreCase("Seleccione ingrediente")){
                     i.setCantidad(Integer.parseInt(cant3.getText().toString()));
                     i.setNombre(tipoInputSpinnerIngredientes3.getSelectedItem().toString());
@@ -189,14 +192,24 @@ public class CrearRecetaFragment extends android.support.v4.app.Fragment impleme
                 if(creado){
                     Toast.makeText(getActivity(), "Receta creada correctamente",Toast.LENGTH_SHORT ).show();
                     //ir a la lista de recetas
+                    FragmentManager manager = getActivity().getSupportFragmentManager();
                     android.support.v4.app.FragmentTransaction trans = getFragmentManager().beginTransaction();
                     android.support.v4.app.Fragment fragment = new ListaRecetasFragment("");
                     trans.replace(R.id.mainFrame, fragment);
-                    trans.addToBackStack(null);
+                    trans.remove(this);
                     trans.commit();
+                    manager.popBackStack();
 
                 }else{
-                    Toast.makeText(getActivity(), "Receta no creada",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Receta no creada. Hubo un error al procesar la petición",Toast.LENGTH_SHORT).show();
+                    //ir a la lista de recetas
+                    FragmentManager manager = getActivity().getSupportFragmentManager();
+                    android.support.v4.app.FragmentTransaction trans = getFragmentManager().beginTransaction();
+                    android.support.v4.app.Fragment fragment = new ListaRecetasFragment("");
+                    trans.replace(R.id.mainFrame, fragment);
+                    trans.remove(this);
+                    trans.commit();
+                    manager.popBackStack();
                 }
 
                 break;

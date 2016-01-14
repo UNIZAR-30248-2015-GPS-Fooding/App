@@ -86,12 +86,13 @@
                 android:visibility="gone">
 
                 <EditText android:id="@+id/cant2" android:layout_width="54dp"
-                    android:layout_height="wrap_content" android:hint="@string/nombre_receta"
+                    android:inputType="number"
+                    android:layout_height="wrap_content" android:hint="@string/cantidad"
                     android:imeActionId="@+id/login"
                     android:maxLines="1" android:singleLine="true" />
 
                 <EditText android:id="@+id/uds2" android:layout_width="54dp"
-                    android:layout_height="wrap_content" android:hint="@string/nombre_receta"
+                    android:layout_height="wrap_content" android:hint="@string/unidades"
                     android:imeActionId="@+id/login"
                     android:maxLines="1" android:singleLine="true" />
 
@@ -109,12 +110,13 @@
                 android:visibility="gone">
 
                 <EditText android:id="@+id/cant3" android:layout_width="54dp"
-                    android:layout_height="wrap_content" android:hint="@string/nombre_receta"
+                    android:layout_height="wrap_content" android:hint="@string/cantidad"
                     android:imeActionId="@+id/login"
+                    android:inputType="number"
                     android:maxLines="1" android:singleLine="true" />
 
                 <EditText android:id="@+id/uds3" android:layout_width="54dp"
-                    android:layout_height="wrap_content" android:hint="@string/nombre_receta"
+                    android:layout_height="wrap_content" android:hint="@string/unidades"
                     android:imeActionId="@+id/login"
                     android:maxLines="1" android:singleLine="true" />
 
@@ -144,7 +146,7 @@
             <EditText android:id="@+id/elaboracion" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:hint="@string/elaboracion"
                 android:imeActionId="@+id/login"
-                android:maxLines="1" android:singleLine="true" />
+                android:maxLines="1" android:singleLine="false" />
 
         </android.support.design.widget.TextInputLayout>
 
