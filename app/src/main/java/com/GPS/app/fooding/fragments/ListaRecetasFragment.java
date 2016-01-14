@@ -55,23 +55,10 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_lista_recetas, container, false);
         lv = (ListView) view.findViewById(R.id.listRec);
 
-        String correo = "";
-        File myFile = new File(MainActivity.mPath + "/" + "ficheroUsuarios.txt");
-        try {
-            FileReader f = new FileReader(myFile);
-            BufferedReader b = new BufferedReader(f);
-            correo = b.readLine();
-            b.close();
-            System.out.println(correo);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         FloatingActionButton floatingButton = (FloatingActionButton) view.findViewById(R.id.fab);
-        if(correo!=null){
+        if (MainActivity.registrado) {
             floatingButton.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             floatingButton.setVisibility(View.GONE);
         }
         floatingButton.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +96,7 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
         editNameDialog.show(fm, "fragment_edit_name");
     }
 
-    public static void actualizarLista(List<Receta> listaReceta, String modo) {
+    public static void actualizarLista(List<Receta> listaReceta, String modo1) {
 
         /*
         if (modo.equalsIgnoreCase("modoFavoritos")) {
@@ -169,7 +156,7 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
             }
 
         }*/
-
+        modo = modo1;
         if (listaReceta != null) {
             listaRecetas = listaReceta;
             String[] listaNombres = new String[listaRecetas.size()];
@@ -177,12 +164,18 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
             Integer[] listaIconos = new Integer[listaRecetas.size()];
             int[] listaIds = new int[listaRecetas.size()];
             Double[] puntos = new Double[listaRecetas.size()];
+            boolean[] favs = new boolean[listaRecetas.size()];
 
             //creamos la lista de nombres y de logos
             for (int i = 0; i < listaRecetas.size(); i++) {
                 listaNombres[i] = listaRecetas.get(i).getNombre();
                 listaTipo[i] = listaRecetas.get(i).getTipo();
                 listaIds[i] = listaRecetas.get(i).getId();
+                if (MainActivity.registrado) {
+                    favs[i] = ClientInterface.esFavorita(MainActivity.mail, listaIds[i], false);
+                } else {
+                    favs[i] = false;
+                }
 
                 double media = (double) listaRecetas.get(i).getMe_gusta() / (double) (listaRecetas.get(i).getNo_me_gusta() + listaRecetas.get(i).getMe_gusta());
                 if (listaRecetas.get(i).getMe_gusta() == 0 || (listaRecetas.get(i).getNo_me_gusta() + listaRecetas.get(i).getMe_gusta()) == 0) {
@@ -208,30 +201,44 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
 
             }
 
-            RecetaAdapter adapter = new RecetaAdapter(actividadPadre, listaNombres, listaIds, listaIconos, puntos);
-            lv.setAdapter(adapter);
-        } else{
+            final RecetaAdapter adapter = new RecetaAdapter(actividadPadre, listaNombres, favs, listaIds, listaIconos, puntos);
+            actividadPadre.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    lv.setAdapter(adapter);
+                }
+            });
+        } else {
             String[] listaNombres = new String[1];
             String[] listaTipo = new String[1];
             Integer[] listaIconos = new Integer[1];
             int[] listaIds = new int[1];
             Double[] puntos = new Double[1];
+            boolean[] favs = new boolean[1];
 
             listaNombres[0] = "Cargando";
             listaTipo[0] = "?";
             listaIconos[0] = R.mipmap.random_logo;
             listaIds[0] = -1;
             puntos[0] = 0.0;
+            favs[0] = false;
+
             new GetRecetas().execute(ACT);
-            RecetaAdapter adapter = new RecetaAdapter(actividadPadre, listaNombres, listaIds, listaIconos, puntos);
-            lv.setAdapter(adapter);
+            final RecetaAdapter adapter = new RecetaAdapter(actividadPadre, listaNombres, favs, listaIds, listaIconos, puntos);
+            actividadPadre.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    lv.setAdapter(adapter);
+                }
+            });
         }
     }
 
-    private static class GetRecetas extends AsyncTask<Activity,String,String> {
+    private static class GetRecetas extends AsyncTask<Activity, String, String> {
+
 
         protected String doInBackground(Activity... list) {
-            Activity a = list[0];
+
 
             if (modo.equalsIgnoreCase("modoFavoritos")) {
                 File myFile = new File(MainActivity.mPath + "/" + "ficheroUsuarios.txt");
@@ -248,9 +255,10 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
                 }
                 listaRecetas = ClientInterface.get_favoritos(correo, false);
             } else {
-                    listaRecetas = ClientInterface.getRecetas();
+                listaRecetas = ClientInterface.getRecetas();
             }
 
+/*
             String[] listaNombres = new String[listaRecetas.size()];
             String[] listaTipo = new String[listaRecetas.size()];
             Integer[] listaIconos = new Integer[listaRecetas.size()];
@@ -286,13 +294,8 @@ public class ListaRecetasFragment extends android.support.v4.app.Fragment {
                 }
 
             }
-            final RecetaAdapter adapter = new RecetaAdapter(actividadPadre, listaNombres, listaIds, listaIconos, puntos);
-            actividadPadre.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    lv.setAdapter(adapter);
-                }
-            });
+*/
+            actualizarLista(listaRecetas, modo);
 
             return "";
         }

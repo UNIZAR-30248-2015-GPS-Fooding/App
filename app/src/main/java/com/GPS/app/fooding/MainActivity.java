@@ -82,12 +82,43 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         //leer el fichero si hay algo escrito ese nombre de usuario
+        registrado = false;
+        if (!mPath.exists()) {
+            mPath.mkdirs();
+        }
+        String correo ="Invitado";
+        if(ficheroUsuarios.exists() && ficheroUsuarios.length() != 0){
+            try {
+                FileReader f = new FileReader(ficheroUsuarios);
+                BufferedReader b = new BufferedReader(f);
+                correo = b.readLine();
+                b.close();
+                Usuario u = ClientInterface.info_usuario(correo, false);
+                if(u!=null) {
+                    registrado = true;
+                    mail = correo;
+                }
+                else
+                    correo = "Invitado";
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         //Si estamos logeados, msotramos menu oculto
         navigationView.getMenu().findItem(R.id.menu_logueados).setVisible(registrado);
         navigationView.getMenu().findItem(R.id.menu_iniciar_sesion).setVisible(!registrado);
         navigationView.getMenu().findItem(R.id.menu_registrarse).setVisible(!registrado);
+        correoT = (TextView) findViewById(R.id.textViewCorreo);
+        correoT.setText(correo);
+        new GetRecetas().execute("");
 
+        //Iniciamos la Actividad con el fragment ListaRecetas
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        android.support.v4.app.Fragment fragment = new ListaRecetasFragment("");
+        fragmentTransaction.replace(R.id.mainFrame, fragment);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -105,8 +136,10 @@ public class MainActivity extends AppCompatActivity
                 correo = b.readLine();
                 b.close();
                 Usuario u = ClientInterface.info_usuario(correo, false);
-                if(u!=null)
+                if(u!=null) {
                     registrado = true;
+                    mail = correo;
+                }
                 else
                     correo = "Invitado";
             } catch (IOException e) {
@@ -281,6 +314,7 @@ public class MainActivity extends AppCompatActivity
                 navigationView.getMenu().findItem(R.id.menu_registrarse).setVisible(true);
                 correoT.setText("Invitado");
 
+                /*
                 File myFile = new File(MainActivity.mPath + "/" + "ficheroUsuarios.txt");
                 try {
                     FileWriter writer = new FileWriter(root);
@@ -289,11 +323,12 @@ public class MainActivity extends AppCompatActivity
                     writer.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
+                }*/
 
                 android.support.v4.app.Fragment fragment = new ListaRecetasFragment("");
                 fragmentTransaction.replace(R.id.mainFrame, fragment);
                 fragmentTransaction.addToBackStack(null);
+                MainActivity.mail = "";
                 
                 Toast.makeText(MainActivity.this, "Sesion cerrada correctamente", Toast.LENGTH_SHORT).show();
             } else {
