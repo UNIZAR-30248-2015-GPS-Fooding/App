@@ -173,14 +173,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.getMenu().findItem(R.id.menu_registrarse).setVisible(!registrado);
         correoT = (TextView) findViewById(R.id.textViewCorreo);
         correoT.setText(correo);
-        new GetRecetas().execute("");
-
-        //Iniciamos la Actividad con el fragment ListaRecetas
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        android.support.v4.app.Fragment fragment = new ListaRecetasFragment("");
-        fragmentTransaction.replace(R.id.mainFrame, fragment);
-        fragmentTransaction.commit();
 
         /*
         tipos.add("Ninguno");
